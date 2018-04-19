@@ -1,4 +1,5 @@
 *.pyc
 
 .virtualenv
-.idea
+.idea/
+node_modules/
