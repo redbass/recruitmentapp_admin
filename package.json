@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "webpack.config.js",
+  "dependencies": {}
   "devDependencies": {
     "babel-loader": "^7.1.4",
     "babel-preset-react": "^6.24.1",
@@ -28,6 +29,5 @@
   "bugs": {
     "url": "https://github.com/redbass/recruitmentapp_admin/issues"
   },
-  "homepage": "https://github.com/redbass/recruitmentapp_admin#readme",
-  "dependencies": {}
+  "homepage": "https://github.com/redbass/recruitmentapp_admin#readme"
 }
