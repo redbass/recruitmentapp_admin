@@ -1,6 +1,7 @@
 from flask import render_template
 
-from lib.auth import login_get, login_post
+from lib.auth import login_get, login_post, logout
+from ui.jobs import list_jobs
 
 
 def add_routes(app):
@@ -11,3 +12,6 @@ def add_routes(app):
 
     app.add_url_rule('/login', 'login_get', login_get, methods=['GET'])
     app.add_url_rule('/login', 'login_post', login_post, methods=['POST'])
+    app.add_url_rule('/logout', 'logout', logout, methods=['GET'])
+
+    app.add_url_rule('/jobs', 'list_jobs', list_jobs, methods=['GET'])
