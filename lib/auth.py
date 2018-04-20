@@ -28,7 +28,7 @@ def login_post():
 
 
 def create_login_response(jwt):
-    resp = make_response(jsonify({}))
+    resp = redirect(url_for('home'), code=302)
     resp.set_cookie('jwt', jwt.get('token'),
                     httponly=True, max_age=COOKIE_MAX_AGE_delta)
     resp.set_cookie('username', jwt.get('username'))
@@ -36,7 +36,7 @@ def create_login_response(jwt):
 
 
 def logout():
-    resp = make_response(jsonify({}))
+    resp = redirect(url_for('login_get'), code=302)
     resp.set_cookie('jwt', '', expires=0)
     return resp
 

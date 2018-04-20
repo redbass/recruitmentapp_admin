@@ -2,6 +2,10 @@
 
 {% block body %}
 
-    jobs
+    <ul class="list-group">
+    {% for job in jobs %}
+        <li class="list-group-item">{{ job.title }} -  {{ job.description }}</li>
+    {% endfor %}
+    </ul>
 
 {% endblock body %}
