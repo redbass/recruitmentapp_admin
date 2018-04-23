@@ -1,6 +1,7 @@
 import requests
 from flask import render_template, request
 
+from config import settings
 from lib.auth import login_required
 
 
@@ -8,7 +9,7 @@ from lib.auth import login_required
 def list_jobs():
 
     jwt = request.cookies.get('jwt')
-    url = 'http://localhost:5000'+'/api/job'
+    url = settings.API_URL_ROOT + '/api/job'
     jobs = requests.get(url,
                         headers={'Authorization': 'Bearer ' + jwt})
 
