@@ -42,7 +42,7 @@ def logout():
 
 
 def request_jwt(username, password):
-    url = settings.API_URL_ROOT + API_URL_AUTH
+    url = settings.CORE_APP_URL + API_URL_AUTH
     r = requests.post(url, json={'username': username, 'password': password})
     return r
 
