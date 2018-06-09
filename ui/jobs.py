@@ -9,8 +9,8 @@ from lib.auth import login_required
 def list_jobs():
 
     jwt = request.cookies.get('jwt')
-    url = settings.API_URL_ROOT + '/api/job'
-    jobs = requests.get(url,
+    url = settings.CORE_APP_URL + '/api/job'
+    resopnse = requests.get(url,
                         headers={'Authorization': 'Bearer ' + jwt})
 
-    return render_template("jobs.jinja2", jobs=jobs.json()['results'])
+    return render_template("jobs.jinja2", jobs=resopnse.json())

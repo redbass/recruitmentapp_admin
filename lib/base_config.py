@@ -14,7 +14,7 @@ class BaseConfig(object):
     ENC_PSWD = None
 
     def __init__(self):
-        self.API_URL_ROOT = os.environ.get('API_URL')
+        self.CORE_APP_URL = os.environ.get('CORE_APP_URL')
         self.ENC_PSWD = os.environ.get('ENC_PSWD', None)
 
     def encrypt(self, msg: str):
