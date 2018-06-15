@@ -17,7 +17,8 @@
   },
   "scripts": {
     "compile": "webpack",
-    "compile:watch": "webpack --watch"
+    "compile:watch": "webpack --watch",
+    "heroku-postbuild": "webpack"
   },
   "repository": {
     "type": "git",
