@@ -3,13 +3,13 @@
 {% block body %}
 
     <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-action active">
-            Hire manager List
+        <a href="{{ url_for('companies') }}" class="list-group-item list-group-item-action active">
+            Company List
         </a>
         <a href="#" class="list-group-item list-group-item-action">
             Admin List
         </a>
-        <a href="/jobs" class="list-group-item list-group-item-action">
+        <a href="{{ url_for('jobs') }}" class="list-group-item list-group-item-action">
             Job List
         </a>
         <a href="#" class="list-group-item list-group-item-action">

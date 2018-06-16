@@ -6,7 +6,7 @@ from lib.auth import login_required
 
 
 @login_required
-def list_jobs():
+def jobs_view():
 
     jwt = request.cookies.get('jwt')
     url = settings.CORE_APP_URL + '/api/job'

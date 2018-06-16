@@ -1,8 +1,8 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 from functools import wraps
 
 import requests
-from flask import render_template, request, jsonify, make_response, redirect, \
+from flask import render_template, request, jsonify, redirect, \
     url_for
 
 from config import settings
