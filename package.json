@@ -3,17 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "webpack.config.js",
-  "dependencies": {},
   "devDependencies": {
-    "bootstrap": "^4.0.0",
     "babel-loader": "^7.1.4",
     "babel-preset-react": "^6.24.1",
+    "bootstrap": "^4.1.1",
     "css-loader": "^0.28.10",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
-    "node-sass": "^4.7.2",
+    "node-sass": "^4.9.0",
     "sass-loader": "^6.0.7",
-    "webpack": "^4.1.1",
-    "webpack-cli": "^2.0.10"
+    "webpack": "^4.12.0",
+    "webpack-cli": "^2.1.5"
   },
   "scripts": {
     "compile": "webpack",
@@ -29,5 +28,6 @@
   "bugs": {
     "url": "https://github.com/redbass/recruitmentapp_admin/issues"
   },
-  "homepage": "https://github.com/redbass/recruitmentapp_admin#readme"
+  "homepage": "https://github.com/redbass/recruitmentapp_admin#readme",
+  "dependencies": {}
 }

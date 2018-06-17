@@ -1,16 +1,34 @@
-import requests
-from flask import render_template, request
+from flask import render_template, request, url_for, redirect
 
-from config import settings
 from lib.auth import login_required
+from lib.core_integration import make_core_api_call
 
 
 @login_required
 def jobs_view():
+    response = make_core_api_call('/api/job')
+    return render_template("job/jobs.jinja2", jobs=response.json())
 
-    jwt = request.cookies.get('jwt')
-    url = settings.CORE_APP_URL + '/api/job'
-    resopnse = requests.get(url,
-                        headers={'Authorization': 'Bearer ' + jwt})
 
-    return render_template("jobs.jinja2", jobs=resopnse.json())
+@login_required
+def create_job():
+    response = make_core_api_call('/api/company')
+    return render_template("job/create_job.jinja2", companies=response.json())
+
+
+@login_required
+def create_job_post():
+    
+    data = {
+        "company_id": request.form.get('company_id'),
+        "title": request.form.get('title'),
+        "description": request.form.get('description'),
+        "location": {
+            "lat": request.form.get('latitude'),
+            "lng": request.form.get('longitude')
+        }
+    }
+
+    response = make_core_api_call('/admin/api/job', data=data)
+
+    return redirect(url_for('jobs'))

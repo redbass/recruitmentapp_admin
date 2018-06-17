@@ -1,10 +1,7 @@
-from json import dumps
-
-import requests
 from flask import render_template, request, redirect, url_for
 
-from config import settings
 from lib.auth import login_required
+from lib.core_integration import make_core_api_call
 
 
 @login_required
@@ -33,15 +30,3 @@ def create_company_post():
     make_core_api_call('/admin/api/company', data=data)
 
     return redirect(url_for('companies'))
-
-
-def make_core_api_call(path,
-                       data: dict = None):
-    jwt = request.cookies.get('jwt')
-    url = settings.CORE_APP_URL + path
-    headers = {'Authorization': 'Bearer ' + jwt}
-
-    if data:
-        return requests.post(url, headers=headers, json=data)
-
-    return requests.get(url, headers=headers)
