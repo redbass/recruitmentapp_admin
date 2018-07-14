@@ -15,6 +15,7 @@ class BaseConfig(object):
 
     def __init__(self):
         self.CORE_APP_URL = os.environ.get('CORE_APP_URL')
+        self.CORE_APP_ADMIN_URL = self.CORE_APP_URL + "/admin"
         self.ENC_PSWD = os.environ.get('ENC_PSWD', None)
 
     def encrypt(self, msg: str):

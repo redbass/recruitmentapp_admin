@@ -6,6 +6,7 @@ from flask import render_template, request, jsonify, redirect, \
     url_for
 
 from config import settings
+from lib.core_integration import make_admin_core_api_call
 
 API_URL_AUTH = '/token/auth'
 COOKIE_MAX_AGE_delta = timedelta(minutes=60)
