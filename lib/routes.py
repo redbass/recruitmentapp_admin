@@ -1,7 +1,8 @@
 from lib.auth import login_get, login_post, logout
 from ui.home import home_page
 from ui.job import jobs_view, create_job, create_job_post
-from ui.company import companies_view, create_company_view, create_company_post
+from ui.company import companies_view, create_company_view, \
+    create_company_post, edit_company_post, edit_company_view
 
 
 def add_routes(app):
@@ -33,6 +34,12 @@ def _add_job_routes(app):
 def _add_company_routes(app):
     app.add_url_rule('/companies', 'companies',
                      companies_view, methods=['GET'])
+
+    app.add_url_rule('/companies/edit/<company_id>', 'edit_company',
+                     edit_company_view, methods=['GET'])
+    app.add_url_rule('/companies/edit/<company_id>', 'edit_company_post',
+                     edit_company_post, methods=['POST'])
+
     app.add_url_rule('/companies/add', 'create_company',
                      create_company_view, methods=['GET'])
     app.add_url_rule('/companies/add', 'create_company_post',

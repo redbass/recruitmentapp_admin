@@ -23,13 +23,13 @@
             </tr>
             </thead>
             <tbody>
-                {% for job in companies %}
+                {% for company in companies %}
                 <tr>
                     <th scope="row">{{ loop.index }}</th>
-                    <td>{{ job.name }}</td>
-                    <td>{{ job.description }}</td>
+                    <td>{{ company.name }}</td>
+                    <td>{{ company.description }}</td>
                     <td>
-                        <a href="#">Edit</a>
+                        <a href="{{ url_for('edit_company', company_id=company['_id']) }}">Edit</a>
                     </td>
                 </tr>
             {% endfor %}
