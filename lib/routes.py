@@ -1,6 +1,7 @@
 from lib.auth import login_get, login_post, logout
 from ui.home import home_page
-from ui.job import jobs_view, create_job, create_job_post
+from ui.job import jobs_view, create_job, create_job_post, edit_job_view, \
+    edit_job_post
 from ui.company import companies_view, create_company_view, \
     create_company_post, edit_company_post, edit_company_view
 
@@ -29,6 +30,10 @@ def _add_job_routes(app):
                      create_job, methods=['GET'])
     app.add_url_rule('/jobs/add', 'create_job_post',
                      create_job_post, methods=['POST'])
+    app.add_url_rule('/jobs/edit/<job_id>', 'edit_job',
+                     edit_job_view, methods=['GET'])
+    app.add_url_rule('/jobs/edit/<job_id>', 'edit_job_post',
+                     edit_job_post, methods=['POST'])
 
 
 def _add_company_routes(app):
