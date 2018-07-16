@@ -30,26 +30,64 @@
                 </div>
                 <div class="col-7">
 
-                {% with latlng = job.location.coordinates %}
-                    <div class="form-group">
-                        <label for="description" readonly>Latitude</label>
-                        <input type="text" class="form-control" name="latitude" id="latitude"  value="{{ latlng[1] }}">
-                    </div>
+                    {% with latlng = job.location.coordinates %}
+                        <div class="form-group">
+                            <label for="description" readonly>Latitude</label>
+                            <input type="text" class="form-control" name="latitude" id="latitude"
+                                   value="{{ latlng[1] }}">
+                        </div>
 
 
-                    <div class="form-group">
-                        <label for="description" readonly>Longitude</label>
-                        <input type="text" class="form-control" name="longitude" id="longitude"  value="{{ latlng[0] }}">
-                    </div>
-                {% endwith %}
+                        <div class="form-group">
+                            <label for="description" readonly>Longitude</label>
+                            <input type="text" class="form-control" name="longitude" id="longitude"
+                                   value="{{ latlng[0] }}">
+                        </div>
+                    {% endwith %}
 
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary pull-right">Submit</button>
 
         </form>
+
+            <h3>Adverts</h3>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Start</th>
+                    <th scope="col">End</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Deleted</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for advert in job.adverts or [] %}
+                <tr>
+                    <th scope="row">1</th>
+                    <td>{{ advert.date.published.start }}</td>
+                    <td>{{ advert.date.published.end }}</td>
+                    <td>{{ advert.status}}</td>
+                    <td>{{ advert.deleted }}</td>
+                    <td><a href="#">Publish</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
 
     </div>
 
 {% endblock body %}
+
+{
+'_id': 'eb32e4545747401faebdf6339d3c6c63',
+'date':
+    {
+        'created': '2018-07-16T21:05:58.107000',
+        'expire': None,
+        'published': {
+            'end': '2018-12-25T00:00:00', 'start': '2018-01-01T00:00:00'}, 'updated': '2018-07-16T21:05:58.107000'}, 'deleted': False, 'status': 'DRAFT'}]
