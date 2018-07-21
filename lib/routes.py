@@ -1,4 +1,4 @@
-from lib.auth import login_get, login_post, logout
+from lib.auth import login_view, login_post, logout_view
 from ui.home import home_page
 from ui.job import jobs_view, create_job, create_job_post, edit_job_view, \
     edit_job_post
@@ -15,12 +15,12 @@ def add_routes(app):
 
 
 def _add_login_routes(app):
-    app.add_url_rule('/login', 'login_get',
-                     login_get, methods=['GET'])
+    app.add_url_rule('/login', 'login_view',
+                     login_view, methods=['GET'])
     app.add_url_rule('/login', 'login_post',
                      login_post, methods=['POST'])
     app.add_url_rule('/logout', 'logout',
-                     logout, methods=['GET'])
+                     logout_view, methods=['GET'])
 
 
 def _add_job_routes(app):
