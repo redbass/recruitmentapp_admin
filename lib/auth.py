@@ -1,60 +1,61 @@
-from datetime import timedelta
 from functools import wraps
 
-import requests
-from flask import render_template, request, jsonify, redirect, \
-    url_for
+from flask import render_template, request, session, redirect, url_for, flash, \
+    get_flashed_messages
 
-from config import settings
-from lib.core_integration import make_admin_core_api_call
+from lib.exceptions import AuthenticationError
+from lib.core_integration import request_access_jwt
 
-API_URL_AUTH = '/token/auth'
-COOKIE_MAX_AGE_delta = timedelta(minutes=60)
+SESSION_IS_LOGGED_IN = 'logged_in'
+SESSION_USERNAME = 'username'
 
 
-def login_get():
-    return render_template("login.jinja2")
+def login_view():
+    messages = get_flashed_messages()
+    return render_template("login.jinja2", messages=messages)
 
 
 def login_post():
+    log_out()
     username = request.form['username']
     password = request.form['password']
 
-    response = request_jwt(username, password)
+    try:
+        request_access_jwt(username, password)
+    except AuthenticationError as e:
+        flash(str(e))
+        return login_view()
 
-    if response.status_code is not 200:
-        return jsonify({'error': 'wrong authentication'}), 402
+    log_in()
 
-    return create_login_response(response.json())
-
-
-def create_login_response(jwt):
-    resp = redirect(url_for('home'), code=302)
-    resp.set_cookie('jwt', jwt.get('token'),
-                    httponly=True, max_age=COOKIE_MAX_AGE_delta)
-    resp.set_cookie('username', jwt.get('username'))
-    return resp
+    return redirect(url_for('home'), code=302)
 
 
-def logout():
-    resp = redirect(url_for('login_get'), code=302)
-    resp.set_cookie('jwt', '', expires=0)
-    return resp
+def logout_view():
+    log_out()
+    flash('Logged out')
+    return login_view()
 
 
-def request_jwt(username, password):
-    url = settings.CORE_APP_URL + API_URL_AUTH
-    r = requests.post(url, json={'username': username, 'password': password})
-    return r
+def log_in():
+    session[SESSION_IS_LOGGED_IN] = True
+
+
+def log_out():
+    session[SESSION_IS_LOGGED_IN] = False
+
+
+def is_logged_in():
+    return session.get(SESSION_IS_LOGGED_IN, False)
 
 
 def login_required(fn):
 
     @wraps(fn)
     def wrapper(*args, **kwargs):
-        if 'jwt' in request.cookies:
+        if is_logged_in():
             return fn(*args, **kwargs)
 
-        return redirect(url_for('login_get'), code=302)
+        return redirect(url_for('login_view'), code=302)
 
     return wrapper

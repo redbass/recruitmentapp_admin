@@ -1,16 +1,13 @@
 from flask import render_template, request, redirect, url_for
 
 from lib.auth import login_required
-from lib.core_integration import make_admin_core_api_call
+from lib.core_integration import get_json_from_core, post_json_to_core
 
 
 @login_required
 def companies_view():
-
-    response = make_admin_core_api_call('/api/company')
-
-    return render_template("company/companies.jinja2",
-                           companies=response.json())
+    companies = get_json_from_core('/api/company')
+    return render_template("company/companies.jinja2", companies=companies)
 
 
 @login_required
@@ -28,17 +25,17 @@ def create_company_post():
         'description': description
     }
 
-    make_admin_core_api_call('/api/company', data=data)
+    post_json_to_core('/api/company', json=data)
 
     return redirect(url_for('companies'))
 
 
 @login_required
 def edit_company_view(company_id):
-    response = make_admin_core_api_call('/api/company/' + company_id)
+    company = get_json_from_core('/api/company/' + company_id)
 
     return render_template("company/edit_company.jinja2",
-                           company=response.json())
+                           company=company)
 
 
 @login_required
@@ -53,6 +50,6 @@ def edit_company_post(company_id):
         'description': description
     }
 
-    data = make_admin_core_api_call('/api/company/' + company_id, data=data)
+    post_json_to_core('/api/company/' + company_id, json=data)
 
     return redirect(url_for('companies'))
