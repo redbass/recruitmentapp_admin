@@ -8,29 +8,42 @@
     <title>Find a start</title>
 
 {#    <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet">#}
-    <link href="https://findastart.palmerminto.com/wp-content/themes/understrap-child-master/css/find-a-start.css?ver=0.5.1" rel="stylesheet">
+    <link href="https://findastart.palmerminto.com/wp-content/themes/understrap-child-master/css/find-a-start.css" rel="stylesheet">
 </head>
 <body>
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<nav class="navbar navbar-expand-md bg-fas-yellow ">
     <div class="container">
         <div class="row">
             <div class="col-md-2">
-                <a class="navbar-brand" href="#">Navbar</a>
+                <a href="{{ url_for('home') }}"><img src="https://findastart.palmerminto.com/wp-content/uploads/2018/06/cropped-Find-a-Start-logo@2x.png" /><span class="sr-only">Find a Start dashboard</span></a>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-10 mt-2">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="collapse navbar-collapse" id="siteNavbar">
-                            <ul class="navbar-nav mr-auto">
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="{{ url_for('home') }}">Companies <span
+                            <ul class="navbar-nav mr-auto navbar-left mt-5">
+                                <li class="nav-item">
+                                    <a class="btn nav-link" href="{{ url_for('home') }}">Candidates</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="btn nav-link" href="{{ url_for('companies') }}">Companies <span
                                             class="sr-only">(current)</span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url_for('home') }}">Jobs</a>
+                                    <a class="btn nav-link" href="{{ url_for('jobs') }}">Jobs</a>
                                 </li>
                             </ul>
+                            <div class="navbar-right">
+                                <span class="d-block">
+                                    Logged in as: <span class="font-weight-bold">Vince Smith</span>
+                                </span>
+                                <div class="btn-toolbar mt-3 float-right" role="toolbar" aria-label="Toolbar with button groups">
+                                    <div class="btn-group mr-3 mb-2" role="group" aria-label="First group">
+                                      <a class="btn btn-black -orange" href="#" role="button">Logout</a>
+                                    </div>
+                                  </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -51,28 +64,7 @@
 </main>
 
 <footer class="container-fluid bg-dark">
-    <div class="container pt-4">
-        <div class="row">
-            <div class="col-md-4">
-                <h4>Call us</h4>
-            </div>
-            <div class="col-md-4">
-                <h4>Connect with us</h4>
-            </div>
-            <div class="col-md-4">
-                <h4>Email us </h4>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <p>© Find a Start 2018
-                </p>
-            </div>
-            <div class="col-md-6">
-
-            </div>
-        </div>
-    </div>
+    <br/>
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
