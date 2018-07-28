@@ -1,4 +1,5 @@
 {% extends 'job/_job.jinja2' %}
+{% import 'job/edit_advert.jinja2' as advert_macro%}
 
 {% block body %}
 
@@ -52,42 +53,18 @@
 
         </form>
 
-            <h3>Adverts</h3>
+        <h3>Advert</h3>
 
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Start</th>
-                    <th scope="col">End</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Deleted</th>
-                    <th scope="col">Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for advert in job.adverts or [] %}
-                <tr>
-                    <th scope="row">1</th>
-                    <td>{{ advert.date.published.start }}</td>
-                    <td>{{ advert.date.published.end }}</td>
-                    <td>{{ advert.status}}</td>
-                    <td>{{ advert.deleted }}</td>
-                    <td><a href="#">Publish</a></td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+        {% if not job.adverts %}
+            {{ advert_macro.add_advert(job) }}
+        {% else %}
+            {% if job.adverts[0].status == 'DRAFT' %}
+                {{ advert_macro.display_draft_advert(job_id=job._id, advert=job.adverts[0]) }}
+            {% elif job.adverts[0].status == 'PUBLISHED'%}
+                {{ advert_macro.display_published_advert() }}
+            {% endif %}
+        {% endif %}
 
     </div>
 
 {% endblock body %}
-
-{
-'_id': 'eb32e4545747401faebdf6339d3c6c63',
-'date':
-    {
-        'created': '2018-07-16T21:05:58.107000',
-        'expire': None,
-        'published': {
-            'end': '2018-12-25T00:00:00', 'start': '2018-01-01T00:00:00'}, 'updated': '2018-07-16T21:05:58.107000'}, 'deleted': False, 'status': 'DRAFT'}]
