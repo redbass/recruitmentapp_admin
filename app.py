@@ -1,6 +1,7 @@
 from flask import Flask
 
 from config import settings
+from lib.filters import register_filters
 from lib.routes import add_routes
 
 _app = None
@@ -16,6 +17,7 @@ def get_app(*args, **kwarg) -> Flask:
             SECRET_KEY='secret_xxx'  # TODO: SET REAL ONE
         )
         add_routes(_app)
+        register_filters(_app)
 
     return _app
 
