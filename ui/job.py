@@ -29,13 +29,15 @@ def create_job_post():
         }
     }
 
-    response = post_json_to_core('/api/job', json=data)
+    new_job = post_json_to_core('/api/job', json=data)
 
     data = {'duration': request.form.get('duration')}
-    post_json_to_core('/api/job/{job_id}/advert'
-                      .format(job_id=response['_id']), json=data)
+    job_id = new_job['_id']
 
-    return redirect(url_for('jobs'))
+    result = post_json_to_core('/api/job/{job_id}/advert'
+                               .format(job_id=job_id), json=data)
+
+    return redirect(url_for('edit_job', job_id=job_id))
 
 
 @login_required
