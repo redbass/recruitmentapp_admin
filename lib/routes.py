@@ -1,5 +1,5 @@
 from lib.auth import login_view, login_post, logout_view
-from ui.advert import create_advert_post, publish_advert_post
+from ui.advert import publish_advert_post
 from ui.home import home_page
 from ui.job import jobs_view, create_job, create_job_post, edit_job_view, \
     edit_job_post
@@ -41,8 +41,6 @@ def _add_job_routes(app):
 
 
 def _add_advert_routes(app):
-    app.add_url_rule('/jobs/<job_id>/advert', 'create_advert_post',
-                     create_advert_post, methods=['POST'])
     app.add_url_rule('/jobs/<job_id>/advert/<advert_id>/publish',
                      'publish_advert_post',
                      publish_advert_post, methods=['POST'])

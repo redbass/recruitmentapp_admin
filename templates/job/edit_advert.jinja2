@@ -1,20 +1,16 @@
-{% macro add_advert(job) %}
+{% macro add_advert() %}
 
-    <form action="{{ url_for('create_advert_post', job_id=job._id) }}" method="post" >
-        <div class="form-group">
-            <label for="duration">Advert duration</label>
-            <select class="form-control" id="duration" name="duration">
-                <option selected>...select a duration</option>
-                <option value="7">1 week</option>
-                <option value="14">2 weeks</option>
-                <option value="21">3 weeks</option>
-                <option value="28">4 weeks</option>
-                <option value="35">5 weeks</option>
-            </select>
-        </div>
-
-        <button type="submit" class="btn btn-primary mb-2 pull-right">Create Advert</button>
-    </form>
+    <div class="form-group">
+        <label for="duration">Advert duration</label>
+        <select class="form-control" id="duration" name="duration">
+            <option selected>...select a duration</option>
+            <option value="7">1 week</option>
+            <option value="14">2 weeks</option>
+            <option value="21">3 weeks</option>
+            <option value="28">4 weeks</option>
+            <option value="35">5 weeks</option>
+        </select>
+    </div>
 
 {% endmacro %}
 
