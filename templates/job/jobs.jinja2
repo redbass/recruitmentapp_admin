@@ -28,7 +28,7 @@
             {% for job in jobs %}
                 {% for advert in job.adverts %}
                 <tr>
-                    <td>{{ job.company_id }}</td>
+                    <td>{{ job.company_name }}</td>
                     <td>{{ job.title }}</td>
                     <td>{{ advert.status  }}</td>
                     <td>{{ advert.date.created | format_date }}</td>
