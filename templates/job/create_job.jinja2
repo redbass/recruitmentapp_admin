@@ -1,4 +1,5 @@
 {% extends 'job/_job.jinja2' %}
+{% import 'job/edit_advert.jinja2' as advert_macro%}
 
 {% block body %}
 
@@ -26,7 +27,7 @@
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <input type="text" class="form-control" name="description">
+                <textarea type="text" class="form-control" name="description"></textarea>
             </div>
 
             <div class="row">
@@ -49,6 +50,8 @@
 
                 </div>
             </div>
+
+            {{ advert_macro.add_advert() }}
 
             <button type="submit" class="btn btn-primary">Submit</button>
 

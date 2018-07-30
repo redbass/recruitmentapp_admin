@@ -55,14 +55,10 @@
 
         <h3>Advert</h3>
 
-        {% if not job.adverts %}
-            {{ advert_macro.add_advert(job) }}
-        {% else %}
-            {% if job.adverts[0].status == 'DRAFT' %}
-                {{ advert_macro.display_draft_advert(job_id=job._id, advert=job.adverts[0]) }}
-            {% elif job.adverts[0].status == 'PUBLISHED'%}
-                {{ advert_macro.display_published_advert() }}
-            {% endif %}
+        {% if job.adverts[0].status == 'DRAFT' %}
+            {{ advert_macro.display_draft_advert(job_id=job._id, advert=job.adverts[0]) }}
+        {% elif job.adverts[0].status == 'PUBLISHED'%}
+            {{ advert_macro.display_published_advert() }}
         {% endif %}
 
     </div>
