@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_wtf import CSRFProtect
 
 from config import settings
 from lib.filters import register_filters
@@ -21,6 +22,8 @@ def get_app(*args, **kwarg) -> Flask:
 
         if settings.DEBUG_MODE:
             _app.jinja_env.auto_reload = True
+
+        CSRFProtect(_app)
 
     return _app
 
