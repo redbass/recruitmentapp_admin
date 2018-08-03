@@ -1,27 +1,161 @@
 {% extends '_base.jinja2' %}
 
 {% block body %}
-
-    <div class="container-fluid">
-        <div class="navbar navbar-light bg-light justify-content-between">
-            <div class="container">
-                <a class="navbar-brand" href="#">Create company</a>
+<div class="row">
+    <div class="col offset-1">
+        <div class="row">
+            <div class="col-md-7">
+                <h1 class=" px-3 py-1 page-header mb-4">Create company</h1>
             </div>
         </div>
-
-
-        <form action="{{ url_for('create_company_post') }}" method="post">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" name="name">
-            </div>
-            <div class="form-group">
-                <label for="description">Description</label>
-                <input type="text" class="form-control" id="description" name="description">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-
     </div>
+</div>
+<div class="row mt-4">
+    <div class="offset-lg-1 col-lg-10 col-xl-8">
+        <form action="{{ url_for('create_company_post') }}" method="post">
+            <div class="form-group row">
+              <div class="col-lg-5">
+                <label class="col-form-label" for="title">Title</label>
+              </div>
+              <div class="col-lg-4 has-icon">
+                <select class="form-control" id="title">
+                  <option>Please select</option>
+                  <option>Mrs</option>
+                  <option>Ms</option>
+                </select>
+                <div class="form-icons select-icon"><div class="yellow-chevron">&nbsp</div></div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-lg-5">
+                <label class="col-form-label" for="firstname">First name</label>
+              </div>
+              <div class="col-lg-7">
+                  <input class="form-control" type="text" id="firstname" required/>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-lg-5">
+                <label class="col-form-label" for="surname">Surname</label>
+              </div>
+              <div class="col-lg-7">
+                <input class="form-control" type="text" id="surname" required/>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-lg-5">
+                <label class="col-form-label" for="emailaddress">Email address</label>
+              </div>
+              <div class="col-lg-7">
+                <input class="form-control" type="email" id="emailaddress" required/>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-lg-5">
+                <label class="col-form-label" for="mobilenumber">Mobie Phone Number</label>
+              </div>
+              <div class="col-lg-7">
+                <input class="form-control" type="text" id="mobilenumber" required/>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-lg-5">
+                <label class="col-form-label" for="officenumber">Office Phone Number</label>
+              </div>
+              <div class="col-lg-7">
+                <input class="form-control" type="text" id="officenumber" required/>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-lg-5">
+                <label for="company-name"  class="col-form-label font-weight-bold">Company Name</label>
+              </div>
+              <div class="col-lg-7">
+                <input type="text" class="form-control" id="name" name="name">
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-lg-5">
+                <label class="col-form-label font-weight-bold" for="trades">Trades</label>
+              </div>
+              <div class="col-lg-7 has-icon">
+                <select class="form-control" id="trades" required>
+                  <option>Please select...</option>
+                  <option>Mrs</option>
+                  <option>Ms</option>
+                </select>
+                <div class="form-icons select-icon"><div class="yellow-chevron">&nbsp</div></div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-lg-5">
+                <label class="col-form-label" for="fileupload">Company Logo</label>
+              </div>
+              <div class="col-lg-7">
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" id="fileupload" required>
+                  <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-lg-5">
+                <label class="col-form-label font-weight-bold" for="address1">Company address</label>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-lg-5">
+                <label class="col-form-label  font-weight-normal" for="address1">House or flat name or number</label>
+              </div>
+              <div class="col-lg-7">
+                  <input class="form-control" type="text" id="address1" required/>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-lg-5">
+                <label class="col-form-label  font-weight-normal" for="Street">Street</label>
+              </div>
+              <div class="col-lg-7">
+                  <input class="form-control" type="text" id="Street" required/>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-lg-5">
+                <label class="col-form-label  font-weight-normal" for="Town">Town</label>
+              </div>
+              <div class="col-lg-7">
+                  <input class="form-control" type="text" id="Town" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-lg-5">
+                <label class="col-form-label  font-weight-normal" for="City">City</label>
+              </div>
+              <div class="col-lg-7">
+                  <input class="form-control" type="text" id="City"/>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-lg-5">
+                <label class="col-form-label  font-weight-normal" for="Postcode">Postcode</label>
+              </div>
+              <div class="col-6 col-lg-4">
+                  <input class="form-control" type="text" id="Postcode" required/>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-lg-5">
+                <label class="col-form-label" for="vatnumber">Company Vat Number</label>
+              </div>
+              <div class="col-lg-7">
+                <input class="form-control" type="text" id="vatnumber" required/>
+              </div>
+            </div>
+            <div class="pull-right mt-4">
+              <button class="btn btn-yellow triangle-outter" role="button" id="register-stage1">Add Company <span class="triangle-inner"></span></button>
+            </div>
+        </form>
+    </div>
+</div>
 
 {% endblock body %}
