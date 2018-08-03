@@ -1,91 +1,99 @@
 {% extends 'job/_job.jinja2' %}
-{% import 'job/edit_advert.jinja2' as advert_macro%}
+{% import 'job/edit_advert.jinja2' as advert_macro %}
 
 {% block body %}
 
-<div class="row">
-    <div class="col offset-1">
-        <div class="row">
-            <div class="col-md-7">
-                <h1 class=" px-3 py-1 page-header mb-4">Create job</h1>
+    <div class="row">
+        <div class="col offset-1">
+            <div class="row">
+                <div class="col-md-7">
+                    <h1 class=" px-3 py-1 page-header mb-4">Create job</h1>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row mt-4">
-    <div class="offset-lg-1 col-lg-10 col-xl-8">
-        <form action="{{ url_for('create_job_post') }}" method="post">
-            <div class="form-group row">
-              <div class="col-lg-5">
-                <label class="col-form-label" for="company_id">Company</label>
-              </div>
-              <div class="col-lg-7 has-icon">
-                <select class="form-control" id="company_id" name="company_id" required aria-required="You need to select a company">
-                    <option>... select a company</option>
-                    {% for company in companies %}
-                    <option value="{{ company._id }}">{{ company.name }}</option>
-                    {% endfor %}
-                </select>
-                <div class="form-icons select-icon"><div class="yellow-chevron">&nbsp</div></div>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <div class="col-lg-5">
-                <label class="col-form-label" for="name">Job name</label>
-              </div>
-              <div class="col-lg-7">
-                <input type="text" class="form-control" name="title" required>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <div class="col-lg-5">
-                <label class="col-form-label" for="trade">Trade</label>
-              </div>
-              <div class="col-lg-7 has-icon">
-                <select class="form-control" id="trade" name="trade" required aria-required="You need to select a company">
-                    <option>... select a trade</option>
-                    {% for company in companies %}
-                    <option value="{{ company._id }}">{{ company.name }}</option>
-                    {% endfor %}
-                </select>
-                <div class="form-icons select-icon"><div class="yellow-chevron">&nbsp</div></div>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <div class="col-lg-5">
-                <label class="col-form-label font-weight-bold" for="address1">Select a Location</label>
-              </div>
-            </div>
-            <div class="row">
-                <div class="col-5">
-                    <div id="mapid" style="height: 300px"></div>
-                </div>
-                <div class="col-7">
-                    <div class="form-group">
-                        <label for="description" readonly>Latitude</label>
-                        <input type="text" class="form-control" name="latitude" id="latitude">
+    <div class="row mt-4">
+        <div class="offset-lg-1 col-lg-10 col-xl-8">
+            <form action="{{ url_for('create_job_post') }}" method="post">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <div class="form-group row">
+                    <div class="col-lg-5">
+                        <label class="col-form-label" for="company_id">Company</label>
                     </div>
-
-
-                    <div class="form-group">
-                        <label for="description" readonly>Longitude</label>
-                        <input type="text" class="form-control" name="longitude" id="longitude">
+                    <div class="col-lg-7 has-icon">
+                        <select class="form-control" id="company_id" name="company_id" required
+                                aria-required="You need to select a company">
+                            <option>... select a company</option>
+                            {% for company in companies %}
+                                <option value="{{ company._id }}">{{ company.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="form-icons select-icon">
+                            <div class="yellow-chevron">&nbsp</div>
+                        </div>
                     </div>
-
                 </div>
-            </div>
 
-            {{ advert_macro.add_advert() }}
+                <div class="form-group row">
+                    <div class="col-lg-5">
+                        <label class="col-form-label" for="name">Job name</label>
+                    </div>
+                    <div class="col-lg-7">
+                        <input type="text" class="form-control" name="title" required>
+                    </div>
+                </div>
 
-            <div class="pull-right mt-4">
-              <button class="btn btn-yellow triangle-outter" role="button" id="register-stage1">Create Job <span class="triangle-inner"></span></button>
-            </div>
+                <div class="form-group row">
+                    <div class="col-lg-5">
+                        <label class="col-form-label" for="trade">Trade</label>
+                    </div>
+                    <div class="col-lg-7 has-icon">
+                        <select class="form-control" id="trade" name="trade" required
+                                aria-required="You need to select a company">
+                            <option>... select a trade</option>
+                            {% for company in companies %}
+                                <option value="{{ company._id }}">{{ company.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="form-icons select-icon">
+                            <div class="yellow-chevron">&nbsp</div>
+                        </div>
+                    </div>
+                </div>
 
-        </form>
+                <div class="form-group row">
+                    <div class="col-lg-5">
+                        <label class="col-form-label font-weight-bold" for="address1">Select a Location</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <div id="mapid" style="height: 300px"></div>
+                    </div>
+                    <div class="col-7">
+                        <div class="form-group">
+                            <label for="description" readonly>Latitude</label>
+                            <input type="text" class="form-control" name="latitude" id="latitude">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="description" readonly>Longitude</label>
+                            <input type="text" class="form-control" name="longitude" id="longitude">
+                        </div>
+
+                    </div>
+                </div>
+
+                {{ advert_macro.add_advert() }}
+
+                <div class="pull-right mt-4">
+                    <button class="btn btn-yellow triangle-outter" role="button" id="register-stage1">Create Job <span
+                            class="triangle-inner"></span></button>
+                </div>
+
+            </form>
+        </div>
     </div>
-</div>
 
 {% endblock body %}
