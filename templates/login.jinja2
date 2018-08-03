@@ -12,6 +12,7 @@
         {% endif %}
 
         <form action="{{ url_for('login_post') }}" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="input" name="username" class="form-control" id="username" aria-describedby="username">
