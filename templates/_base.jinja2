@@ -11,42 +11,40 @@
     <link href="https://findastart.palmerminto.com/wp-content/themes/understrap-child-master/css/find-a-start.css" rel="stylesheet">
 </head>
 <body>
+    <div  class="recruitment-app-admin container-fluid -wrapper">
 
-<nav class="navbar navbar-expand-md bg-fas-yellow ">
-    <div class="container">
+<nav class="navbar navbar-admin navbar-expand-md">
+    <div class="navbar-inner">
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-2 brand">
                 <a href="{{ url_for('home') }}"><img src="https://findastart.palmerminto.com/wp-content/uploads/2018/06/cropped-Find-a-Start-logo@2x.png" /><span class="sr-only">Find a Start dashboard</span></a>
             </div>
-            <div class="col-md-10 mt-2">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="collapse navbar-collapse" id="siteNavbar">
-                            <ul class="navbar-nav mr-auto navbar-left mt-5">
-                                <li class="nav-item">
-                                    <a class="btn nav-link" href="{{ url_for('home') }}">Candidates</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="btn nav-link" href="{{ url_for('companies') }}">Companies <span
-                                            class="sr-only">(current)</span></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="btn nav-link" href="{{ url_for('jobs') }}">Jobs</a>
-                                </li>
-                            </ul>
-                            <div class="navbar-right">
-                                <span class="d-block">
-                                    Logged in as: <span class="font-weight-bold">Vince Smith</span>
-                                </span>
-                                <div class="btn-toolbar mt-3 float-right" role="toolbar" aria-label="Toolbar with button groups">
-                                    <div class="btn-group mr-3 mb-2" role="group" aria-label="First group">
-                                      <a class="btn btn-black -orange" href="#" role="button">Logout</a>
-                                    </div>
-                                  </div>
+            <div class="col-md-10 ">
+                <div class="collapse navbar-collapse" id="siteNavbar">
+                    <ul class="navbar-nav mr-auto navbar-left navigation">
+                        <li class="nav-item">
+                            <a class="btn nav-link" href="{{ url_for('home') }}">Candidates</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn nav-link" href="{{ url_for('companies') }}">Companies <span
+                                    class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn nav-link" href="{{ url_for('jobs') }}">Jobs</a>
+                        </li>
+                    </ul>
+                    <div class="navbar-right profile">
+                        <span class="d-block">
+                            Logged in as: <span class="font-weight-bold">Vince Smith</span>
+                        </span>
+                        <div class="btn-toolbar mt-3 float-right" role="toolbar" aria-label="Toolbar with button groups">
+                            <div class="btn-group mr-3 mb-2" role="group" aria-label="First group">
+                              <a class="btn btn-logout" href="#" role="button">Logout</a>
                             </div>
-                        </div>
+                          </div>
                     </div>
                 </div>
+
             </div>
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#siteNavbar"
@@ -63,7 +61,7 @@
     </div>
 </main>
 
-<footer class="container-fluid bg-dark">
+<footer class="container-fluid bg-dark admin-footer">
     <br/>
 </footer>
 
@@ -80,5 +78,6 @@
 
 {% endblock %}
 
+    </div>
 </body>
 </html>
