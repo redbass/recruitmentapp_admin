@@ -8,4 +8,6 @@ class BaseRecruitmentAppException(Exception):
 
 
 class AuthenticationError(BaseRecruitmentAppException):
-    pass
+
+    def __init__(self, msg: str = None, ref_id: str = None):
+        super().__init__(msg or 'Authentication error', ref_id)
