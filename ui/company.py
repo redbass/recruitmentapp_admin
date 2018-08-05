@@ -11,26 +11,6 @@ def companies_view():
 
 
 @login_required
-def create_company_view():
-    return render_template("company/create_company.jinja2")
-
-
-@login_required
-def create_company_post():
-    name = request.form.get('name')
-    description = request.form.get('description')
-
-    data = {
-        'name': name,
-        'description': description
-    }
-
-    post_json_to_core('/api/company', json=data)
-
-    return redirect(url_for('companies'))
-
-
-@login_required
 def edit_company_view(company_id):
     company = get_json_from_core('/api/company/' + company_id)
 
