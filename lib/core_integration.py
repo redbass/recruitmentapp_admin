@@ -14,6 +14,10 @@ SESSION_ACCESS_TOKEN = 'jwt-access'
 SESSION_REFRESH_TOKEN = 'jwt-refresh'
 
 
+class APICallError(Exception):
+    pass
+
+
 def request_access_jwt(username, password):
     url = settings.CORE_APP_URL + API_URL_GET_ACCESS_TOKEN
     request_json = {
@@ -55,26 +59,34 @@ def _retry_if_token_expired(fn):
 @_retry_if_token_expired
 def get_json_from_core(path: str):
     url = settings.CORE_APP_ADMIN_URL + path
-    headers = _get_core_call_headers()
-    response = requests.get(url, headers=headers)
-
-    if response.status_code == 401:
-        raise AuthenticationError(response.json().get('msg', ''))
-
-    return response.json()
+    return _call_core_response(requests.get, url)
 
 
 @_retry_if_token_expired
 def post_json_to_core(path: str,
                       json: dict = None):
     url = settings.CORE_APP_ADMIN_URL + path
+    return _call_core_response(requests.post, url, json=json)
+
+
+def _call_core_response(fn, url, **kwargs):
     headers = _get_core_call_headers()
-    response = requests.post(url, headers=headers, json=json)
+
+    try:
+        response = fn(url, headers=headers, **kwargs)
+        status_code = response.status_code
+        body = response.json()
+
+        if status_code == 200:
+            return body
+
+    except Exception as e:
+        raise APICallError(str(e))
 
     if response.status_code == 401:
-        raise AuthenticationError(response.json().get('msg', ''))
+        raise AuthenticationError()
 
-    return response.json()
+    raise APICallError(body.get('message', 'Unhandled error'))
 
 
 def _get_core_call_headers(is_refresh_token_call=False):

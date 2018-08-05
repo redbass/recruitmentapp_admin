@@ -1,0 +1,22 @@
+{% macro render_field(field) %}
+
+    <div class="form-group row">
+        <div class="col-lg-5">
+            {{ field.label(class='col-form-label font-weight-bold') }}
+        </div>
+        <div class="col-lg-7">
+            {{ field(class='form-control', **kwargs)|safe }}
+        </div>
+    </div>
+
+{% endmacro %}
+
+{% macro render_submit(label) %}
+
+    <div class="pull-right mt-4">
+        <button class="btn btn-yellow triangle-outter" role="button" id="register-stage1">
+            {{ label }} <span class="triangle-inner"></span>
+        </button>
+    </div>
+
+{%  endmacro %}
