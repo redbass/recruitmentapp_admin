@@ -1,16 +1,11 @@
-from flask import request, render_template, redirect, url_for, flash
 from flask_wtf import FlaskForm
-from wtforms import StringField, validators as Validators, \
-    SelectField
+from wtforms import validators as Validators, StringField, SelectMultipleField
 
 from forms import TRADES_VALUES
 from forms.widgets import LongStringField
-from lib.auth import login_required
-from lib.core_integration import post_json_to_core, APICallError
-from lib.exceptions import AuthenticationError
 
 
-class CreateCompanyForm(FlaskForm):
+class CompanyForm(FlaskForm):
     validators = [Validators.Length(min=1, max=25),
                   Validators.DataRequired()]
 
@@ -24,8 +19,7 @@ class CreateCompanyForm(FlaskForm):
         validators=[Validators.Length(min=1, max=2000),
                     Validators.DataRequired()])
 
-    trades = SelectField('Trades',
-                         choices=TRADES_VALUES)
+    trades = SelectMultipleField('Trades', choices=TRADES_VALUES)
 
     # company_logo = FileInput(lable='Company Logo')
 
@@ -55,32 +49,12 @@ class CreateCompanyForm(FlaskForm):
         'Company Vat Number',
         validators=[Validators.Length(min=1, max=100)])
 
+    def populate_form_from_core(self, company):
+        self.company_name.data = company.get('name', '')
+        self.company_description.data = company.get('description', '')
 
-@login_required
-def create_company_view():
-    form = CreateCompanyForm(request.form)
-    return render_template("company/create_company.jinja2", form=form)
-
-
-@login_required
-def create_company_post():
-    form = CreateCompanyForm(request.form)
-
-    if form.validate_on_submit():
-
-        try:
-            create_company_core(form)
-        except [APICallError, AuthenticationError] as e:
-            flash(str(e))
-            return render_template("company/create_company.jinja2", form=form)
-
-    return redirect(url_for('companies'))
-
-
-def create_company_core(form):
-    data = {
-        'name': form.data.get('company_name'),
-        'description': form.data.get('company_description')
-    }
-
-    post_json_to_core('/api/company', json=data)
+    def create_company_core_from_form(self):
+        return {
+            'name': self.data.get('company_name'),
+            'description': self.data.get('company_description')
+        }
