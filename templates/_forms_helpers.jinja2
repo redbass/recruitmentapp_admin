@@ -7,6 +7,13 @@
         <div class="col-lg-7">
             {{ field(class='form-control', **kwargs)|safe }}
         </div>
+        {% if field.errors %}
+            <div class="-invalid-feedback">
+            {% for error in field.errors %}
+                {{ error }}<br>
+            {% endfor %}
+            </div>
+        {% endif %}
     </div>
 
 {% endmacro %}
@@ -19,4 +26,4 @@
         </button>
     </div>
 
-{%  endmacro %}
+{% endmacro %}

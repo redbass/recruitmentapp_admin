@@ -1,10 +1,11 @@
+from forms.company.routes import create_company_view, create_company_post, edit_company_view, edit_company_post
 from lib.auth import login_view, login_post, logout_view
 from ui.advert import publish_advert_post
 from ui.home import home_page
 from ui.job import jobs_view, create_job, create_job_post, edit_job_view, \
     edit_job_post
-from ui.company import companies_view, edit_company_post, edit_company_view
-from forms.company.create_company import create_company_view, create_company_post
+from ui.company import companies_view
+
 
 
 def add_routes(app):
