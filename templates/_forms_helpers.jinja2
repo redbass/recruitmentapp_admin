@@ -18,6 +18,47 @@
 
 {% endmacro %}
 
+{% macro render_basic_field(field) %}
+
+    <div class="form-group row">
+        <div class="col-lg-5">
+            {{ field.label(class='col-form-label font-weight-normal') }}
+        </div>
+        <div class="col-lg-7">
+            {{ field(class='form-control', **kwargs)|safe }}
+        </div>
+        {% if field.errors %}
+            <div class="-invalid-feedback">
+            {% for error in field.errors %}
+                {{ error }}<br>
+            {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+{% endmacro %}
+
+{% macro render_selectfield(field) %}
+
+    <div class="form-group row">
+        <div class="col-lg-5">
+            {{ field.label(class='col-form-label font-weight-bold') }}
+        </div>
+        <div class="col-lg-7 has-icon">
+            {{ field(class='form-control', **kwargs)|safe }}
+            <div class="form-icons select-icon"><div class="yellow-chevron">&nbsp;</div></div>
+        </div>
+        {% if field.errors %}
+            <div class="-invalid-feedback">
+            {% for error in field.errors %}
+                {{ error }}<br>
+            {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+{% endmacro %}
+
 {% macro render_submit(label) %}
 
     <div class="pull-right mt-4">
