@@ -6,3 +6,11 @@ TRADES_VALUES = [
     ("trade_4", "Trade 4"),
     ("trade_5", "Trade 5")
 ]
+
+TITLES = [
+    ("", "Select a title..."),
+    ("mr", "Mr"),
+    ("mrs", "Mrs"),
+    ("ms", "Ms"),
+    ("dr", "Dr")
+]
