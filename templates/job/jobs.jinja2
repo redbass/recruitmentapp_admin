@@ -10,7 +10,10 @@
                         <h1 class=" px-3 py-1 page-header mb-4">Job List</h1>
                     </div>
                     <div class="col-md-5">
-                        <a class="pull-right btn btn-black -orange mt-4" href="{{ url_for('create_job') }}"> Create Job</a>
+                        <a class="pull-right btn btn-yellow triangle-outter" href="{{ url_for('create_job') }}">
+                            Create Job
+                            <span class="triangle-inner"></span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -49,7 +52,13 @@
                                     <td>{{ advert.status  }}</td>
 
                                     <td class="table-action -first">
-                                        <a class="btn btn-black" href="{{ url_for('edit_job', job_id=job._id) }}">View or Edit details</a>
+                                       <a
+                                            class="btn btn-goto"
+                                           href="{{ url_for('edit_job', job_id=job._id) }}"
+                                        >
+                                            View or Edit details
+                                            <div class="chevron -yellow" style="right:7px;">&nbsp;</div>
+                                        </a>
                                     </td>
                                     <td class="table-action -delete" style="width:107px">
                                         <button type="button" class="btn btn-danger"  data-toggle="modal" data-target="#deleteModal{{ loop.index }}">Delete Job</button>
