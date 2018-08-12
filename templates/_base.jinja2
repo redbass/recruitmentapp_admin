@@ -25,9 +25,9 @@
                 <div class="col-md-10 ">
                     <div class="collapse navbar-collapse" id="siteNavbar">
                         <ul class="navbar-nav mr-auto navbar-left navigation">
-                            <li class="nav-item">
+                            <!--li class="nav-item">
                                 <a class="btn nav-link" href="{{ url_for('home') }}">Candidates</a>
-                            </li>
+                            </li-->
                             <li class="nav-item">
                                 <a class="btn nav-link" href="{{ url_for('companies') }}">Companies <span
                                         class="sr-only">(current)</span></a>
@@ -58,7 +58,7 @@
         </div>
     </nav>
     <main role="main">
-        <div class="container py-4">
+        <div class="p-4">
 
             {% with messages = get_flashed_messages() %}
                 {% if messages %}

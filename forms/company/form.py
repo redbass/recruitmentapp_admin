@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import validators as Validators, StringField, SelectMultipleField
+from wtforms import validators as Validators, StringField, SelectMultipleField, SelectField
 
-from forms import TRADES_VALUES
+from forms import TRADES_VALUES, TITLES
 from forms.widgets import LongStringField
 
 
@@ -14,12 +14,39 @@ class CompanyForm(FlaskForm):
         validators=[Validators.Length(min=1, max=25),
                     Validators.DataRequired()])
 
+    first_name = StringField(
+        'First name',
+        validators=[Validators.Length(min=1, max=25),
+                    Validators.DataRequired()])
+
+    surname = StringField(
+        'Surname',
+        validators=[Validators.Length(min=1, max=25),
+                    Validators.DataRequired()])
+
+    email = StringField(
+        'Email',
+        validators=[Validators.Length(min=1, max=25),
+                    Validators.DataRequired()])
+
+    mobile_number = StringField(
+        'Mobile number',
+        validators=[Validators.Length(min=1, max=25),
+                    Validators.DataRequired()])
+
+    office_number = StringField(
+        'Office number',
+        validators=[Validators.Length(min=1, max=25),
+                    Validators.DataRequired()])
+
     company_description = LongStringField(
         'Company Description',
         validators=[Validators.Length(min=1, max=2000),
                     Validators.DataRequired()])
 
     trades = SelectMultipleField('Trades', choices=TRADES_VALUES)
+
+    title = SelectField('Title', choices=TITLES)
 
     # company_logo = FileInput(lable='Company Logo')
 
