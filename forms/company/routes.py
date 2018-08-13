@@ -1,9 +1,9 @@
-from flask import request, render_template, redirect, url_for, flash
+from flask import request, render_template, redirect, url_for
 
 from forms.company.form import CompanyForm
 from lib.auth import login_required
-from lib.core_integration import post_json_to_core, APICallError, get_json_from_core
-from lib.exceptions import AuthenticationError
+from lib.core_integration import post_json_to_core, get_json_from_core
+from lib.errors import flash_exception
 
 
 @login_required
@@ -20,11 +20,11 @@ def create_company_post():
 
         try:
             data = form.create_company_core_from_form()
-            response = post_json_to_core('/api/company', json=data)
+            post_json_to_core('/api/company', json=data)
             return redirect(url_for('companies'))
 
-        except [APICallError, AuthenticationError] as e:
-            flash(str(e))
+        except Exception as e:
+            flash_exception(e)
 
     return render_template("company/create_company.jinja2", form=form)
 
@@ -50,10 +50,10 @@ def edit_company_post(company_id):
 
         try:
             data = form.create_company_core_from_form()
-            response = post_json_to_core('/api/company/' + company_id, json=data)
+            post_json_to_core('/api/company/' + company_id, json=data)
             return redirect(url_for('companies'))
 
-        except [APICallError, AuthenticationError] as e:
-            flash(str(e))
+        except Exception as e:
+            flash_exception(e)
 
     return render_template("company/edit_company.jinja2", form=form)

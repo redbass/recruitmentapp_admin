@@ -1,39 +1,15 @@
-{% macro render_field(field) %}
+{% macro render_field(field, bold_label=True) %}
+
+    {% set label_font_weight = 'bold' if bold_label else 'normal'  %}
 
     <div class="form-group row">
         <div class="col-lg-5">
-            {{ field.label(class='col-form-label font-weight-bold') }}
+            {{ field.label(class='col-form-label ont-weight-' + label_font_weight) }}
         </div>
         <div class="col-lg-7">
             {{ field(class='form-control', **kwargs)|safe }}
         </div>
-        {% if field.errors %}
-            <div class="-invalid-feedback">
-            {% for error in field.errors %}
-                {{ error }}<br>
-            {% endfor %}
-            </div>
-        {% endif %}
-    </div>
-
-{% endmacro %}
-
-{% macro render_basic_field(field) %}
-
-    <div class="form-group row">
-        <div class="col-lg-5">
-            {{ field.label(class='col-form-label font-weight-normal') }}
-        </div>
-        <div class="col-lg-7">
-            {{ field(class='form-control', **kwargs)|safe }}
-        </div>
-        {% if field.errors %}
-            <div class="-invalid-feedback">
-            {% for error in field.errors %}
-                {{ error }}<br>
-            {% endfor %}
-            </div>
-        {% endif %}
+        {{ _render_errors(field.errors) }}
     </div>
 
 {% endmacro %}
@@ -48,13 +24,7 @@
             {{ field(class='form-control', **kwargs)|safe }}
             <div class="form-icons select-icon"><div class="yellow-chevron">&nbsp;</div></div>
         </div>
-        {% if field.errors %}
-            <div class="-invalid-feedback">
-            {% for error in field.errors %}
-                {{ error }}<br>
-            {% endfor %}
-            </div>
-        {% endif %}
+        {{ _render_errors(field.errors) }}
     </div>
 
 {% endmacro %}
@@ -66,5 +36,17 @@
             {{ label }} <span class="triangle-inner"></span>
         </button>
     </div>
+
+{% endmacro %}
+
+{% macro _render_errors(errors) %}
+
+    {% if errors %}
+        <div class="-invalid-feedback">
+        {% for error in field.errors %}
+            {{ error }}<br>
+        {% endfor %}
+        </div>
+    {% endif %}
 
 {% endmacro %}

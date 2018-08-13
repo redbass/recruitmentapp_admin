@@ -1,5 +1,6 @@
 {% extends '_base.jinja2' %}
-{% from "_forms_helpers.jinja2" import render_field, render_basic_field, render_selectfield, render_submit %}
+{% from "_forms_helpers.jinja2" import render_submit %}
+{% from "company/_base.jinja2" import render_company_form_fields %}
 
 {% block body %}
     <div class="row">
@@ -15,32 +16,7 @@
         <div class="offset-lg-1 col-lg-10 col-xl-8">
             <form action="{{ url_for('create_company_post') }}" method="post">
 
-                {{ form.csrf_token() }}
-                {{ render_selectfield(form.title) }}
-                {{ render_field(form.first_name) }}
-                {{ render_field(form.surname) }}
-                {{ render_field(form.email) }}
-                {{ render_field(form.mobile_number) }}
-                {{ render_field(form.office_number) }}
-
-                {{ render_field(form.company_name) }}
-                {{ render_field(form.company_description, rows="5") }}
-                {{ render_selectfield(form.trades) }}
-{#                {{ render_field(form.company_logo) }}#}
-
-
-                    <div class="form-group row">
-                      <div class="col-lg-5">
-                        <label class="col-form-label font-weight-bold" for="address1">Company address</label>
-                      </div>
-                    </div>
-
-                {{ render_basic_field(form.address_number) }}
-                {{ render_basic_field(form.address_street) }}
-                {{ render_basic_field(form.address_town) }}
-                {{ render_basic_field(form.address_city) }}
-                {{ render_basic_field(form.address_postcode) }}
-                {{ render_field(form.company_vat) }}
+                {{ render_company_form_fields(form) }}
 
                 {{ render_submit("Create Company") }}
 

@@ -5,17 +5,13 @@ import requests
 from flask import session
 
 from config import settings
-from lib.exceptions import AuthenticationError
+from lib.exceptions import AuthenticationError, APICallError, APIValidationError
 
 API_URL_GET_ACCESS_TOKEN = '/token/auth'
 API_URL_REFRESH_ACCESS_TOKEN = '/token/refresh'
 COOKIE_MAX_AGE_delta = timedelta(minutes=60)
 SESSION_ACCESS_TOKEN = 'jwt-access'
 SESSION_REFRESH_TOKEN = 'jwt-refresh'
-
-
-class APICallError(Exception):
-    pass
 
 
 def request_access_jwt(username, password):
@@ -85,6 +81,9 @@ def _call_core_response(fn, url, **kwargs):
 
     if response.status_code == 401:
         raise AuthenticationError()
+
+    elif body.get('exception') == 'ValidationError':
+        raise APIValidationError(core_response_body=body)
 
     raise APICallError(body.get('message', 'Unhandled error'))
 
