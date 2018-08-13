@@ -9,79 +9,93 @@ class CompanyForm(FlaskForm):
     validators = [Validators.Length(min=1, max=25),
                   Validators.DataRequired()]
 
-    company_name = StringField(
+    name = StringField(
         'Company Name',
         validators=[Validators.Length(min=1, max=25),
                     Validators.DataRequired()])
 
-    first_name = StringField(
-        'First name',
-        validators=[Validators.Length(min=1, max=25),
-                    Validators.DataRequired()])
-
-    surname = StringField(
-        'Surname',
-        validators=[Validators.Length(min=1, max=25),
-                    Validators.DataRequired()])
-
-    email = StringField(
-        'Email',
-        validators=[Validators.Length(min=1, max=25),
-                    Validators.DataRequired()])
-
-    mobile_number = StringField(
-        'Mobile number',
-        validators=[Validators.Length(min=1, max=25),
-                    Validators.DataRequired()])
-
-    office_number = StringField(
-        'Office number',
-        validators=[Validators.Length(min=1, max=25),
-                    Validators.DataRequired()])
-
-    company_description = LongStringField(
+    description = LongStringField(
         'Company Description',
         validators=[Validators.Length(min=1, max=2000),
                     Validators.DataRequired()])
 
     trades = SelectMultipleField('Trades', choices=TRADES_VALUES)
 
-    title = SelectField('Title', choices=TITLES)
-
-    # company_logo = FileInput(lable='Company Logo')
-
-    address_number = StringField(
-        'House or flat name or number',
-        validators=[Validators.Length(min=1, max=100),
-                    Validators.DataRequired()])
-
-    address_street = StringField(
-        'Company Name',
-        validators=[Validators.Length(min=1, max=100),
-                    Validators.DataRequired()])
-
-    address_town = StringField(
-        'Street',
-        validators=[Validators.Length(min=1, max=100)])
-
-    address_city = StringField(
-        'City',
-        validators=[Validators.Length(min=1, max=100)])
-
-    address_postcode = StringField(
-        'Postcode',
-        validators=[Validators.Length(min=1, max=100)])
-
-    company_vat = StringField(
+    vat = StringField(
         'Company Vat Number',
         validators=[Validators.Length(min=1, max=100)])
 
+    address_number = StringField(
+        'House or flat name or number',
+        validators=[Validators.Length(min=1, max=25),
+                    Validators.DataRequired()])
+
+    address_street = StringField(
+        'Street',
+        validators=[Validators.Length(min=1, max=50),
+                    Validators.DataRequired()])
+
+    address_town = StringField(
+        'Town',
+        validators=[Validators.Length(min=1, max=25)])
+
+    address_city = StringField(
+        'City',
+        validators=[Validators.Length(min=1, max=50)])
+
+    address_postcode = StringField(
+        'Postcode',
+        validators=[Validators.Length(min=1, max=10)])
+
+    email = StringField(
+        'Email',
+        validators=[Validators.Length(min=1, max=25),
+                    Validators.DataRequired()])
+
+    phone_number = StringField(
+        'Phone number',
+        validators=[Validators.Length(min=1, max=25),
+                    Validators.DataRequired()])
+
+    # company_logo = FileInput(lable='Company Logo')
+
     def populate_form_from_core(self, company):
-        self.company_name.data = company.get('name', '')
-        self.company_description.data = company.get('description', '')
+
+        self.name.data = company.get('name', '')
+        self.description.data = company.get('description', '')
+        self.vat.data = company.get('vat', '')
+
+        metadata = company.get('metadata', {})
+        self.trades.data = metadata.get('trades', [])
+
+        contacts = company.get('contacts', {})
+        self.email.data = contacts.get('email')
+        self.phone_number.data = contacts.get('phone_number', '')
+
+        address = contacts.get('address', {})
+        self.address_number.data = address.get('number', '')
+        self.address_street.data = address.get('street', '')
+        self.address_city.data = address.get('city', '')
+        self.address_town.data = address.get('town', '')
+        self.address_postcode.data = address.get('postcode', '')
 
     def create_company_core_from_form(self):
         return {
-            'name': self.data.get('company_name'),
-            'description': self.data.get('company_description')
+            "name": self.data.get('name'),
+            "description": self.data.get('description'),
+            "vat": self.data.get('vat'),
+            "contacts": {
+                "address": {
+                    "number": self.data.get('address_number'),
+                    "street": self.data.get('address_street'),
+                    "city": self.data.get('address_city'),
+                    "town": self.data.get('address_town'),
+                    "postcode": self.data.get('address_postcode'),
+                },
+                "email": self.data.get('email'),
+                "phone_number": self.data.get('phone_number'),
+            },
+            "metadata":{
+                "trades": self.data.get('trades'),
+            }
         }
