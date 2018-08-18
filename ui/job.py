@@ -11,12 +11,6 @@ def jobs_view():
 
 
 @login_required
-def create_job():
-    companies = get_json_from_core('/api/company')
-    return render_template("job/create_job.jinja2", companies=companies)
-
-
-@login_required
 def create_job_post():
     
     data = {

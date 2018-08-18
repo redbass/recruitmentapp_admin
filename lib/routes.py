@@ -2,8 +2,9 @@ from forms.company.routes import create_company_view, create_company_post, edit_
 from lib.auth import login_view, login_post, logout_view
 from ui.advert import publish_advert_post
 from ui.home import home_page
-from ui.job import jobs_view, create_job, create_job_post, edit_job_view, \
+from ui.job import jobs_view, create_job_post, edit_job_view, \
     edit_job_post
+from forms.job.routes import create_job
 from ui.company import companies_view
 
 

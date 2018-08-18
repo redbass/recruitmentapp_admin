@@ -1,61 +1,59 @@
 from flask_wtf import FlaskForm
-from wtforms import validators as Validators, StringField, SelectMultipleField, SelectField
+from wtforms import validators, StringField, SelectMultipleField
 
-from forms import TRADES_VALUES, TITLES
+from forms import TRADES_VALUES
 from forms.widgets import LongStringField
 
 
 class CompanyForm(FlaskForm):
-    validators = [Validators.Length(min=1, max=25),
-                  Validators.DataRequired()]
 
     name = StringField(
         'Company Name',
-        validators=[Validators.Length(min=1, max=25),
-                    Validators.DataRequired()])
+        validators=[validators.Length(min=1, max=25),
+                    validators.DataRequired()])
 
     description = LongStringField(
         'Company Description',
-        validators=[Validators.Length(min=1, max=2000),
-                    Validators.DataRequired()])
+        validators=[validators.Length(min=1, max=2000),
+                    validators.DataRequired()])
 
     trades = SelectMultipleField('Trades', choices=TRADES_VALUES)
 
     vat = StringField(
         'Company Vat Number',
-        validators=[Validators.Length(min=1, max=100)])
+        validators=[validators.Length(min=1, max=100)])
 
     address_number = StringField(
         'House or flat name or number',
-        validators=[Validators.Length(min=1, max=25),
-                    Validators.DataRequired()])
+        validators=[validators.Length(min=1, max=25),
+                    validators.DataRequired()])
 
     address_street = StringField(
         'Street',
-        validators=[Validators.Length(min=1, max=50),
-                    Validators.DataRequired()])
+        validators=[validators.Length(min=1, max=50),
+                    validators.DataRequired()])
 
     address_town = StringField(
         'Town',
-        validators=[Validators.Length(min=1, max=25)])
+        validators=[validators.Length(min=1, max=25)])
 
     address_city = StringField(
         'City',
-        validators=[Validators.Length(min=1, max=50)])
+        validators=[validators.Length(min=1, max=50)])
 
     address_postcode = StringField(
         'Postcode',
-        validators=[Validators.Length(min=1, max=10)])
+        validators=[validators.Length(min=1, max=10)])
 
     email = StringField(
         'Email',
-        validators=[Validators.Length(min=1, max=25),
-                    Validators.DataRequired()])
+        validators=[validators.Length(min=1, max=25),
+                    validators.DataRequired()])
 
     phone_number = StringField(
         'Phone number',
-        validators=[Validators.Length(min=1, max=25),
-                    Validators.DataRequired()])
+        validators=[validators.Length(min=1, max=25),
+                    validators.DataRequired()])
 
     # company_logo = FileInput(lable='Company Logo')
 
