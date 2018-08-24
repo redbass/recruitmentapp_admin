@@ -1,0 +1,74 @@
+{% extends 'job/_job.jinja2' %}
+{% import 'job/edit_advert.jinja2' as advert_macro%}
+
+{% block body %}
+
+<div class="row">
+    <div class="col offset-1">
+        <div class="row">
+            <div class="col-md-7">
+                <h1 class=" px-3 py-1 page-header mb-4">Edit Job</h1>
+            </div>
+        </div>
+    </div>
+  </div>
+    <div class="row mt-4">
+        <div class="offset-lg-1 col-lg-10 col-xl-8">
+
+
+        <form action="{{ url_for('edit_job_post', job_id=job._id) }}" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <div class="form-group">
+                <label for="name">Company</label>
+                <input type="text" class="form-control" name="title" value="{{ company.name }}" disabled>
+            </div>
+            <div class="form-group">
+                <label for="name">Title</label>
+                <input type="text" class="form-control" name="title" value="{{ job.title }}">
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" class="form-control" name="description" value="{{ job.description }}">
+            </div>
+
+            <div class="row">
+                <div class="col-5">
+                    <div id="mapid" style="height: 300px"></div>
+                </div>
+                <div class="col-7">
+
+                    {% with latlng = job.location.coordinates %}
+                        <div class="form-group">
+                            <label for="description" readonly>Latitude</label>
+                            <input type="text" class="form-control" name="latitude" id="latitude"
+                                   value="{{ latlng[1] }}">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="description" readonly>Longitude</label>
+                            <input type="text" class="form-control" name="longitude" id="longitude"
+                                   value="{{ latlng[0] }}">
+                        </div>
+                    {% endwith %}
+
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary pull-right">Save changes</button>
+
+        </form>
+
+        <h3>Advert</h3>
+
+        {% if job.adverts[0].status == 'DRAFT' %}
+            {{ advert_macro.display_draft_advert(job_id=job._id, advert=job.adverts[0]) }}
+        {% elif job.adverts[0].status == 'PUBLISHED'%}
+            {{ advert_macro.display_published_advert() }}
+        {% endif %}
+
+        </div>
+    </div>
+
+
+{% endblock body %}

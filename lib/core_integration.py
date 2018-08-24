@@ -53,16 +53,23 @@ def _retry_if_token_expired(fn):
 
 
 @_retry_if_token_expired
-def get_json_from_core(path: str):
-    url = settings.CORE_APP_ADMIN_URL + path
+def get_json_from_core(path: str,
+                       is_admin: bool = True):
+    url = _get_api_url(is_admin, path)
     return _call_core_response(requests.get, url)
 
 
 @_retry_if_token_expired
 def post_json_to_core(path: str,
-                      json: dict = None):
-    url = settings.CORE_APP_ADMIN_URL + path
+                      json: dict = None,
+                      is_admin: bool = True):
+    url = _get_api_url(is_admin, path)
     return _call_core_response(requests.post, url, json=json)
+
+
+def _get_api_url(is_admin, path):
+    url = settings.CORE_APP_ADMIN_URL if is_admin else settings.CORE_APP_URL
+    return url + path
 
 
 def _call_core_response(fn, url, **kwargs):
