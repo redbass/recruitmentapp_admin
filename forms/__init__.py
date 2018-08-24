@@ -14,3 +14,12 @@ TITLES = [
     ("ms", "Ms"),
     ("dr", "Dr")
 ]
+
+DURATIONS = [
+    ("", "Select a duration..."),
+    (7, "1 week"),
+    (14, "2 weeks"),
+    (21, "3 weeks"),
+    (28, "4 weeks"),
+    (35, "5 weeks")
+]

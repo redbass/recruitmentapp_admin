@@ -14,6 +14,27 @@
 
 {% endmacro %}
 
+{% macro render_search_field(field, on_click, search_label='Search') %}
+
+    <div class="form-group row">
+        <div class="col-lg-5">
+            {{ field.label(class='col-form-label font-weight-bold') }}
+        </div>
+        <div class="col-lg-5">
+            {{ field(class='form-control', **kwargs)|safe }}
+        </div>
+        <div class="col-lg-2">
+             <a  class="btn btn-yellow triangle-outter"
+                     onclick="{{ on_click }}">
+                {{ search_label }}
+             </a>
+            <span class="triangle-inner"></span>
+        </div>
+        {{ _render_errors(field.errors) }}
+    </div>
+
+{% endmacro %}
+
 {% macro render_selectfield(field) %}
 
     <div class="form-group row">
@@ -43,7 +64,7 @@
 
     {% if errors %}
         <div class="-invalid-feedback">
-        {% for error in field.errors %}
+        {% for error in errors %}
             {{ error }}<br>
         {% endfor %}
         </div>

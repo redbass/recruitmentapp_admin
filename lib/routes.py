@@ -1,21 +1,21 @@
 from forms.company.routes import create_company_view, create_company_post, edit_company_view, edit_company_post
 from lib.auth import login_view, login_post, logout_view
+from lib.services import get_postcode
 from ui.advert import publish_advert_post
 from ui.home import home_page
-from ui.job import jobs_view, create_job_post, edit_job_view, \
+from ui.job import jobs_view, edit_job_view, \
     edit_job_post
-from forms.job.routes import create_job
+from forms.job.routes import create_job, create_job_post
 from ui.company import companies_view
 
 
-
 def add_routes(app):
-
     app.add_url_rule('/', 'home', home_page, methods=['GET'])
     _add_login_routes(app)
     _add_job_routes(app)
     _add_advert_routes(app)
     _add_company_routes(app)
+    _add_services_routes(app)
 
 
 def _add_login_routes(app):
@@ -62,3 +62,7 @@ def _add_company_routes(app):
     app.add_url_rule('/companies/<company_id>', 'edit_company_post',
                      edit_company_post, methods=['POST'])
 
+
+def _add_services_routes(app):
+    app.add_url_rule('/postcode/<postcode>', 'postcode',
+                     get_postcode, methods=['GET'])
