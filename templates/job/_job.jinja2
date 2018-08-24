@@ -48,6 +48,21 @@
             createMarker(initalMarkerLatLng)
         }
 
+        function get_location_from_postcode() {
+            var postcode = $('#postcode').val();
+
+            $.get('/postcode/' + postcode).done(
+                function (response) {
+                    var latitude = response.latitude;
+                    var longitude = response.longitude;
+                    $('#latitude').val(response.latitude);
+                    $('#longitude').val(response.longitude);
+                    latLng = new L.LatLng(response.latitude, response.longitude);
+                    createMarker(latLng)
+                }
+            );
+        }
+
     </script>
 
 {% endblock %}

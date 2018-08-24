@@ -7,31 +7,8 @@ from lib.core_integration import get_json_from_core, post_json_to_core
 @login_required
 def jobs_view():
     jobs = get_json_from_core('/api/job')
+
     return render_template("job/jobs.jinja2", jobs=jobs)
-
-
-@login_required
-def create_job_post():
-    
-    data = {
-        "company_id": request.form.get('company_id'),
-        "title": request.form.get('title'),
-        "description": request.form.get('description'),
-        "location": {
-            "lat": request.form.get('latitude'),
-            "lng": request.form.get('longitude')
-        }
-    }
-
-    new_job = post_json_to_core('/api/job', json=data)
-
-    data = {'duration': request.form.get('duration')}
-    job_id = new_job['_id']
-
-    result = post_json_to_core('/api/job/{job_id}/advert'
-                               .format(job_id=job_id), json=data)
-
-    return redirect(url_for('edit_job', job_id=job_id))
 
 
 @login_required

@@ -1,33 +1,35 @@
-{% from "_forms_helpers.jinja2" import render_field, render_submit, render_selectfield %}
+{% from "_forms_helpers.jinja2" import render_field, render_submit, render_selectfield, render_search_field %}
 
 {% macro render_jobs_form_fields(form, submit_label) %}
 
     {{ form.csrf_token() }}
 
-    {{ render_selectfield(form.company_name) }}
-    {{ render_field(form.name) }}
+    {{ render_selectfield(form.company_id) }}
+    {{ render_field(form.title) }}
     {{ render_field(form.description, rows="5") }}
 
-{##}
-{#    <div class="form-group row">#}
-{#        <div class="col-lg-5">#}
-{#            <label class="col-form-label font-weight-bold" for="address1">Select a Location</label>#}
-{#        </div>#}
-{#    </div>#}
-{##}
-{#    <div class="row">#}
-{#        <div class="col-5">#}
-{#            <div id="mapid" style="height: 300px"></div>#}
-{#        </div>#}
-{##}
-{#        {{ render_field(form.latitude) }}#}
-{#        {{ render_field(form.longitude) }}#}
-{#    </div>#}
-{##}
-{#    {{ advert_macro.add_advert() }}#}
-
-
+    {{ get_location__by_postcode(form) }}
+    <br>
+    <br>
+    {{ render_selectfield(form.duration) }}
 
     {{ render_submit(submit_label) }}
 
 {% endmacro %}
+
+
+{% macro get_location__by_postcode(form) %}
+
+    {{ render_search_field(form.postcode, on_click='get_location_from_postcode()') }}
+
+    <div class="row">
+        <div class="col-5"></div>
+        <div class="col-7">
+            <div id="mapid" style="height: 300px"></div>
+        </div>
+        {{ form.latitude() }}
+        {{ form.longitude() }}
+    </div>
+
+{% endmacro %}
+
