@@ -55,7 +55,20 @@ class JobForm(FlaskForm):
     )
 
     def populate_form_from_core(self, company):
-        pass
+        self.company_id.data = company.get('company_id', '')
+        self.title.data = company.get('title', '')
+        self.description.data = company.get('description', '')
+        # self.postcode.data = company.get('postcode', '')
+
+
+        location = company.get('location', {})
+        coordinates = location.get('coordinates', {})
+        self.latitude.data = coordinates[1]
+        self.longitude.data = coordinates[0]
+
+        adverts = company.get('adverts', [])
+        if adverts:
+            self.duration.data = adverts[0].get('duration', '')
 
     def create_job_core_from_form(self):
         job = {
