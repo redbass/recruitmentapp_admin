@@ -3,9 +3,8 @@ from lib.auth import login_view, login_post, logout_view
 from lib.services import get_postcode
 from ui.advert import publish_advert_post
 from ui.home import home_page
-from ui.job import jobs_view, edit_job_view, \
-    edit_job_post
-from forms.job.routes import create_job, create_job_post
+from ui.job import jobs_view
+from forms.job.routes import create_job, create_job_post, edit_job_view, edit_job_post
 from ui.company import companies_view
 
 
