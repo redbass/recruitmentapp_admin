@@ -17,12 +17,7 @@ def company_choices_fn():
     return choices
 
 
-class JobForm(FlaskForm):
-
-    company_id = SelectFieldAsync(
-        'Company Name',
-        choices_fn=company_choices_fn
-    )
+class JobBaseForm(FlaskForm):
 
     title = StringField(
         'Job Title',
@@ -47,6 +42,55 @@ class JobForm(FlaskForm):
         validators=[validators.DataRequired()],
         widget=HiddenInput())
 
+    def populate_form_from_core(self, company):
+        self.company_id.data = company.get('company_id', '')
+        self.title.data = company.get('title', '')
+        self.description.data = company.get('description', '')
+
+        location = company.get('location', {})
+        self.postcode.data = location.get('postcode', '')
+
+        coordinates = location.get('geo_location', {}).get('coordinates', [])
+        self.latitude.data = coordinates[1]
+        self.longitude.data = coordinates[0]
+
+    def create_job_core_from_form(self):
+        job = {
+            "title": self.data.get('title'),
+            "description": self.data.get('description'),
+            "location": {
+                "postcode": self.data.get('postcode'),
+                "latitude": float(self.data.get('latitude')),
+                "longitude": float(self.data.get('longitude'))
+            }
+        }
+
+        job_not_implemented_fields = {
+            "duration_days": 28,
+            "metadata": {
+                "trades": ["software_engineer"],
+                "job_type": "developer"
+            },
+            "rate": {
+                "type": "other",
+                "units": "lines of code",
+                "value": 0.1
+            }
+        }
+
+        job.update(job_not_implemented_fields)
+
+        return job
+
+
+class JobCreateForm(JobBaseForm):
+
+    company_id = SelectFieldAsync(
+        'Company Name',
+        choices_fn=company_choices_fn,
+        validators=[validators.DataRequired()]
+    )
+
     duration = SelectField(
         'Duration',
         choices=DURATIONS,
@@ -55,34 +99,24 @@ class JobForm(FlaskForm):
     )
 
     def populate_form_from_core(self, company):
-        self.company_id.data = company.get('company_id', '')
-        self.title.data = company.get('title', '')
-        self.description.data = company.get('description', '')
-        # self.postcode.data = company.get('postcode', '')
-
-
-        location = company.get('location', {})
-        coordinates = location.get('coordinates', {})
-        self.latitude.data = coordinates[1]
-        self.longitude.data = coordinates[0]
+        super().populate_form_from_core(company)
 
         adverts = company.get('adverts', [])
         if adverts:
             self.duration.data = adverts[0].get('duration', '')
 
     def create_job_core_from_form(self):
-        job = {
-            "company_id": self.data.get('company_id'),
-            "title": self.data.get('title'),
-            "description": self.data.get('description'),
-            "location": {
-                "lat": float(self.data.get('latitude')),
-                "lng": float(self.data.get('longitude'))
-            }
-        }
+        job = super().create_job_core_from_form()
+
+        job['company_id'] = self.data.get('company_id')
 
         advert = {
             'duration': self.data.get('duration')
         }
 
         return job, advert
+
+
+class JobEditForm(JobBaseForm):
+
+    pass

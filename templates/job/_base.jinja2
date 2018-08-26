@@ -5,7 +5,10 @@
 
     {{ form.csrf_token() }}
 
-    {{ render_selectfield(form.company_id, disabled=form_type=='edit') }}
+    {% if form_type=='create' %}
+        {{ render_selectfield(form.company_id) }}
+    {% endif %}
+
     {{ render_field(form.title) }}
     {{ render_field(form.description, rows="5") }}
 

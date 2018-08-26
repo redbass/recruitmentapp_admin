@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for
 
-from forms.job.form import JobForm
+from forms.job.form import JobCreateForm, JobEditForm
 from lib.auth import login_required
 from lib.core_integration import post_json_to_core, get_json_from_core
 from lib.errors import flash_exception
@@ -8,14 +8,14 @@ from lib.errors import flash_exception
 
 @login_required
 def create_job(form=None):
-    form = form or JobForm(request.form)
+    form = form or JobCreateForm(request.form)
 
     return render_template("job/create_job.jinja2", form=form)
 
 
 @login_required
 def create_job_post():
-    form = JobForm(request.form)
+    form = JobCreateForm(request.form)
 
     if form.validate_on_submit():
 
@@ -36,11 +36,11 @@ def create_job_post():
 
 
 @login_required
-def edit_job_view(job_id):
+def edit_job_view(job_id, form=None):
     job = get_json_from_core('/api/job/' + job_id)
     adverts = job.get('adverts', [None])
 
-    form = JobForm(request.form)
+    form = JobCreateForm(form or request.form)
 
     form.populate_form_from_core(job)
 
@@ -51,15 +51,17 @@ def edit_job_view(job_id):
 @login_required
 def edit_job_post(job_id):
 
-    data = {
-        "title": request.form.get('title'),
-        "description": request.form.get('description'),
-        "location": {
-            "lat": request.form.get('latitude'),
-            "lng": request.form.get('longitude')
-        }
-    }
+    form = JobEditForm(request.form)
 
-    post_json_to_core('/api/job/' + job_id, json=data)
+    if form.validate_on_submit():
 
-    return redirect(url_for('jobs'))
+        try:
+            job = form.create_job_core_from_form()
+            post_json_to_core('/api/job/' + job_id, json=job)
+
+            return redirect(url_for('jobs'))
+
+        except Exception as e:
+            flash_exception(e)
+
+    return edit_job_view(job_id, form)
