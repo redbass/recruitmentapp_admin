@@ -65,3 +65,14 @@ def edit_job_post(job_id):
             flash_exception(e)
 
     return edit_job_view(job_id, form)
+
+
+@login_required
+def set_advert_status(job_id: str, advert_id: str, action: str):
+    data = {'duration': request.form.get('duration')}
+    publish_url = '/api/job/{job_id}/advert/{advert_id}/{action}'\
+        .format(job_id=job_id, advert_id=advert_id, action=action)
+
+    post_json_to_core(publish_url, json=data)
+
+    return redirect(url_for('edit_job', job_id=job_id))
