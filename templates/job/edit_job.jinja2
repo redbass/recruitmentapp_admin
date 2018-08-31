@@ -27,8 +27,10 @@
 
             {% if advert['status'] == 'DRAFT' %}
                 {{ display_draft_advert(job_id=job_id, advert=advert) }}
+            {% elif advert['status'] == 'APPROVED'%}
+                {{ display_approved_advert(job_id, advert) }}
             {% elif advert['status'] == 'PUBLISHED'%}
-                {{ display_published_advert() }}
+                {{ display_published_advert(job_id, advert) }}
             {% endif %}
         </div>
     </div>
