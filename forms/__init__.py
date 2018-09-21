@@ -9,10 +9,10 @@ TRADES_VALUES = [
 
 TITLES = [
     ("", "Select a title..."),
-    ("mr", "Mr"),
-    ("mrs", "Mrs"),
-    ("ms", "Ms"),
-    ("dr", "Dr")
+    ("Mr", "Mr"),
+    ("Mrs", "Mrs"),
+    ("Ms", "Ms"),
+    ("Dr", "Dr")
 ]
 
 DURATIONS = [
