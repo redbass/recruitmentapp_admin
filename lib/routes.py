@@ -1,5 +1,6 @@
 from forms.company.routes import create_company_view, create_company_post, \
     edit_company_view, edit_company_post
+from forms.company.sign_company import sign_in_company, sign_in_company_post
 from lib.auth import login_view, login_post, logout_view
 from lib.services import get_postcode
 from ui.home import home_page
@@ -61,6 +62,12 @@ def _add_company_routes(app):
                      edit_company_view, methods=['GET'])
     app.add_url_rule('/companies/<company_id>', 'edit_company_post',
                      edit_company_post, methods=['POST'])
+
+    app.add_url_rule('/companies/sign_in', 'sign_in_company',
+                     sign_in_company, methods=['GET'])
+
+    app.add_url_rule('/companies/sign_in', 'sign_in_company_post',
+                     sign_in_company_post, methods=['POST'])
 
 
 def _add_services_routes(app):

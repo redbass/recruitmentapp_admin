@@ -14,7 +14,7 @@ class CompanyForm(FlaskForm):
 
     description = LongStringField(
         'Company Description',
-        validators=[validators.Length(min=1, max=2000),
+        validators=[validators.Length(min=1, max=500),
                     validators.DataRequired()])
 
     trades = SelectMultipleField('Trades', choices=TRADES_VALUES)
