@@ -7,7 +7,7 @@ from lib.exceptions import AuthenticationError
 from lib.core_integration import request_access_jwt
 
 SESSION_IS_LOGGED_IN = 'logged_in'
-SESSION_USERNAME = 'username'
+SESSION_USER = 'user'
 
 
 def login_view():
@@ -21,12 +21,13 @@ def login_post():
     password = request.form['password']
 
     try:
-        request_access_jwt(username, password)
+        respone = request_access_jwt(username, password)
+        user = respone.json()
     except AuthenticationError as e:
         flash(str(e))
         return login_view()
 
-    log_in()
+    log_in(user.get('username'), user.get('role'))
 
     return redirect(url_for('home'), code=302)
 
@@ -37,8 +38,16 @@ def logout_view():
     return login_view()
 
 
-def log_in():
+def log_in(username, role):
     session[SESSION_IS_LOGGED_IN] = True
+    session[SESSION_USER] = {
+        "username": username,
+        'role': role
+    }
+
+
+def get_logged_user():
+    return session[SESSION_USER]
 
 
 def log_out():

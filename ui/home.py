@@ -5,4 +5,4 @@ from lib.auth import login_required
 
 @login_required
 def home_page():
-    return render_template("index.jinja2")
+    return render_template("home.jinja2")

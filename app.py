@@ -2,7 +2,7 @@ from flask import Flask
 from flask_wtf import CSRFProtect
 
 from config import settings
-from lib.filters import register_filters
+from lib.jinja_utils import register_filters, register_variables
 from lib.routes import add_routes
 
 _app = None
@@ -19,6 +19,7 @@ def get_app(*args, **kwarg) -> Flask:
         )
         add_routes(_app)
         register_filters(_app)
+        register_variables(_app)
 
         if settings.DEBUG_MODE:
             _app.jinja_env.auto_reload = True
