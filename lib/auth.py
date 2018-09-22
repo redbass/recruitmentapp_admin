@@ -47,7 +47,7 @@ def log_in(username, role):
 
 
 def get_logged_user():
-    return session[SESSION_USER]
+    return session.get(SESSION_USER, {})
 
 
 def log_out():
