@@ -1,8 +1,8 @@
 from flask import request, render_template
 
 from lib import template_list
-from forms.hiring_manager.company_form import HMCompanyForm
-from forms.hiring_manager.job_form import HMJobCreateForm
+from routes.hiring_manager.company_form import HMCompanyForm
+from routes.hiring_manager.job_form import HMJobCreateForm
 from lib.auth import login_required, get_logged_user
 from lib.core_integration import get_json_from_core
 

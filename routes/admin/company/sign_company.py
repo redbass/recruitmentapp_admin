@@ -3,7 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, validators, SelectField, PasswordField
 
 from lib import template_list
-from forms import TITLES
+from routes import TITLES
 from lib.auth import login_required
 from lib.core_integration import post_json_to_core
 from lib.errors import flash_exception

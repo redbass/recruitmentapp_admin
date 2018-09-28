@@ -1,7 +1,7 @@
-from forms.company.routes import create_company_view, create_company_post, \
+from routes.admin.company.routes import create_company_view, create_company_post, \
     edit_company_view, edit_company_post, companies_view
-from forms.company.sign_company import sign_in_company, sign_in_company_post
-from forms.job.routes import create_job, create_job_post, edit_job_view, \
+from routes.admin.company.sign_company import sign_in_company, sign_in_company_post
+from routes.admin.job.routes import create_job, create_job_post, edit_job_view, \
     edit_job_post, set_advert_status, jobs_view
 
 ADMIN_JOBS = '/admin/jobs'

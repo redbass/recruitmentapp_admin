@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import validators, StringField, SelectMultipleField
 
-from forms import TRADES_VALUES
-from forms.widgets import LongStringField
+from routes import TRADES_VALUES
+from lib.widgets import LongStringField
 
 
 class CompanyForm(FlaskForm):

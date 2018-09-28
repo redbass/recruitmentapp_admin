@@ -2,7 +2,8 @@ HR_COMPANY = '/hr/company'
 HR_COMPANY_JOBS = '/hr/company/jobs'
 HR_COMPANY_JOB = '/hr/company/job'
 
-from forms.hiring_manager.routes import company_jobs, company_info, \
+
+from routes.hiring_manager.routes import company_jobs, company_info, \
     create_company_job
 
 

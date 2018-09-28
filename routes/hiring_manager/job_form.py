@@ -1,4 +1,4 @@
-from forms.job.form import JobCreateForm
+from routes.admin.job.form import JobCreateForm
 
 
 class HMJobCreateForm(JobCreateForm):
