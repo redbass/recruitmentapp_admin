@@ -10,6 +10,8 @@ from lib.core_integration import request_access_jwt
 SESSION_IS_LOGGED_IN = 'logged_in'
 SESSION_USER = 'user'
 
+ADMIN_ROLE = 'ADMIN'
+HR_ROLE = 'HIRING_MANAGER'
 
 def login_view():
     messages = get_flashed_messages()
@@ -54,19 +56,27 @@ def get_logged_user():
 
 def log_out():
     session[SESSION_IS_LOGGED_IN] = False
+    session[SESSION_USER] = {}
 
 
-def is_logged_in():
+def is_logged_in(role=None):
+    if role and session[SESSION_USER]['role'] != role:
+        raise AuthenticationError()
+
     return session.get(SESSION_IS_LOGGED_IN, False)
 
 
-def login_required(fn):
+def login_required(role=None):
 
-    @wraps(fn)
-    def wrapper(*args, **kwargs):
-        if is_logged_in():
-            return fn(*args, **kwargs)
+    def decorator(fn):
 
-        return redirect(url_for('login_view'), code=302)
+        @wraps(fn)
+        def wrapper(*args, **kwargs):
+            if is_logged_in(role):
+                return fn(*args, **kwargs)
 
-    return wrapper
+            return redirect(url_for('login_view'), code=302)
+
+        return wrapper
+
+    return decorator

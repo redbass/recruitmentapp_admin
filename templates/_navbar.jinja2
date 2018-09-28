@@ -8,6 +8,7 @@
         <div class="col-md-10 ">
             <div class="collapse navbar-collapse" id="siteNavbar">
                 <ul class="navbar-nav mr-auto navbar-left navigation">
+
                     <li class="nav-item">
                         <a class="btn nav-link" href="{{ url_for('home') }}">Home</a>
                     </li>
@@ -22,9 +23,10 @@
                     {% endif %}
                 </ul>
                 <div class="navbar-right profile">
-                <span class="d-block">
-                    Logged in as: <span class="font-weight-bold">{{ user_info['username'] }}</span>
-                </span>
+                    {% if user_info %}
+                    <span class="d-block">
+                        Logged in as: <span class="font-weight-bold">{{ user_info['username'] }}</span>
+                    </span>
                     <div class="btn-toolbar mt-3 float-right" role="toolbar"
                          aria-label="Toolbar with button groups">
                         <div class="btn-group mr-3 mb-2" role="group" aria-label="First group">
@@ -34,6 +36,7 @@
                             </a>
                         </div>
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

@@ -2,6 +2,7 @@
 SIGN_IN_COMPANY = "company/sign_in_company.jinja2"
 HOME = "home.jinja2"
 LOGIN = "login.jinja2"
+ERROR = "errpr.jinja"
 
 
 # COMMON

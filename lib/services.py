@@ -4,7 +4,7 @@ from lib.auth import login_required
 from lib.core_integration import get_json_from_core
 
 
-@login_required
+@login_required('ADMIN')
 def get_postcode(postcode):
 
     url = '/api/postcode/' + postcode
