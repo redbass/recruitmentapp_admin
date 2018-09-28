@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import validators, StringField, SelectMultipleField
 
-from routes import TRADES_VALUES
+from lib.enums import TRADES_VALUES
 from lib.widgets import LongStringField
 
 

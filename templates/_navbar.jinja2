@@ -1,0 +1,46 @@
+{% macro render_navbar(field, user_info=None) %}
+    <div class="row">
+        <div class="col-md-2 brand">
+            <a href="{{ url_for('home') }}"><img
+                    src="https://findastart.palmerminto.com/wp-content/uploads/2018/06/cropped-Find-a-Start-logo@2x.png"/><span
+                    class="sr-only">Find a Start dashboard</span></a>
+        </div>
+        <div class="col-md-10 ">
+            <div class="collapse navbar-collapse" id="siteNavbar">
+                <ul class="navbar-nav mr-auto navbar-left navigation">
+                    <li class="nav-item">
+                        <a class="btn nav-link" href="{{ url_for('home') }}">Home</a>
+                    </li>
+                    {% if user_info['role'] == 'ADMIN'  %}
+                        <li class="nav-item">
+                            <a class="btn nav-link" href="{{ url_for('companies') }}">Companies <span
+                                    class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn nav-link" href="{{ url_for('jobs') }}">Jobs</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                <div class="navbar-right profile">
+                <span class="d-block">
+                    Logged in as: <span class="font-weight-bold">{{ user_info['username'] }}</span>
+                </span>
+                    <div class="btn-toolbar mt-3 float-right" role="toolbar"
+                         aria-label="Toolbar with button groups">
+                        <div class="btn-group mr-3 mb-2" role="group" aria-label="First group">
+                            <a class="btn btn-goto -orange" href="{{ url_for('logout') }}" role="button">
+                                Logout
+                                <div class="chevron -yellow">&nbsp;</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#siteNavbar"
+            aria-controls="siteNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+{% endmacro %}
