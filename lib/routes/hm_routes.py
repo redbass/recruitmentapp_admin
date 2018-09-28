@@ -2,7 +2,8 @@ HR_COMPANY = '/hr/company'
 HR_COMPANY_JOBS = '/hr/company/jobs'
 HR_COMPANY_JOB = '/hr/company/job'
 
-from forms.hm_company.routes import company_info, company_jobs, create_company_job
+from forms.hiring_manager.routes import company_jobs, company_info, \
+    create_company_job
 
 
 def add_hm_routes(app):
@@ -14,4 +15,3 @@ def add_hm_routes(app):
 
     app.add_url_rule(HR_COMPANY_JOB, 'hr_create_company_job',
                      create_company_job, methods=['GET'])
-    pass

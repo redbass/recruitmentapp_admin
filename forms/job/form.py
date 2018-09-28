@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, validators, SelectField, DecimalField, HiddenField
+from wtforms import StringField, validators, SelectField, DecimalField
 from wtforms.widgets import HiddenInput
 
 from forms import DURATIONS

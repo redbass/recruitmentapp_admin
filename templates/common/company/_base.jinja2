@@ -1,0 +1,37 @@
+{% from "_forms_helpers.jinja2" import render_field, render_selectfield, render_submit %}
+
+{% macro render_company_form_fields(form, submit_label) %}
+    {{ form.csrf_token() }}
+
+    {{ render_field(form.name) }}
+    {{ render_field(form.description, rows="5") }}
+    {{ render_selectfield(form.trades) }}
+    {{ render_field(form.vat) }}
+
+{#    {{ render_field(form.company_logo) }}  #}
+
+    <div class="form-group row">
+      <div class="col-lg-5">
+        <label class="col-form-label font-weight-bold" for="address1">Company address</label>
+      </div>
+    </div>
+
+    {{ render_field(form.address_number, bold_label=False) }}
+    {{ render_field(form.address_street, bold_label=False) }}
+    {{ render_field(form.address_town, bold_label=False) }}
+    {{ render_field(form.address_city, bold_label=False) }}
+    {{ render_field(form.address_postcode, bold_label=False) }}
+
+    <div class="form-group row">
+      <div class="col-lg-5">
+        <label class="col-form-label font-weight-bold" for="address1">Company contacts</label>
+      </div>
+    </div>
+
+    {{ render_field(form.email, bold_label=False) }}
+    {{ render_field(form.phone_number, bold_label=False) }}
+
+
+    {{ render_submit(submit_label) }}
+
+{% endmacro %}

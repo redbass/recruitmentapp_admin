@@ -1,4 +1,4 @@
-{% extends 'job/_base.jinja2' %}
+{% extends 'common/job/_base.jinja2' %}
 {% from "_forms_helpers.jinja2" import render_submit %}
 
 {% block body %}
@@ -18,7 +18,7 @@
 
                 {{ render_jobs_form_fields(
                     form,
-                    form_type='create') }}
+                    form_type=form_type) }}
 
             </form>
         </div>
