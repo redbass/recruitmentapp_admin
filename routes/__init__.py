@@ -1,25 +1,22 @@
-TRADES_VALUES = [
-    ("", "Select a trade..."),
-    ("trade_1", "Trade 1"),
-    ("trade_2", "Trade 2"),
-    ("trade_3", "Trade 3"),
-    ("trade_4", "Trade 4"),
-    ("trade_5", "Trade 5")
-]
+from lib.auth import login_view, login_post, logout_view
+from routes.admin_routes import add_admin_routes
+from routes.hm_routes import add_hm_routes
+from routes.home import home_page
+from routes.services_routes import add_services_routes
 
-TITLES = [
-    ("", "Select a title..."),
-    ("Mr", "Mr"),
-    ("Mrs", "Mrs"),
-    ("Ms", "Ms"),
-    ("Dr", "Dr")
-]
 
-DURATIONS = [
-    ("", "Select a duration..."),
-    (7, "1 week"),
-    (14, "2 weeks"),
-    (21, "3 weeks"),
-    (28, "4 weeks"),
-    (35, "5 weeks")
-]
+def add_routes(app):
+    _add_base_routes(app)
+
+    add_services_routes(app)
+    add_admin_routes(app)
+    add_hm_routes(app)
+
+
+def _add_base_routes(app):
+
+    app.add_url_rule('/', 'home', home_page, methods=['GET'])
+
+    app.add_url_rule('/login', 'login_view', login_view, methods=['GET'])
+    app.add_url_rule('/login', 'login_post', login_post, methods=['POST'])
+    app.add_url_rule('/logout', 'logout', logout_view, methods=['GET'])

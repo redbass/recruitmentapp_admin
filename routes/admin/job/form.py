@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, validators, SelectField, DecimalField
 from wtforms.widgets import HiddenInput
 
-from routes import DURATIONS
+from lib.enums import DURATIONS
 from lib.widgets import SelectFieldAsync, LongStringField
 from lib.core_integration import get_json_from_core
 

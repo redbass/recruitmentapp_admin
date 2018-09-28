@@ -3,7 +3,7 @@ from flask_wtf import CSRFProtect
 
 from config import settings
 from lib.jinja_utils import register_filters, register_variables
-from lib.routes import add_routes
+from routes import add_routes
 
 _app = None
 
