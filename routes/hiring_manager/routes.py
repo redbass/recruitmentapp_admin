@@ -3,18 +3,18 @@ from flask import request, render_template
 from lib import template_list
 from routes.hiring_manager.company_form import HMCompanyForm
 from routes.hiring_manager.job_form import HMJobCreateForm
-from lib.auth import login_required, get_logged_user
+from lib.auth import login_required, get_logged_user, HR_ROLE
 from lib.core_integration import get_json_from_core
 
 
-@login_required
+@login_required(HR_ROLE)
 def company_jobs():
     jobs = get_json_from_core('/api/job')
 
     return render_template(template_list.JOB_LIST, jobs=jobs)
 
 
-@login_required
+@login_required(HR_ROLE)
 def create_company_job():
     user = get_logged_user()
 
@@ -25,7 +25,7 @@ def create_company_job():
                            form_type='create_hr')
 
 
-@login_required
+@login_required(HR_ROLE)
 def edit_job_view(job_id, form=None):
     job = get_json_from_core('/api/job/' + job_id)
     adverts = job.get('adverts', [None])
@@ -39,7 +39,7 @@ def edit_job_view(job_id, form=None):
                            form_type='ht_edit')
 
 
-@login_required
+@login_required(HR_ROLE)
 def company_info():
     user = get_logged_user()
 

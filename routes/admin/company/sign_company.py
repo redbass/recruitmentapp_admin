@@ -59,13 +59,13 @@ class SignCompanyForm(FlaskForm):
         }
 
 
-@login_required
+@login_required('ADMIN')
 def sign_in_company():
     form = SignCompanyForm(request.form)
     return render_template(template_list.SIGN_IN_COMPANY, form=form)
 
 
-@login_required
+@login_required('ADMIN')
 def sign_in_company_post():
     form = SignCompanyForm(request.form)
 
