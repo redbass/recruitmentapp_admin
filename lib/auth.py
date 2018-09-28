@@ -3,6 +3,7 @@ from functools import wraps
 from flask import render_template, request, session, redirect, url_for, flash, \
     get_flashed_messages
 
+from lib import template_list
 from lib.exceptions import AuthenticationError
 from lib.core_integration import request_access_jwt
 
@@ -12,7 +13,7 @@ SESSION_USER = 'user'
 
 def login_view():
     messages = get_flashed_messages()
-    return render_template("login.jinja2", messages=messages)
+    return render_template(template_list.LOGIN, messages=messages)
 
 
 def login_post():
@@ -42,7 +43,8 @@ def log_in(username, role):
     session[SESSION_IS_LOGGED_IN] = True
     session[SESSION_USER] = {
         "username": username,
-        'role': role
+        "role": role,
+        "company_id": "0ccf647d7b1b474c825b55053386c417"
     }
 
 

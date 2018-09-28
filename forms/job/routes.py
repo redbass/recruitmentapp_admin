@@ -4,13 +4,15 @@ from forms.job.form import JobCreateForm, JobEditForm
 from lib.auth import login_required
 from lib.core_integration import post_json_to_core, get_json_from_core
 from lib.errors import flash_exception
+from lib import template_list
 
 
 @login_required
 def create_job(form=None):
     form = form or JobCreateForm(request.form)
 
-    return render_template("job/create_job.jinja2", form=form)
+    return render_template(template_list.CREATE_JOB, form=form,
+                           form_type='create_admin')
 
 
 @login_required
@@ -44,8 +46,9 @@ def edit_job_view(job_id, form=None):
 
     form.populate_form_from_core(job)
 
-    return render_template("job/edit_job.jinja2",
-                           job_id=job_id, advert=adverts[0], form=form)
+    return render_template(template_list.EDIT_JOB,
+                           job_id=job_id, advert=adverts[0], form=form,
+                           form_type='admin_edit')
 
 
 @login_required
@@ -76,3 +79,10 @@ def set_advert_status(job_id: str, advert_id: str, action: str):
     post_json_to_core(publish_url, json=data)
 
     return redirect(url_for('edit_job', job_id=job_id))
+
+
+@login_required
+def jobs_view():
+    jobs = get_json_from_core('/api/job')
+
+    return render_template(template_list.JOB_LIST, jobs=jobs)

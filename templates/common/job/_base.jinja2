@@ -5,7 +5,7 @@
 
     {{ form.csrf_token() }}
 
-    {% if form_type=='create' %}
+    {% if form_type=='create_admin' %}
         {{ render_selectfield(form.company_id) }}
     {% endif %}
 
@@ -15,7 +15,7 @@
     {{ get_location__by_postcode(form) }}
     <br>
 
-    {% if form_type == 'create' %}
+    {% if form_type in ('create_admin', 'create_hr') %}
         {{ render_selectfield(form.duration) }}
     {% endif %}
 

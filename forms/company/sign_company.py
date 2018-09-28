@@ -2,6 +2,7 @@ from flask import render_template, request, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, validators, SelectField, PasswordField
 
+from lib import template_list
 from forms import TITLES
 from lib.auth import login_required
 from lib.core_integration import post_json_to_core
@@ -61,7 +62,7 @@ class SignCompanyForm(FlaskForm):
 @login_required
 def sign_in_company():
     form = SignCompanyForm(request.form)
-    return render_template("company/sign_in_company.jinja2", form=form)
+    return render_template(template_list.SIGN_IN_COMPANY, form=form)
 
 
 @login_required
@@ -79,7 +80,7 @@ def sign_in_company_post():
         except Exception as e:
             flash_exception(e)
 
-    return render_template("company/sign_in_company.jinja2", form=form)
+    return render_template(template_list.SIGN_IN_COMPANY, form=form)
 
 
 def _validate_password(form):
