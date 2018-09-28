@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for
 
-from forms.job.form import JobCreateForm, JobEditForm
+from routes.admin.job.form import JobCreateForm, JobEditForm
 from lib.auth import login_required
 from lib.core_integration import post_json_to_core, get_json_from_core
 from lib.errors import flash_exception
