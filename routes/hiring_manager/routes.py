@@ -9,7 +9,7 @@ from lib.core_integration import get_json_from_core
 
 @login_required(HR_ROLE)
 def company_jobs():
-    jobs = get_json_from_core('/api/job')
+    jobs = get_json_from_core('/api/hm/company/job', is_admin=False)
 
     return render_template(template_list.JOB_LIST, jobs=jobs)
 
