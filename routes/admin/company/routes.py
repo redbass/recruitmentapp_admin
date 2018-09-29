@@ -10,7 +10,7 @@ from lib.errors import flash_exception
 @login_required(ADMIN_ROLE)
 def create_company_view():
     form = CompanyForm(request.form)
-    return render_template(template_list.CREATE_COMPANY, form=form)
+    return render_template(template_list.ADMIN_CREATE_COMPANY, form=form)
 
 
 @login_required(ADMIN_ROLE)
@@ -27,7 +27,7 @@ def create_company_post():
         except Exception as e:
             flash_exception(e)
 
-    return render_template(template_list.CREATE_COMPANY, form=form)
+    return render_template(template_list.ADMIN_CREATE_COMPANY, form=form)
 
 
 @login_required(ADMIN_ROLE)
@@ -38,7 +38,7 @@ def edit_company_view(company_id):
 
     form.populate_form_from_core(company)
 
-    return render_template(template_list.CREATE_COMPANY, form=form,
+    return render_template(template_list.ADMIN_EDIT_COMPANY, form=form,
                            company_id=company.get('_id'))
 
 
@@ -57,10 +57,10 @@ def edit_company_post(company_id):
         except Exception as e:
             flash_exception(e)
 
-    return render_template(template_list.EDIT_COMPANY, form=form)
+    return render_template(template_list.ADMIN_EDIT_COMPANY, form=form)
 
 
 @login_required(ADMIN_ROLE)
 def companies_view():
     companies = get_json_from_core('/api/company')
-    return render_template(template_list.COMPANY_LIST, companies=companies)
+    return render_template(template_list.ADMIN_COMPANY_LIST, companies=companies)
