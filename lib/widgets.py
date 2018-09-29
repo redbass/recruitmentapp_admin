@@ -10,7 +10,8 @@ class LongStringField(StringField):
 
 class SelectFieldAsync(SelectField):
 
-    def __init__(self, label=None, validators=None, coerce=text_type, choices_fn=None, **kwargs):
+    def __init__(self, label=None, validators=None, coerce=text_type,
+                 choices_fn=None, **kwargs):
 
         choices = choices_fn()
 

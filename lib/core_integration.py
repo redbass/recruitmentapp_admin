@@ -5,7 +5,8 @@ import requests
 from flask import session
 
 from config import settings
-from lib.exceptions import AuthenticationError, APICallError, APIValidationError
+from lib.exceptions import AuthenticationError, APICallError, \
+    APIValidationError
 
 API_URL_GET_ACCESS_TOKEN = '/token/auth'
 API_URL_REFRESH_ACCESS_TOKEN = '/token/refresh'

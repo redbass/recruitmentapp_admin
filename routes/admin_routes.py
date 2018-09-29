@@ -1,8 +1,7 @@
-from routes.admin.company.routes import create_company_view, create_company_post, \
-    edit_company_view, edit_company_post, companies_view
-from routes.admin.company.sign_company import sign_in_company, sign_in_company_post
-from routes.admin.job.routes import create_job, create_job_post, edit_job_view, \
-    edit_job_post, set_advert_status, jobs_view
+from routes.admin.company.routes import create_company_view, \
+    create_company_post, edit_company_view, edit_company_post, companies_view
+from routes.admin.job.routes import create_job, create_job_post, \
+    edit_job_view, edit_job_post, set_advert_status, jobs_view
 
 ADMIN_JOBS = '/admin/jobs'
 ADMIN_JOBS_ADD = '/admin/jobs/add'
@@ -57,9 +56,3 @@ def _add_company_routes(app):
                      edit_company_view, methods=['GET'])
     app.add_url_rule(ADMIN_COMPANY, 'edit_company_post',
                      edit_company_post, methods=['POST'])
-
-    app.add_url_rule(ADMIN_SIGN_IN_COMPANY, 'sign_in_company',
-                     sign_in_company, methods=['GET'])
-
-    app.add_url_rule(ADMIN_SIGN_IN_COMPANY, 'sign_in_company_post',
-                     sign_in_company_post, methods=['POST'])
