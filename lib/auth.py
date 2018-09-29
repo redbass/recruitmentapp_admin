@@ -1,7 +1,7 @@
 from functools import wraps
 
-from flask import render_template, request, session, redirect, url_for, flash, \
-    get_flashed_messages
+from flask import render_template, request, session, redirect, url_for, \
+    flash, get_flashed_messages
 
 from lib import template_list
 from lib.exceptions import AuthenticationError
@@ -12,6 +12,7 @@ SESSION_USER = 'user'
 
 ADMIN_ROLE = 'ADMIN'
 HR_ROLE = 'HIRING_MANAGER'
+
 
 def login_view():
     messages = get_flashed_messages()

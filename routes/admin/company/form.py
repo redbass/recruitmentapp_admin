@@ -93,7 +93,7 @@ class CompanyForm(FlaskForm):
                 "email": self.data.get('email'),
                 "phone_number": self.data.get('phone_number'),
             },
-            "metadata":{
+            "metadata": {
                 "trades": self.data.get('trades'),
             }
         }

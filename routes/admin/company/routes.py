@@ -5,6 +5,7 @@ from routes.admin.company.form import CompanyForm
 from lib.auth import login_required, ADMIN_ROLE
 from lib.core_integration import post_json_to_core, get_json_from_core
 from lib.errors import flash_exception
+from routes.common.company import edit_company
 
 
 @login_required(ADMIN_ROLE)
@@ -44,23 +45,16 @@ def edit_company_view(company_id):
 
 @login_required(ADMIN_ROLE)
 def edit_company_post(company_id):
+    company_form_class = CompanyForm
+    success_end_point = 'companies'
+    failure_template_name = template_list.ADMIN_EDIT_COMPANY
 
-    form = CompanyForm(request.form)
-
-    if form.validate_on_submit():
-
-        try:
-            data = form.create_company_core_from_form()
-            post_json_to_core('/api/company/' + company_id, json=data)
-            return redirect(url_for('companies'))
-
-        except Exception as e:
-            flash_exception(e)
-
-    return render_template(template_list.ADMIN_EDIT_COMPANY, form=form)
+    return edit_company(company_form_class, company_id, failure_template_name,
+                        success_end_point)
 
 
 @login_required(ADMIN_ROLE)
 def companies_view():
     companies = get_json_from_core('/api/company')
-    return render_template(template_list.ADMIN_COMPANY_LIST, companies=companies)
+    return render_template(template_list.ADMIN_COMPANY_LIST,
+                           companies=companies)
