@@ -31,7 +31,7 @@ def login_post():
         flash(str(e))
         return login_view()
 
-    log_in(user.get('username'), user.get('role'))
+    log_in(user)
 
     return redirect(url_for('home'), code=302)
 
@@ -42,12 +42,12 @@ def logout_view():
     return login_view()
 
 
-def log_in(username, role):
+def log_in(user):
     session[SESSION_IS_LOGGED_IN] = True
     session[SESSION_USER] = {
-        "username": username,
-        "role": role,
-        "company_id": "0ccf647d7b1b474c825b55053386c417"
+        "username": user.get('username'),
+        "role": user.get('role'),
+        "company_id": user.get('company_id')
     }
 
 
