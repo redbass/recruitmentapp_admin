@@ -1,4 +1,4 @@
-from flask import request, render_template
+from flask import request, render_template, redirect, url_for
 
 from lib import template_list
 from lib.auth import login_required, HR_ROLE, get_logged_user
@@ -17,20 +17,23 @@ def company_info():
 
     form.populate_form_from_core(company)
 
-    return render_template(template_list.HM_EDIT_COMPANY, form=form,
-                           company_id=company_id)
+    return render_template(template_list.COMMON_EDIT_COMPANY,
+                           form=form,
+                           company_id=company_id,
+                           form_action='hr_company_info_post')
 
 
 @login_required(HR_ROLE)
 def company_info_post():
-    company_form_class = HMCompanyForm
-    success_end_point = 'hr_company_info'
-    failure_template_name = template_list.HM_EDIT_COMPANY
-
     company_id = get_user_company_id()
+    form = HMCompanyForm(request.form)
 
-    return edit_company(company_form_class, company_id, failure_template_name,
-                        success_end_point)
+    edited = edit_company(form, company_id)
+
+    if edited:
+        return redirect(url_for('hr_company_info'))
+
+    return render_template(template_list.COMMON_EDIT_COMPANY, form=form)
 
 
 def get_user_company_id():
