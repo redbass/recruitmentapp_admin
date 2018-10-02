@@ -1,6 +1,6 @@
-from routes.admin.company.routes import create_company_view, \
+from routes.admin.company_routes import create_company_view, \
     create_company_post, edit_company_view, edit_company_post, companies_view
-from routes.admin.job.routes import create_job_post, \
+from routes.admin.job_routes import create_job_post, \
     edit_job_view, edit_job_post, jobs_view, create_job_view
 
 ADMIN_JOBS = '/admin/jobs'
