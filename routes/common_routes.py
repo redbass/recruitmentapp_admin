@@ -1,4 +1,4 @@
-from routes.admin.common.routes import set_advert_status
+from routes.common.advert import set_advert_status
 
 COMMON_SET_ADVERT_STATUS = '/admin/jobs/<job_id>/advert/<advert_id>/<action>'
 
