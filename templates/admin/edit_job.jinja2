@@ -1,4 +1,4 @@
-{% extends 'common/job/_base.jinja2' %}
+{% extends 'common/_job_base.jinja2' %}
 {% from "_forms_helpers.jinja2" import render_submit %}
 
 {% block body %}
@@ -7,20 +7,26 @@
         <div class="col offset-1">
             <div class="row">
                 <div class="col-md-7">
-                    <h1 class=" px-3 py-1 page-header mb-4">Create Job</h1>
+                    <h1 class=" px-3 py-1 page-header mb-4">Edit Job</h1>
                 </div>
             </div>
         </div>
     </div>
     <div class="row mt-4">
         <div class="offset-lg-1 col-lg-10 col-xl-8">
-            <form action="{{ url_for('create_job_post') }}" method="post">
+            <form action="{{ url_for('edit_job_post', job_id=job_id) }}" method="post">
 
                 {{ render_jobs_form_fields(
                     form,
                     form_type=form_type) }}
 
             </form>
+
+            <br>
+            <br>
+
+            {{ render_advert(job_id=job_id, advert=advert) }}
+
         </div>
     </div>
 
