@@ -37,7 +37,9 @@ def edit_company_job_view_post(job_id):
 def company_jobs():
     jobs = get_json_from_core('/api/hm/company/job', is_admin=False)
 
-    return render_template(template_list.HM_JOB_LIST, jobs=jobs)
+    return render_template(template_list.COMMON_JOB_LIST,
+                           jobs=jobs,
+                           edit_job_endpoint='hr_edit_company_job')
 
 
 @login_required(HR_ROLE)
