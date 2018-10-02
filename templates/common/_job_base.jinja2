@@ -40,6 +40,18 @@
 
 {% endmacro %}
 
+{% macro render_advert(job_id=job_id, advert=advert) %}
+
+    {% if advert['status'] == 'DRAFT' %}
+        {{ display_draft_advert(job_id=job_id, advert=advert) }}
+    {% elif advert['status'] == 'APPROVED'%}
+        {{ display_approved_advert(job_id, advert) }}
+    {% elif advert['status'] == 'PUBLISHED'%}
+        {{ display_published_advert(job_id, advert) }}
+    {% endif %}
+
+{% endmacro %}
+
 {% macro display_draft_advert(job_id, advert) %}
 
     <form action="{{ url_for('set_advert_status', job_id=job_id, advert_id=advert._id, action='approve') }}" method="post" >

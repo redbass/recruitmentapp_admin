@@ -43,7 +43,6 @@ class JobBaseForm(FlaskForm):
         widget=HiddenInput())
 
     def populate_form_from_core(self, company):
-        self.company_id.data = company.get('company_id', '')
         self.title.data = company.get('title', '')
         self.description.data = company.get('description', '')
 
@@ -100,6 +99,8 @@ class JobCreateForm(JobBaseForm):
 
     def populate_form_from_core(self, company):
         super().populate_form_from_core(company)
+
+        self.company_id.data = company.get('company_id', '')
 
         adverts = company.get('adverts', [])
         if adverts:
