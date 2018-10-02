@@ -11,7 +11,7 @@ ADMIN_JOB_LIST = 'admin/jobs.jinja2'
 ADMIN_EDIT_JOB = "admin/edit_job.jinja2"
 
 # COMMON
-COMMON_EDIT_COMPANY = "admin/edit_company.jinja2"
+COMMON_EDIT_COMPANY = "common/edit_company.jinja2"
 COMMON_CREATE_JOB = "common/create_job.jinja2"
 
 # HIRING MANAGER
