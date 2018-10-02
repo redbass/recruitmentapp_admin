@@ -39,18 +39,22 @@ def edit_company_view(company_id):
 
     form.populate_form_from_core(company)
 
-    return render_template(template_list.ADMIN_EDIT_COMPANY, form=form,
-                           company_id=company.get('_id'))
+    return render_template(template_list.COMMON_EDIT_COMPANY,
+                           form=form,
+                           company_id=company.get('_id'),
+                           form_action='edit_company_post')
 
 
 @login_required(ADMIN_ROLE)
 def edit_company_post(company_id):
-    company_form_class = CompanyForm
-    success_end_point = 'companies'
-    failure_template_name = template_list.ADMIN_EDIT_COMPANY
+    form = CompanyForm(request.form)
 
-    return edit_company(company_form_class, company_id, failure_template_name,
-                        success_end_point)
+    edited = edit_company(form, company_id)
+
+    if edited:
+        return redirect(url_for('companies'))
+
+    return render_template(template_list.COMMON_EDIT_COMPANY, form=form)
 
 
 @login_required(ADMIN_ROLE)
