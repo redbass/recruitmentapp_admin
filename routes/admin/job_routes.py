@@ -38,9 +38,12 @@ def edit_job_view(job_id, form=None):
 
     form.populate_form_from_core(job)
 
-    return render_template(template_list.ADMIN_EDIT_JOB,
-                           job_id=job_id, advert=adverts[0], form=form,
-                           form_type='admin_edit')
+    return render_template(template_list.COMMON_EDIT_JOB,
+                           job_id=job_id,
+                           advert=adverts[0],
+                           form=form,
+                           form_type='admin_edit',
+                           form_action='edit_job_post')
 
 
 @login_required(ADMIN_ROLE)
