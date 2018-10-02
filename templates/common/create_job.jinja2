@@ -14,7 +14,7 @@
     </div>
     <div class="row mt-4">
         <div class="offset-lg-1 col-lg-10 col-xl-8">
-            <form action="{{ url_for('create_job_post') }}" method="post">
+            <form action="{{ url_for(form_action) }}" method="post">
 
                 {{ render_jobs_form_fields(
                     form,

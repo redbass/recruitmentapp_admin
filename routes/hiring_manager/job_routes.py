@@ -44,8 +44,10 @@ def create_company_job(form=None):
     form = form or HMJobCreateForm(request.form)
     form.company_id = user['company_id']
 
-    return render_template(template_list.HM_CREATE_JOB, form=form,
-                           form_type='create_hr')
+    return render_template(template_list.COMMON_CREATE_JOB,
+                           form=form,
+                           form_type='create_hr',
+                           form_action='hr_create_company_job_post')
 
 
 @login_required(HR_ROLE)

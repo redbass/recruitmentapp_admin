@@ -11,8 +11,10 @@ from routes.common import job as common
 def create_job_view(form=None):
     form = form or JobCreateForm(request.form)
 
-    return render_template(template_list.ADMIN_CREATE_JOB, form=form,
-                           form_type='create_admin')
+    return render_template(template_list.COMMON_CREATE_JOB,
+                           form=form,
+                           form_type='create_admin',
+                           form_action='create_job_post')
 
 
 @login_required(ADMIN_ROLE)
