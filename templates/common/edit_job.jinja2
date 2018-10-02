@@ -14,7 +14,7 @@
     </div>
     <div class="row mt-4">
         <div class="offset-lg-1 col-lg-10 col-xl-8">
-            <form action="{{ url_for('hr_edit_company_job_post', job_id=job_id) }}" method="post">
+            <form action="{{ url_for(form_action, job_id=job_id) }}" method="post">
 
                 {{ render_jobs_form_fields(
                     form,
