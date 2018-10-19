@@ -57,7 +57,14 @@ def _retry_if_token_expired(fn):
 def get_json_from_core(path: str,
                        is_admin: bool = True):
     url = _get_api_url(is_admin, path)
-    return _call_core_response(requests.get, url)
+    return _call_core_response(fn=requests.get, url=url, is_json=True)
+
+
+@_retry_if_token_expired
+def get_from_core(path: str,
+                  is_admin: bool = True):
+    url = _get_api_url(is_admin, path)
+    return _call_core_response(fn=requests.get, url=url, is_json=False)
 
 
 @_retry_if_token_expired
@@ -65,7 +72,15 @@ def post_json_to_core(path: str,
                       json: dict = None,
                       is_admin: bool = True):
     url = _get_api_url(is_admin, path)
-    return _call_core_response(requests.post, url, json=json)
+    return _call_core_response(fn=requests.post, url=url, json=json)
+
+
+@_retry_if_token_expired
+def post_to_core(path: str,
+                 is_admin: bool = True,
+                 **kwargs):
+    url = _get_api_url(is_admin, path)
+    return _call_core_response(fn=requests.post, url=url, **kwargs)
 
 
 def _get_api_url(is_admin, path):
@@ -73,13 +88,13 @@ def _get_api_url(is_admin, path):
     return url + path
 
 
-def _call_core_response(fn, url, **kwargs):
+def _call_core_response(fn, url, is_json=True, **kwargs):
     headers = _get_core_call_headers()
 
     try:
         response = fn(url, headers=headers, **kwargs)
         status_code = response.status_code
-        body = response.json()
+        body = response.json() if is_json else response.content
 
         if status_code == 200:
             return body
@@ -87,13 +102,18 @@ def _call_core_response(fn, url, **kwargs):
     except Exception as e:
         raise APICallError(str(e))
 
+    msg = None
+
     if response.status_code == 401:
         raise AuthenticationError()
 
-    elif body.get('exception') == 'ValidationError':
-        raise APIValidationError(core_response_body=body)
+    elif isinstance(body, dict):
+        if body.get('exception') == 'ValidationError':
+            raise APIValidationError(core_response_body=body)
 
-    raise APICallError(body.get('message', 'Unhandled error'))
+        msg = body.get('message')
+
+    raise APICallError(msg or 'Unhandled error')
 
 
 def _get_core_call_headers(is_refresh_token_call=False):

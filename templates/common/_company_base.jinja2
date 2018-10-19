@@ -1,14 +1,25 @@
 {% from "_forms_helpers.jinja2" import render_field, render_selectfield, render_submit %}
 
-{% macro render_company_form_fields(form, submit_label) %}
+{% macro render_company_form_fields(form, submit_label, company_id) %}
     {{ form.csrf_token() }}
 
     {{ render_field(form.name) }}
+
+    <div class="form-group row">
+        <div class="col-lg-5">
+            <label class="col-form-label font-weight-bold" for="name">Company Logo</label>
+        </div>
+        <div class="col-lg-7">
+            <a href="#" data-toggle="modal" data-target="#logoModal">
+                <img src="{{ url_for('get_company_logo', company_id=company_id) }}" class="img-thumbnail">
+                change logo
+            </a>
+        </div>
+    </div>
+
     {{ render_field(form.description, rows="5") }}
     {{ render_selectfield(form.trades) }}
     {{ render_field(form.vat) }}
-
-{#    {{ render_field(form.company_logo) }}  #}
 
     <div class="form-group row">
       <div class="col-lg-5">
@@ -33,5 +44,83 @@
 
 
     {{ render_submit(submit_label) }}
+
+{% endmacro %}
+
+
+{% macro render_company_logo_modal() %}
+
+    <!-- Modal -->
+
+    <div class="modal fade" id="logoModal" tabindex="-1" role="dialog" aria-labelledby="logoModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="logoModalLabel">Upload company logo</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form id="file-form" action="#" method="POST">
+            <div class="modal-body">
+
+              <input type="file" id="file-select" name="file" required/>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Upload</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+{% endmacro %}
+
+{% macro render_company_logo_modal_javascript(company_id) %}
+
+    <script>
+
+        function onSubmit(e) {
+
+            debugger;
+
+            var formData = new FormData(form);
+            var fileSelect = document.getElementById('file-select');
+            var files = fileSelect.files
+
+            // Loop through each of the selected files.
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+
+                // Check the file type.
+                if (file.type.match('image.*')) {
+                    continue;
+                }
+
+                formData.append('file', file, file.name);
+            }
+
+            formData.append('csrf_token', '{{ csrf_token() }}');
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '{{ url_for('upload_company_logo', company_id=company_id) }}', true);
+            xhr.onload = function () {
+                if (xhr.status !== 200) {
+                    response = JSON.parse(xhr.response)
+                    alert(response['error']);
+                }
+            };
+
+            xhr.send(formData);
+
+            e.preventDefault();
+            return false;
+        }
+
+        var form = document.getElementById('file-form');
+        form.onsubmit = onSubmit;
+
+    </script>
 
 {% endmacro %}
