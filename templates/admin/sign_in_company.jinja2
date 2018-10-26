@@ -1,0 +1,26 @@
+{% extends '_main_base.jinja2' %}
+{% from "_forms_helpers.jinja2" import render_field, render_submit, render_selectfield %}
+
+{% block body %}
+    <div class="row mt-4">
+        <div class="offset-lg-1 col-lg-10 col-xl-8">
+            <form action="{{ url_for('sign_in_company_post') }}" method="post">
+                {{ form.csrf_token() }}
+                <h3>Company admin info:</h3>
+                {{ render_field(form.hm_username) }}
+                {{ render_field(form.hm_password) }}
+                {{ render_field(form.hm_confirm_password) }}
+                {{ render_selectfield(form.hm_title) }}
+                {{ render_field(form.hm_first_name) }}
+                {{ render_field(form.hm_last_name) }}
+
+                <h3>Company admin info:</h3>
+                {{ render_field(form.company_name) }}
+                {{ render_field(form.company_description) }}
+
+                {{ render_submit() }}
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

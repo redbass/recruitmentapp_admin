@@ -1,0 +1,31 @@
+{% extends '_main_base.jinja2' %}
+{% from 'common/_jobs_base.jinja2' import redner_jobs_table%}
+
+{% block body %}
+
+    <div class="">
+        <div class="row">
+            <div class="col offset-1">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1 class=" px-3 py-1 page-header mb-4">Job List</h1>
+                    </div>
+                    <div class="col-md-5">
+                        <a class="pull-right btn btn-yellow triangle-outter" href="{{ url_for('hr_create_company_job') }}">
+                            Create Job
+                            <span class="triangle-inner"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col offset-1">
+
+                {{ redner_jobs_table(jobs, edit_job_endpoint) }}
+
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}

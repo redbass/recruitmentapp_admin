@@ -22,7 +22,8 @@ def _get_settings():
     }
 
     if app_env not in app_configs.keys():
-        raise Exception('APP_ENV "{app_env}" not supported'.format(app_env=app_env))
+        raise Exception('APP_ENV "{app_env}" not supported'
+                        .format(app_env=app_env))
 
     return app_configs.get(app_env)()
 

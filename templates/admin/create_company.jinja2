@@ -1,0 +1,27 @@
+{% extends '_main_base.jinja2' %}
+{% from "../common/_company_base.jinja2" import render_company_form_fields %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col offset-1">
+            <div class="row">
+                <div class="col-md-7">
+                    <h1 class=" px-3 py-1 page-header mb-4">Create Company</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="offset-lg-1 col-lg-10 col-xl-8">
+            <form action="{{ url_for('create_company_post') }}" method="post">
+
+                {{ render_company_form_fields(
+                    form,
+                    submit_label="Create company") }}
+
+            </form>
+        </div>
+    </div>
+
+{% endblock body %}
