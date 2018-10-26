@@ -23,10 +23,12 @@
 
             </form>
 
-            <br>
-            <br>
+            {% if form_type=='admin_edit' %}
+                <br>
+                <br>
 
-            {{ render_advert(job_id=job_id, advert=advert) }}
+                {{ render_advert(job_id=job_id, advert=advert) }}
+            {% endif %}
 
         </div>
     </div>
