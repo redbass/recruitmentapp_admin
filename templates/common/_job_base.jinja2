@@ -1,4 +1,3 @@
-{% extends '_main_base.jinja2' %}
 {% from "_forms_helpers.jinja2" import render_field, render_submit, render_selectfield, render_search_field %}
 
 {% macro render_jobs_form_fields(form, form_type) %}
@@ -80,7 +79,8 @@
 
 {% endmacro %}
 
-{% block footer_scripts %}
+{% macro search_postcode(initial_location) %}
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
           integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
           crossorigin=""/>
@@ -89,16 +89,17 @@
             crossorigin=""></script>
     <script>
 
+        var map;
+
         function initmap() {
             // set up the map
-            var map = new L.Map('mapid');
+            map = new L.Map('mapid');
 
             // create the tile layer with correct attribution
             var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
             var osmAttrib = 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
             var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 12, attribution: osmAttrib});
 
-            // start the map in South-East England
             map.setView(new L.LatLng(55.952141, -3.189296), 9);
             map.addLayer(osm);
 
@@ -111,6 +112,7 @@
                 marker = L.marker(latlng).addTo(mymap);
             }
             marker.setLatLng(latlng);
+            map.setView(latlng, 9);
         }
 
         function createMarkerFromFields() {
@@ -146,4 +148,4 @@
 
     </script>
 
-{% endblock %}
+{% endmacro %}
