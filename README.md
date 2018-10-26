@@ -1,2 +1,2 @@
-# recruitmentapp_admin
+# Recruitment App core
 
