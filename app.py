@@ -4,6 +4,7 @@ from flask_wtf import CSRFProtect
 from config import settings
 from lib.jinja_utils import register_filters, register_variables
 from routes import add_routes
+from services.stripe import create_charge
 
 _app = None
 
@@ -24,7 +25,8 @@ def get_app(*args, **kwarg) -> Flask:
         if settings.DEBUG_MODE:
             _app.jinja_env.auto_reload = True
 
-        CSRFProtect(_app)
+        _csrf = CSRFProtect(_app)
+        _csrf.exempt(create_charge)
 
     return _app
 
