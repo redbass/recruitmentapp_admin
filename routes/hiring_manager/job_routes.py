@@ -20,7 +20,7 @@ def edit_company_job_view(job_id, form=None):
                            job_id=job_id,
                            advert=adverts[0],
                            form=form,
-                           form_type='ht_edit',
+                           form_type='hm_edit',
                            form_action='hr_edit_company_job_post')
 
 

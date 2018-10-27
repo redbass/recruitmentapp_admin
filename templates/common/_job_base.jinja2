@@ -39,46 +39,6 @@
 
 {% endmacro %}
 
-{% macro render_advert(job_id=job_id, advert=advert) %}
-
-    {% if advert['status'] == 'DRAFT' %}
-        {{ display_draft_advert(job_id=job_id, advert=advert) }}
-    {% elif advert['status'] == 'APPROVED'%}
-        {{ display_approved_advert(job_id, advert) }}
-    {% elif advert['status'] == 'PUBLISHED'%}
-        {{ display_published_advert(job_id, advert) }}
-    {% endif %}
-
-{% endmacro %}
-
-{% macro display_draft_advert(job_id, advert) %}
-
-    <form action="{{ url_for('set_advert_status', job_id=job_id, advert_id=advert._id, action='approve') }}" method="post" >
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-        The advert is in DRAFT -
-        <button type="submit" class="btn btn-link" value="publish">Approve?</button>
-    </form>
-
-{% endmacro %}
-
-
-{% macro display_approved_advert(job_id, advert) %}
-
-    <form action="{{ url_for('set_advert_status', job_id=job_id, advert_id=advert._id, action='publish') }}" method="post" >
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-        The advert is APPROVED -
-        <button type="submit" class="btn btn-link" value="publish">Publish?</button>
-    </form>
-
-{% endmacro %}
-
-
-{% macro display_published_advert(job_id, advert) %}
-
-    The advert has been published until - {{ advert['date']['expires'] | format_date  }}
-
-{% endmacro %}
-
 {% macro search_postcode(initial_location) %}
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
