@@ -5,7 +5,6 @@ from lib.base_config import BaseConfig
 
 class StagingConfig(BaseConfig):
     ENC_SEED = 'toBeUpdated'
-    ENC_PSWD = None
 
 
 class DevConfig(BaseConfig):

@@ -13,10 +13,15 @@ class BaseConfig(object):
     ENC_SEED = None
     ENC_PSWD = None
 
+    STRIPE_PUBLIC_KEY = None
+    STRIPE_SECRET_KEY = None
+
     def __init__(self):
         self.CORE_APP_URL = os.environ.get('CORE_APP_URL')
         self.CORE_APP_ADMIN_URL = self.CORE_APP_URL + "/admin"
         self.ENC_PSWD = os.environ.get('ENC_PSWD', None)
+        self.STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY', None)
+        self.STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', None)
 
     def encrypt(self, msg: str):
         aes = AES.new(self.ENC_PSWD, AES.MODE_CBC, self.ENC_SEED)

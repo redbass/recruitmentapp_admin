@@ -1,0 +1,30 @@
+{% macro render_advert(job_id, advert, stripe_settings, default_email) %}
+
+    {% if advert['status'] == 'DRAFT' %}
+
+        <h4>Waiting the Administrators approval</h4>
+
+    {% elif advert['status'] == 'APPROVED' %}
+        <form action="{{ url_for('stripe_charge', job_id=job_id, advert_id=advert['_id']) }}" method="POST">
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                    data-name="Pay advert"
+                    data-locale="auto"
+                    data-allow-remember-me="false"
+                    data-email="{{ default_email }}"
+                    data-key="{{ stripe_settings['stripe_public_key'] }}"
+                    data-amount="{{ stripe_settings['default_advert_charge'] }}"
+                    data-currency="{{ stripe_settings['default_currency'] }}">
+            </script>
+        </form>
+
+    {% elif advert['status'] == 'PAYED' %}
+
+        <h4>The payment has been received, the advert is in the process to be published</h4>
+
+    {% elif advert['status'] == 'PUBLISHED' %}
+
+        <h4>The advert is published</h4>
+
+    {% endif %}
+
+{% endmacro %}

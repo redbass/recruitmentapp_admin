@@ -1,6 +1,7 @@
 from time import strptime, strftime
 
 from lib.auth import get_logged_user
+from services.stripe import get_default_stripe_parameters
 
 
 def register_filters(app):
@@ -14,5 +15,8 @@ def register_filters(app):
 def register_variables(app):
 
     @app.context_processor
-    def user_info():
-        return {'user_info': get_logged_user()}
+    def variables():
+        return {
+            'user_info': get_logged_user(),
+            'stripe_settings': get_default_stripe_parameters
+        }
