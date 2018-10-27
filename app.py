@@ -1,34 +1,32 @@
 from flask import Flask
+from flask_wtf import CSRFProtect
 
 from config import settings
-from lib.csrf import _protect_app_csrf
 from lib.jinja_utils import register_filters, register_variables
 from routes import add_routes
 
-__app__ = None
-__csrf__ = None
+_app = None
 
 
 def get_app(*args, **kwarg) -> Flask:
 
-    global __app__
-    global __csrf__
+    global _app
 
-    if not __app__:
-        __app__ = Flask(__name__, *args, **kwarg)
-        __app__.config.update(
+    if not _app:
+        _app = Flask(__name__, *args, **kwarg)
+        _app.config.update(
             SECRET_KEY='secret_xxx'  # TODO: SET REAL ONE
         )
-        add_routes(__app__)
-        register_filters(__app__)
-        register_variables(__app__)
+        add_routes(_app)
+        register_filters(_app)
+        register_variables(_app)
 
         if settings.DEBUG_MODE:
-            __app__.jinja_env.auto_reload = True
+            _app.jinja_env.auto_reload = True
 
-            __csrf__ = _protect_app_csrf(__app__)
+        CSRFProtect(_app)
 
-    return __app__
+    return _app
 
 
 if __name__ == '__main__':
