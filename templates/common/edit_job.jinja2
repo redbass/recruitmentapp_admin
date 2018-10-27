@@ -1,5 +1,7 @@
 {% extends '_main_base.jinja2' %}
-{% from "common/_job_base.jinja2" import render_jobs_form_fields, render_advert, search_postcode %}
+{% from "common/_job_base.jinja2" import render_jobs_form_fields, search_postcode %}
+{% from "admin/_job_base.jinja2" import render_advert as admin_render_advert %}
+{% from "hm/_job_base.jinja2" import render_advert as hm_render_advert %}
 {% from "_forms_helpers.jinja2" import render_submit %}
 
 {% block body %}
@@ -22,12 +24,17 @@
                     form_type=form_type) }}
 
             </form>
+            <br>
+            <br>
+            <h3>Advert</h3>
 
             {% if form_type=='admin_edit' %}
-                <br>
-                <br>
-
-                {{ render_advert(job_id=job_id, advert=advert) }}
+                {{ admin_render_advert(job_id=job_id, advert=advert) }}
+            {% elif form_type=='hm_edit'%}
+                {{ hm_render_advert(job_id=job_id,
+                                    advert=advert,
+                                    stripe_settings=stripe_settings(),
+                                    default_email=user_info['username']) }}
             {% endif %}
 
         </div>

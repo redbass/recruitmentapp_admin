@@ -1,10 +1,10 @@
 from flask import request, redirect, url_for
 
-from lib.auth import login_required, get_logged_user
+from lib.auth import login_required, get_logged_user, ADMIN_ROLE
 from lib.core_integration import post_json_to_core
 
 
-@login_required()
+@login_required(ADMIN_ROLE)
 def set_advert_status(job_id: str, advert_id: str, action: str):
     data = {'duration': request.form.get('duration')}
     publish_url = '/api/job/{job_id}/advert/{advert_id}/{action}'\
