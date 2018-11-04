@@ -1,8 +1,9 @@
-import stripe
-from flask import request, url_for, redirect
+from flask import request, url_for, redirect, flash
 
 from config import settings
 from lib.auth import login_required
+from lib.core_integration import post_json_to_core
+from lib.exceptions import APICallError
 
 DEFAULT_CURRENCY = 'GBP'
 DEFAULT_ADVERT_CHARGE = 2000
@@ -19,20 +20,17 @@ def get_default_stripe_parameters():
 
 @login_required()
 def create_charge(job_id, advert_id):
-    stripe.api_key = settings.STRIPE_SECRET_KEY
-
     token = request.form['stripeToken']  # Using Flask
+    data = {
+        'job_id': job_id,
+        'advert_id': advert_id,
+        'token': token
+    }
 
-    stripe.Charge.create(
-        amount=DEFAULT_ADVERT_CHARGE,
-        currency=DEFAULT_CURRENCY,
-        description=DEFAULT_CHARGE_DESCRIPTION,
-        source=token,
-        metadata={
-            'job_id': job_id,
-            'advert_id': advert_id
-        }
-    )
+    try:
+        post_json_to_core('/api/stripe/charge', json=data, is_admin=False)
+    except APICallError as e:
+        flash(str(e))
 
     return redirect(url_for('hr_edit_company_job',
                             job_id=job_id,
