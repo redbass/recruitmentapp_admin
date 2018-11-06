@@ -24,8 +24,10 @@
             {% for advert in job.adverts %}
                 <tr>
                     <td>{{ job.company_name }}</td>
-                    <td>{{ job.trade }}</td>
-                    <td>{{ job.location }}</td>
+                    <td>{{ job.metadata.trades | join(', ') }}</td>
+                    <td>
+                        {{ (job.location.admin_district + " - " if job.location.admin_district) }} {{ job.location.postcode }}
+                    </td>
                     <td>{{ advert.duration }} days</td>
                     <td>{{ advert.date.created | format_date }}</td>
                     <td>{{ advert.status }}</td>
