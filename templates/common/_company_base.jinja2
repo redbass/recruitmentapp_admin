@@ -5,17 +5,19 @@
 
     {{ render_field(form.name) }}
 
-    <div class="form-group row">
-        <div class="col-lg-5">
-            <label class="col-form-label font-weight-bold" for="name">Company Logo</label>
+    {% if submit_label != 'Create company' %}
+        <div class="form-group row">
+            <div class="col-lg-5">
+                <label class="col-form-label font-weight-bold" for="name">Company Logo</label>
+            </div>
+            <div class="col-lg-7">
+                <a href="#" data-toggle="modal" data-target="#logoModal">
+                    <img src="{{ url_for('get_company_logo', company_id=company_id) }}" class="img-thumbnail">
+                    change logo
+                </a>
+            </div>
         </div>
-        <div class="col-lg-7">
-            <a href="#" data-toggle="modal" data-target="#logoModal">
-                <img src="{{ url_for('get_company_logo', company_id=company_id) }}" class="img-thumbnail">
-                change logo
-            </a>
-        </div>
-    </div>
+    {% endif %}
 
     {{ render_field(form.description, rows="5") }}
     {{ render_selectfield(form.trades) }}
