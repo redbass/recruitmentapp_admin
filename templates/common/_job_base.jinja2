@@ -35,6 +35,7 @@
         </div>
         {{ form.latitude() }}
         {{ form.longitude() }}
+        {{ form.admin_district() }}
     </div>
 
 {% endmacro %}
@@ -100,6 +101,7 @@
                 function (response) {
                     $('#latitude').val(response.latitude);
                     $('#longitude').val(response.longitude);
+                    $('#admin_district').val(response.admin_district);
                     latLng = new L.LatLng(response.latitude, response.longitude);
                     createMarker(latLng)
                 }
