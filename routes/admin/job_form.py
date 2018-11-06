@@ -41,6 +41,10 @@ class JobBaseForm(FlaskForm):
         'Longitude',
         validators=[validators.DataRequired()],
         widget=HiddenInput())
+    admin_district = StringField(
+        'Admin District',
+        validators=[validators.DataRequired()],
+        widget=HiddenInput())
 
     def populate_form_from_core(self, company):
         self.title.data = company.get('title', '')
@@ -52,6 +56,7 @@ class JobBaseForm(FlaskForm):
         coordinates = location.get('geo_location', {}).get('coordinates', [])
         self.latitude.data = coordinates[1]
         self.longitude.data = coordinates[0]
+        self.admin_district.data = location.get('admin_district')
 
     def create_job_core_from_form(self):
         job = {
@@ -59,6 +64,7 @@ class JobBaseForm(FlaskForm):
             "description": self.data.get('description'),
             "location": {
                 "postcode": self.data.get('postcode'),
+                "admin_district": self.data.get('admin_district'),
                 "latitude": float(self.data.get('latitude')),
                 "longitude": float(self.data.get('longitude'))
             }
