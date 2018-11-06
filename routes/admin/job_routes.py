@@ -59,6 +59,6 @@ def edit_job_post(job_id):
 def jobs_view():
     jobs = get_json_from_core('/api/job')
 
-    return render_template(template_list.COMMON_JOB_LIST,
+    return render_template(template_list.ADMIN_JOB_LIST,
                            jobs=jobs,
                            edit_job_endpoint='edit_job')
