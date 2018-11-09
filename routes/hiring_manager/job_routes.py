@@ -12,7 +12,7 @@ def edit_company_job_view(job_id, form=None):
     job = get_json_from_core('/api/job/' + job_id)
     adverts = job.get('adverts', [None])
 
-    form = HMJobCreateForm(form or request.form)
+    form = HMJobEditForm()
 
     form.populate_form_from_core(job)
 
