@@ -1,6 +1,6 @@
 {% macro render_advert(job_id, advert, stripe_settings, default_email) %}
 
-    {% if advert['status'] == 'DRAFT' %}
+    {% if advert['status'] == 'REQUEST_APPROVAL' %}
 
         <h4>Waiting the Administrators approval</h4>
 
@@ -24,6 +24,14 @@
     {% elif advert['status'] == 'PUBLISHED' %}
 
         <h4>The advert is published</h4>
+
+    {% else %}
+
+        <form action="{{ url_for('hr_request_advert_approval', job_id=job_id, advert_id=advert._id, action='approve') }}" method="post" >
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            The advert is in DRAFT -
+            <button type="submit" class="btn btn-link" value="publish">Would you like to request the approval?</button>
+        </form>
 
     {% endif %}
 

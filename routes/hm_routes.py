@@ -2,21 +2,23 @@ from routes.hiring_manager.company_routes import company_info, \
     company_info_post
 from routes.hiring_manager.job_routes import company_jobs, \
     create_company_job, create_company_job_post, edit_company_job_view, \
-    edit_company_job_view_post
+    edit_company_job_view_post, request_advert_approval_post
 
-HR_COMPANY = '/hr/company'
-HR_COMPANY_JOBS = '/hr/company/jobs'
+HM_COMPANY = '/hr/company'
+HM_COMPANY_JOBS = '/hr/company/jobs'
 HR_COMPANY_JOB = '/hr/company/job'
 HR_COMPANY_JOB_EDIT = '/hr/company/job/<job_id>'
+HR_COMPANY_ADVERT_APPROVAL = \
+    '/hr/company/job/<job_id>/requestapproval/<advert_id>'
 
 
 def add_hm_routes(app):
-    app.add_url_rule(HR_COMPANY, 'hr_company_info',
+    app.add_url_rule(HM_COMPANY, 'hr_company_info',
                      company_info, methods=['GET'])
-    app.add_url_rule(HR_COMPANY, 'hr_company_info_post',
+    app.add_url_rule(HM_COMPANY, 'hr_company_info_post',
                      company_info_post, methods=['POST'])
 
-    app.add_url_rule(HR_COMPANY_JOBS, 'hr_company_jobs',
+    app.add_url_rule(HM_COMPANY_JOBS, 'hr_company_jobs',
                      company_jobs, methods=['GET'])
     app.add_url_rule(HR_COMPANY_JOB, 'hr_create_company_job',
                      create_company_job, methods=['GET'])
@@ -27,3 +29,6 @@ def add_hm_routes(app):
                      edit_company_job_view, methods=['GET'])
     app.add_url_rule(HR_COMPANY_JOB_EDIT, 'hr_edit_company_job_post',
                      edit_company_job_view_post, methods=['POST'])
+
+    app.add_url_rule(HR_COMPANY_ADVERT_APPROVAL, 'hr_request_advert_approval',
+                     request_advert_approval_post, methods=['POST'])
