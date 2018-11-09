@@ -1,6 +1,7 @@
 {% macro redner_jobs_table(jobs, edit_job_endpoint) %}
     <div class="d-block my-4">
-        <h3 class="my-4 d-inline">Review and Edit Jobs</h3><span class="d-inline ml-4"><a href="">(Click for jobs pending approval)</a></span>
+        <h3 class="my-4 d-inline">Review and Edit Jobs</h3>
+        <span class="d-inline ml-4"><a href="{{ url_for('jobs', filter='approval') }}">(Click for jobs pending approval)</a></span>
     </div>
     <table class="table table-striped">
         <thead>

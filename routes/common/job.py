@@ -2,6 +2,14 @@ from lib.core_integration import post_json_to_core
 from lib.errors import flash_exception
 
 
+class AdvertStatus:
+    DRAFT = 'DRAFT'
+    REQUEST_APPROVAL = 'REQUEST_APPROVAL'
+    APPROVED = 'APPROVED'
+    PAYED = 'PAYED'
+    PUBLISHED = 'PUBLISHED'
+
+
 def edit_job(form, job_id):
 
     if form.validate_on_submit():
