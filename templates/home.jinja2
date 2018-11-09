@@ -17,6 +17,9 @@
                 <a href="{{ url_for('jobs') }}" class="list-group-item list-group-item-action">
                     Job List
                 </a>
+                <a href="{{ url_for('jobs', filter='approval') }}" class="list-group-item list-group-item-action">
+                    Requested Approval Job List
+                </a>
                 <a href="{{ url_for('create_job') }}" class="list-group-item list-group-item-action">
                     Create Job
                 </a>

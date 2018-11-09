@@ -5,6 +5,7 @@ from lib.auth import login_required, ADMIN_ROLE
 from lib.core_integration import get_json_from_core
 from lib import template_list
 from routes.common import job as common
+from routes.common.job import AdvertStatus
 
 
 @login_required(ADMIN_ROLE)
@@ -57,8 +58,12 @@ def edit_job_post(job_id):
 
 @login_required(ADMIN_ROLE)
 def jobs_view():
-    jobs = get_json_from_core('/api/job')
+    url = '/api/job'
+    if request.args.get('filter') == 'approval':
+        url += "?filter={advert_status}"\
+            .format(advert_status=AdvertStatus.REQUEST_APPROVAL)
 
+    jobs = get_json_from_core(url)
     return render_template(template_list.ADMIN_JOB_LIST,
                            jobs=jobs,
                            edit_job_endpoint='edit_job')
