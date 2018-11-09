@@ -50,10 +50,10 @@
 
 {% endmacro %}
 
-{% macro render_submit(label="Submit") %}
+{% macro render_submit(label="Submit", disabled=False) %}
 
     <div class="pull-right mt-4">
-        <button class="btn btn-yellow triangle-outter" role="button">
+        <button class="btn btn-yellow triangle-outter" role="button" {{ 'disabled' if disabled else '' }}>
             {{ label }} <span class="triangle-inner"></span>
         </button>
     </div>
