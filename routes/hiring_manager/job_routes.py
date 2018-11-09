@@ -17,12 +17,17 @@ def edit_company_job_view(job_id, form=None):
 
     form.populate_form_from_core(job)
 
+    advert = adverts[0]
+    form_type = 'hm_edit'
+    disable_hm_editing = advert['status'] != 'DRAFT' and form_type == 'hm_edit'
+
     return render_template(template_list.COMMON_EDIT_JOB,
                            job_id=job_id,
-                           advert=adverts[0],
+                           advert=advert,
                            form=form,
-                           form_type='hm_edit',
-                           form_action='hr_edit_company_job_post')
+                           form_type=form_type,
+                           form_action='hr_edit_company_job_post',
+                           disable_hm_editing=disable_hm_editing)
 
 
 @login_required(HR_ROLE)
