@@ -49,6 +49,7 @@ def log_in(user):
         "role": user.get('role'),
         "company_id": user.get('company_id')
     }
+    print("log in:", session[SESSION_USER])
 
 
 def get_logged_user():
