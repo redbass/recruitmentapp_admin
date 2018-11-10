@@ -1,0 +1,36 @@
+{% extends '_main_base.jinja2' %}
+{% from "_forms_helpers.jinja2" import render_field, render_submit %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col offset-1">
+            <div class="row">
+                <div class="col-md-7">
+                    <h1 class=" px-3 py-1 page-header mb-4">Edit User</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="offset-lg-1 col-lg-10 col-xl-8">
+            <form action="{{ url_for('create_company_post') }}" method="post">
+
+                {{ render_field(form.username, disabled=True) }}
+                {{ render_field(form.type, disabled=True) }}
+                {{ render_field(form.title, disabled=True) }}
+                {{ render_field(form.first_name, disabled=True) }}
+                {{ render_field(form.last_name, disabled=True) }}
+
+                <h3>Update password</h3>
+                <form action="{{ url_for('create_company_post') }}" method="post">
+                    {{ form.csrf_token() }}
+                    {{ render_field(form.password) }}
+                    {{ render_submit('Update password') }}
+                </form>
+
+            </form>
+        </div>
+    </div>
+
+{% endblock body %}
