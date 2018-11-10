@@ -13,22 +13,33 @@
             </div>
         </div>
         <div class="row">
-            <div class="col offset-1 col-lg-6">
+            <div class="col offset-1">
 
                 <h3 class="my-4">Edit Users</h3>
 
                 <table class="table table-striped ">
                     <thead>
                     <tr>
+                        <th scope="col">#</th>
                         <th scope="col">Username</th>
                         <th scope="col">Type</th>
+                        <th scope="col" class="table-action -first">
+                            <span class="d-none">Column with View and Edit button</span>
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for user in users %}
                         <tr>
-                            <td>{{ users.email }}</td>
-                            <td>{{ users.type }}</td>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ user._id }}</td>
+                            <td>{{ user.type }}</td>
+                            <td class="table-action -first">
+                                <a class="btn btn-goto" href="#">
+                                    View or Edit details
+                                    <div class="chevron -yellow">&nbsp;</div>
+                                </a>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
