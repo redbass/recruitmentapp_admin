@@ -1,0 +1,41 @@
+{% extends '_main_base.jinja2' %}
+
+{% block body %}
+
+    <div class="">
+        <div class="row">
+            <div class="col offset-1">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1 class=" px-3 py-1 page-header mb-4">Users List</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col offset-1 col-lg-6">
+
+                <h3 class="my-4">Edit Users</h3>
+
+                <table class="table table-striped ">
+                    <thead>
+                    <tr>
+                        <th scope="col">Username</th>
+                        <th scope="col">Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ users.email }}</td>
+                            <td>{{ users.type }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}

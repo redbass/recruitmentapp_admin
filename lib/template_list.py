@@ -8,6 +8,7 @@ SIGN_IN_COMPANY = "admin/sign_in_company.jinja2"
 ADMIN_CREATE_COMPANY = "admin/create_company.jinja2"
 ADMIN_COMPANY_LIST = "admin/companies.jinja2"
 ADMIN_JOB_LIST = 'admin/jobs.jinja2'
+ADMIN_USERS = 'admin/users.jinja2'
 
 # COMMON
 COMMON_EDIT_COMPANY = "common/edit_company.jinja2"
