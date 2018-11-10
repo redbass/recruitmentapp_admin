@@ -2,9 +2,10 @@ from routes.admin.company_routes import create_company_view, \
     create_company_post, edit_company_view, edit_company_post, companies_view
 from routes.admin.job_routes import create_job_post, \
     edit_job_view, edit_job_post, jobs_view, create_job_view
-from routes.admin.user import users_view
+from routes.admin.user import users_view, user_view
 
 ADMIN_USERS = '/admin/users'
+ADMIN_USER = '/admin/users/<user_id>'
 
 ADMIN_JOBS = '/admin/jobs'
 ADMIN_JOBS_ADD = '/admin/jobs/add'
@@ -26,6 +27,8 @@ def add_admin_routes(app):
 def _add_user_routes(app):
     app.add_url_rule(ADMIN_USERS, 'admin_users',
                      users_view, methods=['GET'])
+    app.add_url_rule(ADMIN_USER, 'admin_user',
+                     user_view, methods=['GET'])
 
 
 def _add_job_routes(app):
