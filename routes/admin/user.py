@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template, request, redirect, url_for
 
 from lib import template_list
 from lib.auth import login_required, ADMIN_ROLE
@@ -31,4 +31,4 @@ def update_user_password(user_id):
     post_json_to_core('/api/user/' + user_id,
                       json={'password': form.password.data})
 
-    return render_template(template_list.ADMIN_USER, form=form)
+    return redirect(url_for('admin_users'), code=302)
