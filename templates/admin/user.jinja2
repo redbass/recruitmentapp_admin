@@ -14,21 +14,18 @@
     </div>
     <div class="row mt-4">
         <div class="offset-lg-1 col-lg-10 col-xl-8">
-            <form action="{{ url_for('create_company_post') }}" method="post">
 
-                {{ render_field(form.username, disabled=True) }}
-                {{ render_field(form.type, disabled=True) }}
-                {{ render_field(form.title, disabled=True) }}
-                {{ render_field(form.first_name, disabled=True) }}
-                {{ render_field(form.last_name, disabled=True) }}
+            {{ render_field(form.username, disabled=True) }}
+            {{ render_field(form.type, disabled=True) }}
+            {{ render_field(form.title, disabled=True) }}
+            {{ render_field(form.first_name, disabled=True) }}
+            {{ render_field(form.last_name, disabled=True) }}
 
-                <h3>Update password</h3>
-                <form action="{{ url_for('create_company_post') }}" method="post">
-                    {{ form.csrf_token() }}
-                    {{ render_field(form.password) }}
-                    {{ render_submit('Update password') }}
-                </form>
-
+            <h3>Update password</h3>
+            <form action="{{ url_for('update_user_password', user_id=form.username.data) }}" method="post">
+                {{ form.csrf_token() }}
+                {{ render_field(form.password) }}
+                {{ render_submit('Update password') }}
             </form>
         </div>
     </div>
