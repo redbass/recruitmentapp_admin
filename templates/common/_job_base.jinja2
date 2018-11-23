@@ -14,6 +14,9 @@
     {{ get_location__by_postcode(form) }}
     <br>
 
+    {{ render_selectfield(form.rate_type) }}
+    {{ render_field(form.rate_value) }}
+
     {% if form_type in ('create_admin', 'create_hr') %}
         {{ render_selectfield(form.duration) }}
     {% endif %}

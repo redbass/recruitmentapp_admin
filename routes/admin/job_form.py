@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, validators, SelectField, DecimalField
 from wtforms.widgets import HiddenInput
 
-from lib.enums import DURATIONS
+from lib.enums import DURATIONS, RATES
 from lib.widgets import SelectFieldAsync, LongStringField
 from lib.core_integration import get_json_from_core
 
@@ -46,17 +46,33 @@ class JobBaseForm(FlaskForm):
         validators=[validators.DataRequired()],
         widget=HiddenInput())
 
-    def populate_form_from_core(self, company):
-        self.title.data = company.get('title', '')
-        self.description.data = company.get('description', '')
+    rate_type = SelectField(
+        'Rate type',
+        choices=RATES,
+        validators=[validators.DataRequired()]
+    )
 
-        location = company.get('location', {})
+    rate_value = DecimalField(
+        'Rate value in £',
+        places=2,
+        default=0.00,
+        validators=[validators.DataRequired()])
+
+    def populate_form_from_core(self, job):
+        self.title.data = job.get('title', '')
+        self.description.data = job.get('description', '')
+
+        location = job.get('location', {})
         self.postcode.data = location.get('postcode', '')
 
         coordinates = location.get('geo_location', {}).get('coordinates', [])
         self.latitude.data = coordinates[1]
         self.longitude.data = coordinates[0]
         self.admin_district.data = location.get('admin_district')
+
+        rate = job.get('rate')
+        self.rate_type.data = rate.get('type')
+        self.rate_value.data = rate.get('value')
 
     def create_job_core_from_form(self):
         job = {
@@ -67,19 +83,18 @@ class JobBaseForm(FlaskForm):
                 "admin_district": self.data.get('admin_district'),
                 "latitude": float(self.data.get('latitude')),
                 "longitude": float(self.data.get('longitude'))
+            },
+            "duration_days": self.data.get('duration'),
+            "rate": {
+                "type": self.data.get('rate_type'),
+                "value": float(self.data.get('rate_value'))
             }
         }
 
         job_not_implemented_fields = {
-            "duration_days": 28,
             "metadata": {
                 "trades": ["software_engineer"],
                 "job_type": "developer"
-            },
-            "rate": {
-                "type": "other",
-                "units": "lines of code",
-                "value": 0.1
             }
         }
 
