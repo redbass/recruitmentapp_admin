@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, validators, SelectField, DecimalField
 from wtforms.widgets import HiddenInput
 
-from lib.enums import DURATIONS, RATES
+from lib.enums import DURATIONS, RATES, JOB_TITLES
 from lib.widgets import SelectFieldAsync, LongStringField
 from lib.core_integration import get_json_from_core
 
@@ -46,6 +46,12 @@ class JobBaseForm(FlaskForm):
         validators=[validators.DataRequired()],
         widget=HiddenInput())
 
+    job_type = SelectField(
+        'Job title',
+        choices=JOB_TITLES,
+        validators=[validators.DataRequired()]
+    )
+
     rate_type = SelectField(
         'Rate type',
         choices=RATES,
@@ -74,6 +80,9 @@ class JobBaseForm(FlaskForm):
         self.rate_type.data = rate.get('type')
         self.rate_value.data = rate.get('value')
 
+        metadata = job.get('metadata')
+        self.job_type.data = metadata.get('job_type')
+
     def create_job_core_from_form(self):
         job = {
             "title": self.data.get('title'),
@@ -88,17 +97,13 @@ class JobBaseForm(FlaskForm):
             "rate": {
                 "type": self.data.get('rate_type'),
                 "value": float(self.data.get('rate_value'))
-            }
-        }
-
-        job_not_implemented_fields = {
+            },
             "metadata": {
-                "trades": ["software_engineer"],
-                "job_type": "developer"
+                "job_type": self.data.get('job_type')
             }
         }
 
-        job.update(job_not_implemented_fields)
+        job["metadata"]["trades"] = [""]
 
         return job
 

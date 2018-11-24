@@ -30,3 +30,10 @@ RATES = [
     ("price", "Price"),
     ("salary", "Salary")
 ]
+
+JOB_TITLES = [
+    (None, "Select a duration..."),
+    ("electrician", "Electrician"),
+    ("plumber", "Plumber"),
+    ("carpenter", "Carpenter")
+]
