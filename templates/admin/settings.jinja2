@@ -1,0 +1,46 @@
+{% extends '_main_base.jinja2' %}
+{% from "_forms_helpers.jinja2" import render_field, render_submit %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col offset-1">
+            <div class="row">
+                <div class="col-md-7">
+                    <h1 class=" px-3 py-1 page-header mb-4">Settings</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="offset-lg-1 col-lg-10 col-xl-8">
+
+            <h3>Picklists</h3>
+
+            {{ render_picker(label='Job titles', options=job_title) }}
+            {{ render_picker(label='Job Rates', options=job_rates) }}
+            {{ render_picker(label='Job Durations', options=job_duration) }}
+            {{ render_picker(label='Company Trades', options=company_trades) }}
+
+        </div>
+    </div>
+
+{% endblock body %}
+
+
+
+{% macro render_picker(label, options)%}
+<div class="form-group row">
+    <div class="col-lg-5">
+        <label class="col-form-label font-weight-bold" for="company_id">{{ label }}</label>
+    </div>
+    <div class="col-lg-7 has-icon">
+        <select class="form-control" id="company_id" name="company_id" required="">
+        {% for option in options %}
+            <option value="{{ option[0] }}">{{ option[1] }}</option>
+        {% endfor %}
+        </select>
+        <div class="form-icons select-icon"><div class="yellow-chevron">&nbsp;</div></div>
+    </div>
+</div>
+{% endmacro %}
