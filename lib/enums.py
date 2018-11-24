@@ -24,7 +24,7 @@ DURATIONS = [
 ]
 
 RATES = [
-    (None, "Select a duration..."),
+    (None, "Select a rate..."),
     ("hourly_rate", "Hourly rate"),
     ("day_rate", "Day rate"),
     ("price", "Price"),
@@ -32,7 +32,7 @@ RATES = [
 ]
 
 JOB_TITLES = [
-    (None, "Select a duration..."),
+    (None, "Select a title..."),
     ("electrician", "Electrician"),
     ("plumber", "Plumber"),
     ("carpenter", "Carpenter")
