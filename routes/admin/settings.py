@@ -1,12 +1,12 @@
 from io import StringIO
 
-from flask import render_template, request
+from flask import render_template, request, Response
 from flask.json import jsonify
 
 from lib import template_list
 from lib.auth import login_required, ADMIN_ROLE
 from lib.core_integration import get_json_from_core, post_json_to_core
-from lib.picklist import csv_to_json_values
+from lib.picklist import csv_to_json_values, json_values_to_csv
 
 
 def get_picklist_values(entity_name):
@@ -38,3 +38,15 @@ def upload_picklist():
                       is_admin=False, json=result)
 
     return jsonify({})
+
+
+@login_required(ADMIN_ROLE)
+def download_picklist(name):
+    values = get_picklist_values(entity_name=name)
+    csv = json_values_to_csv(json_values=values)
+
+    return Response(
+        csv,
+        mimetype="text/csv",
+        headers={"Content-disposition":
+                 "attachment; filename={name}.csv".format(name=name)})
