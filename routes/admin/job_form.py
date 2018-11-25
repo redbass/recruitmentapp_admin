@@ -1,10 +1,10 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, validators, SelectField, DecimalField
+from wtforms import StringField, validators, DecimalField
 from wtforms.widgets import HiddenInput
 
-from lib.enums import DURATIONS, RATES, JOB_TITLES
-from lib.widgets import SelectFieldAsync, LongStringField
 from lib.core_integration import get_json_from_core
+from lib.widgets import SelectFieldAsync, LongStringField
+from routes.admin.settings import get_picklist_values
 
 
 def company_choices_fn():
@@ -46,15 +46,15 @@ class JobBaseForm(FlaskForm):
         validators=[validators.DataRequired()],
         widget=HiddenInput())
 
-    job_type = SelectField(
+    job_type = SelectFieldAsync(
         'Job title',
-        choices=JOB_TITLES,
+        choices_fn=lambda: get_picklist_values('job_titles'),
         validators=[validators.DataRequired()]
     )
 
-    rate_type = SelectField(
+    rate_type = SelectFieldAsync(
         'Rate type',
-        choices=RATES,
+        choices_fn=lambda: get_picklist_values('job_rates'),
         validators=[validators.DataRequired()]
     )
 
@@ -116,10 +116,9 @@ class JobCreateForm(JobBaseForm):
         validators=[validators.DataRequired()]
     )
 
-    duration = SelectField(
+    duration = SelectFieldAsync(
         'Duration',
-        choices=DURATIONS,
-        coerce=lambda c: int(c) if c else None,
+        choices_fn=lambda: get_picklist_values('job_durations'),
         validators=[validators.DataRequired()]
     )
 

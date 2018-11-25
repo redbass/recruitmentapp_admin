@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="row mt-4">
-        <div class="offset-lg-1 col-lg-10 col-xl-8">
+        <div class="offset-lg-1 col-lg-10 col-xl-10">
 
             <h3>Picklists</h3>
 
@@ -31,16 +31,19 @@
 
 {% macro render_picker(label, options)%}
 <div class="form-group row">
-    <div class="col-lg-5">
+    <div class="col-lg-3">
         <label class="col-form-label font-weight-bold" for="company_id">{{ label }}</label>
     </div>
-    <div class="col-lg-7 has-icon">
+    <div class="col-lg-5 has-icon">
         <select class="form-control" id="company_id" name="company_id" required="">
         {% for option in options %}
             <option value="{{ option[0] }}">{{ option[1] }}</option>
         {% endfor %}
         </select>
         <div class="form-icons select-icon"><div class="yellow-chevron">&nbsp;</div></div>
+    </div>
+    <div class="col-lg-4">
+        <a href="#">upload new list...</a>
     </div>
 </div>
 {% endmacro %}

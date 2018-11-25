@@ -35,15 +35,17 @@
 
 {% endmacro %}
 
-{% macro render_selectfield(field) %}
+{% macro render_selectfield(field, is_multiple=False) %}
 
     <div class="form-group row">
         <div class="col-lg-5">
             {{ field.label(class='col-form-label font-weight-bold') }}
         </div>
-        <div class="col-lg-7 has-icon">
+        <div class="col-lg-7 {{ '' if is_multiple else 'has-icon' }}">
             {{ field(class='form-control', **kwargs)|safe }}
+            {% if not is_multiple %}
             <div class="form-icons select-icon"><div class="yellow-chevron">&nbsp;</div></div>
+            {% endif %}
         </div>
         {{ _render_errors(field.errors) }}
     </div>

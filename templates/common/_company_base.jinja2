@@ -20,7 +20,7 @@
     {% endif %}
 
     {{ render_field(form.description, rows="5") }}
-    {{ render_selectfield(form.trades) }}
+    {{ render_selectfield(form.trades, is_multiple=True) }}
     {{ render_field(form.vat) }}
 
     <div class="form-group row">
