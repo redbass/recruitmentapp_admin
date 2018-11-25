@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import validators, StringField, SelectMultipleField
+from wtforms import validators, StringField
 
-from lib.enums import TRADES_VALUES
-from lib.widgets import LongStringField
+from lib.widgets import LongStringField, SelectMultipleFieldAsync
+from routes.admin.settings import get_picklist_values
 
 
 class CompanyForm(FlaskForm):
@@ -17,7 +17,9 @@ class CompanyForm(FlaskForm):
         validators=[validators.Length(min=1, max=500),
                     validators.DataRequired()])
 
-    trades = SelectMultipleField('Trades', choices=TRADES_VALUES)
+    trades = SelectMultipleFieldAsync(
+        'Trades',
+        choices_fn=lambda: get_picklist_values('company_trades'))
 
     vat = StringField(
         'Company Vat Number',
