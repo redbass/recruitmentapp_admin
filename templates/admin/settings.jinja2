@@ -82,7 +82,7 @@
     <div class="col-lg-3">
         <label class="col-form-label font-weight-bold" for="company_id">{{ label }}</label>
     </div>
-    <div class="col-lg-6 has-icon">
+    <div class="col-lg-5 has-icon">
         <select class="form-control" id="company_id" name="company_id" required="">
         {% for option in options %}
             <option value="{{ option['key'] }}">{{ option['value'] }}</option>
@@ -90,8 +90,11 @@
         </select>
         <div class="form-icons select-icon"><div class="yellow-chevron">&nbsp;</div></div>
     </div>
-    <div class="col-lg-3">
-        <a href="#" onclick="browse('{{ picklist_name }}')">upload new list...</a>
+    <div class="col-lg-2">
+        <a href="{{ url_for('download_picklist', name=picklist_name)  }}" target="_blank">Download list...</a>
+    </div>
+    <div class="col-lg-2">
+        <a href="#" onclick="browse('{{ picklist_name }}')">Upload new list...</a>
     </div>
 </div>
 {% endmacro %}
