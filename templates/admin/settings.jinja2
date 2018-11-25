@@ -16,12 +16,59 @@
         <div class="offset-lg-1 col-lg-10 col-xl-10">
 
             <h3>Picklists</h3>
+            <form id='file-form' method="post">
+                {{ render_picker(label='Job titles', options=job_title, picklist_name='job_titles') }}
+                {{ render_picker(label='Job rates', options=job_rates, picklist_name='job_rates') }}
+                {{ render_picker(label='Job durations', options=job_duration, picklist_name='job_durations') }}
+                {{ render_picker(label='Job locations', options=job_locations, picklist_name='job_locations') }}
+                {{ render_picker(label='Company Trades', options=company_trades, picklist_name='company_trades') }}
 
-            {{ render_picker(label='Job titles', options=job_title) }}
-            {{ render_picker(label='Job rates', options=job_rates) }}
-            {{ render_picker(label='Job durations', options=job_duration) }}
-            {{ render_picker(label='Job locations', options=job_locations) }}
-            {{ render_picker(label='Company Trades', options=company_trades) }}
+                <input type="file" id="selected_file" name="file" accept="text/*,.csv" onchange="browser_closed()" hidden>
+                <input type="text" id="picklist_name" name="picklist_name" hidden>
+                <input type="submit" id='submit_picklist' hidden>
+
+                <script>
+                    function browse(picklist_name){
+                        document.getElementById('picklist_name').value = picklist_name;
+                        document.getElementById('selected_file').click();
+                    }
+
+                    function browser_closed(){
+                        var form = document.getElementById('file-form');
+                        var formData = new FormData(form);
+                        var fileSelect = document.getElementById('selected_file');
+                        var files = fileSelect.files;
+
+                        // Loop through each of the selected files.
+                        for (var i = 0; i < files.length; i++) {
+                            var file = files[i];
+
+                            // Check the file type.
+                            if (file.type.match('text.*,.csv')) {
+                                continue;
+                            }
+
+                            formData.append('file', file, file.name);
+                        }
+
+                        formData.append('csrf_token', '{{ csrf_token() }}');
+
+                        var xhr = new XMLHttpRequest();
+                        xhr.open('POST', '{{ url_for('upload_picklist') }}', true);
+                        xhr.onload = function () {
+                            debugger
+                            if (xhr.status !== 200) {
+                                response = JSON.parse(xhr.response)
+                                alert(response['error']);
+                            }
+                            window.location = "{{ url_for('admin_settings') }}"
+                        };
+
+                        xhr.send(formData);
+                    }
+                </script>
+            </form>
+
 
         </div>
     </div>
@@ -30,12 +77,12 @@
 
 
 
-{% macro render_picker(label, options)%}
+{% macro render_picker(label, options, picklist_name)%}
 <div class="form-group row">
     <div class="col-lg-3">
         <label class="col-form-label font-weight-bold" for="company_id">{{ label }}</label>
     </div>
-    <div class="col-lg-5 has-icon">
+    <div class="col-lg-6 has-icon">
         <select class="form-control" id="company_id" name="company_id" required="">
         {% for option in options %}
             <option value="{{ option['key'] }}">{{ option['value'] }}</option>
@@ -43,8 +90,8 @@
         </select>
         <div class="form-icons select-icon"><div class="yellow-chevron">&nbsp;</div></div>
     </div>
-    <div class="col-lg-4">
-        <a href="#">upload new list...</a>
+    <div class="col-lg-3">
+        <a href="#" onclick="browse('{{ picklist_name }}')">upload new list...</a>
     </div>
 </div>
 {% endmacro %}
