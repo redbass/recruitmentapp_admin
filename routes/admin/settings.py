@@ -6,10 +6,8 @@ from lib.core_integration import get_json_from_core
 
 
 def get_picklist_values(entity_name):
-    entities = get_json_from_core(path='/api/picklist/' + entity_name,
-                                  is_admin=False)
-
-    return [(entity.get('key'), entity.get('value')) for entity in entities]
+    return get_json_from_core(path='/api/picklist/' + entity_name,
+                              is_admin=False)
 
 
 @login_required(ADMIN_ROLE)
@@ -19,4 +17,5 @@ def settings_view():
         company_trades=get_picklist_values('company_trades'),
         job_title=get_picklist_values('job_titles'),
         job_duration=get_picklist_values('job_durations'),
+        job_locations=get_picklist_values('job_locations'),
         job_rates=get_picklist_values('job_rates'))

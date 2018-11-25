@@ -18,8 +18,9 @@
             <h3>Picklists</h3>
 
             {{ render_picker(label='Job titles', options=job_title) }}
-            {{ render_picker(label='Job Rates', options=job_rates) }}
-            {{ render_picker(label='Job Durations', options=job_duration) }}
+            {{ render_picker(label='Job rates', options=job_rates) }}
+            {{ render_picker(label='Job durations', options=job_duration) }}
+            {{ render_picker(label='Job locations', options=job_locations) }}
             {{ render_picker(label='Company Trades', options=company_trades) }}
 
         </div>
@@ -37,7 +38,7 @@
     <div class="col-lg-5 has-icon">
         <select class="form-control" id="company_id" name="company_id" required="">
         {% for option in options %}
-            <option value="{{ option[0] }}">{{ option[1] }}</option>
+            <option value="{{ option['key'] }}">{{ option['value'] }}</option>
         {% endfor %}
         </select>
         <div class="form-icons select-icon"><div class="yellow-chevron">&nbsp;</div></div>
