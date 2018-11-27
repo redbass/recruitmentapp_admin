@@ -10,8 +10,10 @@ from lib.picklist import csv_to_json_values, json_values_to_csv
 
 
 def get_picklist_values(entity_name):
-    return get_json_from_core(path='/api/picklist/' + entity_name,
-                              is_admin=False)
+    results = get_json_from_core(path='/api/picklist/' + entity_name,
+                                 is_admin=False)
+
+    return [(p['key'], p['value']) for p in results]
 
 
 @login_required(ADMIN_ROLE)
