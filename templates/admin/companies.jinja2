@@ -39,10 +39,10 @@
                         <tr>
                             <td>{{ company.name }}</td>
                             <td>
-                                {{ (company.metadata.trades if 'trades' in company.metadata) | join(', ') }}
+                                {{ (company.metadata.trades if 'metadata' in company and 'trades' in company.metadata) | join(', ') }}
                             </td>
                             <td>
-                                {% with addr = company.contacts.address %}
+                                {% with addr = company.contacts.address if company and 'contacts' in company else {} %}
                                     {{ addr.number }} {{ addr.street }} {{ addr.city }}
                                 {% endwith %}
                             </td>
