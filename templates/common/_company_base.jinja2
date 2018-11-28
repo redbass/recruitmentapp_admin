@@ -79,11 +79,16 @@
     </div>
 {% endmacro %}
 
-{% macro render_company_logo_modal_javascript(company_id) %}
+{% macro render_company_logo_modal_javascript(company_id, form_action) %}
 
     <script>
 
         function onSubmit(e) {
+            {% if form_action == 'hr_company_info_post' %}
+                var redirect_url = "{{ url_for('hr_company_info') }}";
+            {% else %}
+                var redirect_url = "{{ url_for('edit_company', company_id=company_id) }}";
+            {% endif %}
             var formData = new FormData(form);
             var fileSelect = document.getElementById('file-select');
             var files = fileSelect.files
@@ -109,6 +114,7 @@
                     response = JSON.parse(xhr.response)
                     alert(response['error']);
                 }
+                window.location = redirect_url;
             };
 
             xhr.send(formData);
