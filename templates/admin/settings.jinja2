@@ -85,7 +85,7 @@
     <div class="col-lg-5 has-icon">
         <select class="form-control" id="company_id" name="company_id" required="">
         {% for option in options %}
-            <option value="{{ option['key'] }}">{{ option['value'] }}</option>
+            <option value="{{ option[0] }}">{{ option[1] }}</option>
         {% endfor %}
         </select>
         <div class="form-icons select-icon"><div class="yellow-chevron">&nbsp;</div></div>
