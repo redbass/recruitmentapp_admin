@@ -23,12 +23,16 @@ def request_access_jwt(username, password):
     }
     response = requests.post(url, json=request_json)
 
-    if response.status_code is not 200:
-        raise AuthenticationError("Invalid credentials")
+    if response.status_code is 200:
+        _set_session_login_data(response.json())
 
-    _set_session_login_data(response.json())
+        return response
 
-    return response
+    error = response.json()
+    if response.status_code == 401 and 'reason' in error:
+        raise AuthenticationError(error['reason'])
+
+    raise AuthenticationError('Login error')
 
 
 def refresh_access_token():
