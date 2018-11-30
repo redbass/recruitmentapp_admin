@@ -1,9 +1,10 @@
 from functools import wraps
 
 from flask import render_template, request, session, redirect, url_for, \
-    flash, get_flashed_messages
+    flash
 
 from lib import template_list
+from lib.errors import flash_exception
 from lib.exceptions import AuthenticationError
 from lib.core_integration import request_access_jwt
 
@@ -15,8 +16,7 @@ HR_ROLE = 'HIRING_MANAGER'
 
 
 def login_view():
-    messages = get_flashed_messages()
-    return render_template(template_list.LOGIN, messages=messages)
+    return render_template(template_list.LOGIN)
 
 
 def login_post():
@@ -28,7 +28,7 @@ def login_post():
         respone = request_access_jwt(username, password)
         user = respone.json()
     except AuthenticationError as e:
-        flash(str(e))
+        flash_exception(e)
         return login_view()
 
     log_in(user)
