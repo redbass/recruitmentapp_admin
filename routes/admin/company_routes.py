@@ -4,7 +4,7 @@ from lib import template_list
 from routes.admin.company_form import CompanyForm
 from lib.auth import login_required, ADMIN_ROLE
 from lib.core_integration import post_json_to_core, get_json_from_core
-from lib.errors import flash_exception
+from lib.errors import flash_exception, flash_error
 from routes.common.company import edit_company
 
 
@@ -32,10 +32,10 @@ def create_company_post():
 
 
 @login_required(ADMIN_ROLE)
-def edit_company_view(company_id):
+def edit_company_view(company_id, form=None):
     company = get_json_from_core('/api/company/' + company_id)
 
-    form = CompanyForm(request.form)
+    form = form if form else CompanyForm(request.form)
 
     form.populate_form_from_core(company)
 
@@ -54,7 +54,8 @@ def edit_company_post(company_id):
     if edited:
         return redirect(url_for('companies'))
 
-    return render_template(template_list.COMMON_EDIT_COMPANY, form=form)
+    flash_error("Company not saved")
+    return edit_company_view(form)
 
 
 @login_required(ADMIN_ROLE)
