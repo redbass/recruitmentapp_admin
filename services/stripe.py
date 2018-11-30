@@ -1,8 +1,9 @@
-from flask import request, url_for, redirect, flash
+from flask import request, url_for, redirect
 
 from config import settings
 from lib.auth import login_required
 from lib.core_integration import post_json_to_core
+from lib.errors import flash_exception
 from lib.exceptions import APICallError
 
 DEFAULT_CURRENCY = 'GBP'
@@ -30,7 +31,7 @@ def create_charge(job_id, advert_id):
     try:
         post_json_to_core('/api/stripe/charge', json=data, is_admin=False)
     except APICallError as e:
-        flash(str(e))
+        flash_exception(e)
 
     return redirect(url_for('hr_edit_company_job',
                             job_id=job_id,
