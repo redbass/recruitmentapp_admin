@@ -83,7 +83,8 @@ class JobBaseForm(FlaskForm):
         coordinates = location.get('geo_location', {}).get('coordinates', [])
         self.latitude.data = coordinates[1]
         self.longitude.data = coordinates[0]
-        self.admin_district.data = location.get('admin_district')
+        self.admin_district.data = location.get('admin_district',
+                                                "Not provided")
 
         rate = job.get('rate')
         self.rate_type.data = rate.get('type')
@@ -110,8 +111,7 @@ class JobBaseForm(FlaskForm):
             "metadata": {
                 "job_type": self.data.get('job_type'),
                 "job_duration_days": int(self.data.get('job_duration_weeks'))
-            },
-            "duration_days": int(self.data.get('duration'))
+            }
         }
 
         job["metadata"]["trades"] = [""]
@@ -135,12 +135,12 @@ class JobCreateForm(JobBaseForm):
         validators=[validators.DataRequired()]
     )
 
-    def populate_form_from_core(self, company):
-        super().populate_form_from_core(company)
+    def populate_form_from_core(self, job):
+        super().populate_form_from_core(job)
 
-        self.company_id.data = company.get('company_id', '')
+        self.company_id.data = job.get('company_id', '')
 
-        adverts = company.get('adverts', [])
+        adverts = job.get('adverts', [])
         if adverts:
             self.duration.data = adverts[0].get('duration', '')
 
