@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, validators, DecimalField
+from wtforms import StringField, validators, DecimalField, IntegerField
 from wtforms.widgets import HiddenInput
 
 from lib.core_integration import get_json_from_core
@@ -48,21 +48,30 @@ class JobBaseForm(FlaskForm):
 
     job_type = SelectFieldAsync(
         'Job title',
-        choices_fn=lambda: get_picklist_values('job_titles'),
+        choices_fn=lambda: get_picklist_values(
+            'job_titles',
+            none_value="Please select job title"),
+        validators=[validators.DataRequired()]
+    )
+
+    job_duration_weeks = IntegerField(
+        'Job length (weeks)',
         validators=[validators.DataRequired()]
     )
 
     rate_type = SelectFieldAsync(
         'Rate type',
-        choices_fn=lambda: get_picklist_values('job_rates'),
+        choices_fn=lambda: get_picklist_values(
+            'job_rates',
+            none_value="Please select a job type"),
         validators=[validators.DataRequired()]
     )
 
     rate_value = DecimalField(
         'Rate value in £',
         places=2,
-        default=0.00,
-        validators=[validators.DataRequired()])
+        validators=[validators.DataRequired()],
+        render_kw={'placeholder': 0.00})
 
     def populate_form_from_core(self, job):
         self.title.data = job.get('title', '')
@@ -82,6 +91,7 @@ class JobBaseForm(FlaskForm):
 
         metadata = job.get('metadata')
         self.job_type.data = metadata.get('job_type')
+        self.job_duration_weeks.data = metadata.get('job_duration_days')
 
     def create_job_core_from_form(self):
         job = {
@@ -93,14 +103,15 @@ class JobBaseForm(FlaskForm):
                 "latitude": float(self.data.get('latitude')),
                 "longitude": float(self.data.get('longitude'))
             },
-            "duration_days": self.data.get('duration'),
             "rate": {
                 "type": self.data.get('rate_type'),
                 "value": float(self.data.get('rate_value'))
             },
             "metadata": {
-                "job_type": self.data.get('job_type')
-            }
+                "job_type": self.data.get('job_type'),
+                "job_duration_days": int(self.data.get('job_duration_weeks'))
+            },
+            "duration_days": int(self.data.get('duration'))
         }
 
         job["metadata"]["trades"] = [""]
@@ -117,8 +128,10 @@ class JobCreateForm(JobBaseForm):
     )
 
     duration = SelectFieldAsync(
-        'Duration',
-        choices_fn=lambda: get_picklist_values('job_durations'),
+        'Publication Length',
+        choices_fn=lambda: get_picklist_values(
+            'job_durations',
+            none_value="Please select the advert publication length"),
         validators=[validators.DataRequired()]
     )
 
@@ -137,7 +150,7 @@ class JobCreateForm(JobBaseForm):
         job['company_id'] = self.data.get('company_id')
 
         advert = {
-            'duration': self.data.get('duration')
+            'duration': int(self.data.get('duration'))
         }
 
         return job, advert
