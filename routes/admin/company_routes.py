@@ -42,7 +42,8 @@ def edit_company_view(company_id):
     return render_template(template_list.COMMON_EDIT_COMPANY,
                            form=form,
                            company_id=company.get('_id'),
-                           form_action='edit_company_post')
+                           form_action='edit_company_post',
+                           is_company_enabled=company.get('enabled', False))
 
 
 @login_required(ADMIN_ROLE)
@@ -62,3 +63,10 @@ def companies_view():
     companies = get_json_from_core('/api/company')
     return render_template(template_list.ADMIN_COMPANY_LIST,
                            companies=companies)
+
+
+@login_required(ADMIN_ROLE)
+def enable_company_post(company_id, action):
+    post_json_to_core('/api/company/{company_id}/{action}'
+                      .format(company_id=company_id, action=action))
+    return redirect(url_for('edit_company', company_id=company_id))
