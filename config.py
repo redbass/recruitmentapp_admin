@@ -2,6 +2,9 @@ import os
 
 from lib.base_config import BaseConfig
 
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+APP_SRC = os.path.join(APP_ROOT, 'src')
+
 
 class StagingConfig(BaseConfig):
     ENC_SEED = 'toBeUpdated'
