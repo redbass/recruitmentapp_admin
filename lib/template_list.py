@@ -4,7 +4,6 @@ LOGIN = "login.jinja2"
 ERROR = "errpr.jinja"
 
 # ADMIN
-SIGN_IN_COMPANY = "admin/sign_in_company.jinja2"
 ADMIN_CREATE_COMPANY = "admin/create_company.jinja2"
 ADMIN_COMPANY_LIST = "admin/companies.jinja2"
 ADMIN_JOB_LIST = 'admin/jobs.jinja2'

@@ -26,8 +26,8 @@
         {{ render_selectfield(form.duration) }}
     {% endif %}
 
-    {{ render_cancel(url_for('jobs' if 'admin' in form_type else 'hr_company_jobs')) }}
-    {{ render_submit("Create job" if form_type == 'create' else "Save job", disable_hm_editing) }}
+    {% set cancel_url = url_for('jobs' if 'admin' in form_type else 'hr_company_jobs') %}
+    {{ render_submit("Create job" if form_type == 'create' else "Save job", disable_hm_editing, cancel_url) }}
 
 {% endmacro %}
 

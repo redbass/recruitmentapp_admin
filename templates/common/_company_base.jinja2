@@ -45,8 +45,7 @@
     {{ render_field(form.phone_number, bold_label=False) }}
 
 
-    {{ render_cancel(url_for('companies')) }}
-    {{ render_submit(submit_label) }}
+    {{ render_submit(submit_label, cancel_url=url_for('companies')) }}
 
 {% endmacro %}
 
