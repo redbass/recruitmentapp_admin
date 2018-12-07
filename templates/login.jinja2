@@ -2,16 +2,6 @@
 
 {% block body %}
 
-        {% with messages = get_flashed_messages(category_filter=['messages']) %}
-        {% if messages %}
-            <div class="alert alert-primary" role="alert">
-                {% for message in messages %}
-                    {{ message }}<br>
-                {% endfor %}
-            </div>
-        {% endif %}
-        {% endwith %}
-
         <form action="{{ url_for('login_post') }}" method="post">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <div class="form-group">
