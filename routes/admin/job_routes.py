@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for
 
-from lib.errors import flash_error
+from lib.errors import flash_error, flash_message
 from routes.admin.job_form import JobCreateForm, JobEditForm
 from lib.auth import login_required, ADMIN_ROLE
 from lib.core_integration import get_json_from_core
@@ -26,6 +26,7 @@ def create_job_post():
     job_id = common.create_job(form)
 
     if job_id:
+        flash_message("Job created")
         return redirect(url_for('edit_job', job_id=job_id))
 
     return create_job_view(form)
@@ -54,6 +55,7 @@ def edit_job_post(job_id):
     edited = common.edit_job(form, job_id)
 
     if edited:
+        flash_message("Job updated")
         return redirect(url_for('jobs'))
 
     flash_error("Job not saved")
