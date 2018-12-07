@@ -40,7 +40,7 @@
                             <td>{{ company.name }}</td>
                             <td>
                                 {% if 'metadata' in company and 'trades' in company.metadata %}
-                                    {{ (company.metadata.trades ) | map_picklist_value('company_trades') | join(', ') }}
+                                    {{ (company.metadata.trades ) | map_picklist_values('company_trades') }}
                                 {% endif %}
                             </td>
                             <td>
