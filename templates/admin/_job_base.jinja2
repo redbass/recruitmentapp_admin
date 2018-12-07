@@ -2,9 +2,9 @@
 
 {% macro render_advert(job_id=job_id, advert=advert) %}
 
-    {% if advert['status'] == 'DRAFT' %}
+    {% if advert['status'] in ['DRAFT', 'REQUEST_APPROVAL'] %}
         {{ display_draft_advert(job_id=job_id, advert=advert) }}
-    {% elif advert['status'] == 'APPROVED'%}
+    {% elif advert['status'] in ['APPROVED', 'PAYED'] %}
         {{ display_approved_advert(job_id, advert) }}
     {% elif advert['status'] == 'PUBLISHED'%}
         {{ display_published_advert(job_id, advert) }}
@@ -16,7 +16,7 @@
 
     <form action="{{ url_for('set_advert_status', job_id=job_id, advert_id=advert._id, action='approve') }}" method="post" >
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-        The advert is in DRAFT -
+        The advert is in '{{ advert['status'] | map_picklist_values('job_statuses')}}' -
         <button type="submit" class="btn btn-link" value="publish">Approve?</button>
     </form>
 
@@ -27,7 +27,7 @@
 
     <form action="{{ url_for('set_advert_status', job_id=job_id, advert_id=advert._id, action='publish') }}" method="post" >
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-        The advert is APPROVED -
+        The advert is {{ advert['status'] | map_picklist_values('job_statuses') }} -
         <button type="submit" class="btn btn-link" value="publish">Publish?</button>
     </form>
 
