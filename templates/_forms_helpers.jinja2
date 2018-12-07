@@ -52,22 +52,18 @@
 
 {% endmacro %}
 
-{% macro render_submit(label="Submit", disabled=False) %}
+{% macro render_submit(label="Submit", disabled=False, cancel_url=None) %}
 
     <div class="pull-right mt-4">
+        {% if cancel_url %}
+        <a href="{{ cancel_url }}" class="btn btn-black" role="button">
+            Cancel <span class="triangle-inner"></span>
+        </a>
+        &nbsp;
+        {% endif %}
         <button class="btn btn-yellow triangle-outter" role="button" {{ 'disabled' if disabled else '' }}>
             {{ label }} <span class="triangle-inner"></span>
         </button>
-    </div>
-
-{% endmacro %}
-
-{% macro render_cancel(url) %}
-
-    <div class="pull-right mt-4">
-        <a href="{{ url }}" class="btn btn-cancel pull-left" role="button">
-            Cancel <span class="triangle-inner"></span>
-        </a>
     </div>
 
 {% endmacro %}
