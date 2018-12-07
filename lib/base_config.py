@@ -15,6 +15,8 @@ class BaseConfig(object):
 
     STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY', None)
 
+    MARKETING_WEBSITE_URL = os.environ.get('MARKETING_WEBSITE_URL', '#')
+
     def __init__(self):
         self.CORE_APP_URL = os.environ.get('CORE_APP_URL')
         self.CORE_APP_ADMIN_URL = self.CORE_APP_URL + "/admin"
