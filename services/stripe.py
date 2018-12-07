@@ -1,22 +1,13 @@
 from flask import request, url_for, redirect
 
-from config import settings
 from lib.auth import login_required
-from lib.core_integration import post_json_to_core
+from lib.core_integration import post_json_to_core, get_json_from_core
 from lib.errors import flash_exception
 from lib.exceptions import APICallError
 
-DEFAULT_CURRENCY = 'GBP'
-DEFAULT_ADVERT_CHARGE = 2000
-DEFAULT_CHARGE_DESCRIPTION = 'Single Payment'
-
 
 def get_default_stripe_parameters():
-    return {
-        'stripe_public_key': settings.STRIPE_PUBLIC_KEY,
-        'default_currency': DEFAULT_CURRENCY,
-        'default_advert_charge': DEFAULT_ADVERT_CHARGE
-    }
+    return get_json_from_core('/api/stripe/config', is_admin=False)
 
 
 @login_required()

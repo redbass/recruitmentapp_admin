@@ -25,13 +25,13 @@
             {% for advert in job.adverts %}
                 <tr>
                     <td>{{ job.company_name }}</td>
-                    <td>{{ job.metadata.job_type | map_picklist_value('job_titles') | join(', ') }}</td>
+                    <td>{{ job.metadata.job_type | map_picklist_values('job_titles') }}</td>
                     <td>
                         {{ (job.location.admin_district + " - " if job.location.admin_district) }} {{ job.location.postcode }}
                     </td>
                     <td>{{ advert.duration }} days</td>
                     <td>{{ advert.date.created | format_date }}</td>
-                    <td>{{ advert.status }}</td>
+                    <td>{{ advert.status | map_picklist_values('job_statuses') }}</td>
 
                     <td class="table-action -first">
                         <a class="btn btn-goto" href="{{ url_for(edit_job_endpoint, job_id=job._id) }}">

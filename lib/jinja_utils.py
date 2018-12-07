@@ -13,8 +13,8 @@ def register_filters(app):
         datetime_object = strptime(date_str, '%Y-%m-%dT%H:%M:%S.%f')
         return strftime('%H:%M - %Y-%m-%d', datetime_object)
 
-    @app.template_filter('map_picklist_value')
-    def map_picklist_value(values, picklist_name):
+    @app.template_filter('map_picklist_values')
+    def map_picklist_values(values, picklist_name):
         if not isinstance(values, list):
             values = [values]
 
@@ -26,7 +26,7 @@ def register_filters(app):
             if label:
                 result.append(label)
 
-        return result
+        return ', '.join(result)
 
     def _get_picklist_val(val, picklist):
         return next((p[1] for p in picklist if p[0] == val), None)
