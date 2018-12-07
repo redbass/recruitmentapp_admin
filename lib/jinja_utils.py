@@ -1,5 +1,6 @@
 from time import strptime, strftime
 
+from config import settings
 from lib.auth import get_logged_user
 from lib.picklist import get_picklist_values
 from services.stripe import get_default_stripe_parameters
@@ -37,5 +38,6 @@ def register_variables(app):
     def variables():
         return {
             'user_info': get_logged_user(),
-            'stripe_settings': get_default_stripe_parameters
+            'stripe_settings': get_default_stripe_parameters,
+            'marketing_website_url': settings.MARKETING_WEBSITE_URL
         }
