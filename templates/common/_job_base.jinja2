@@ -1,4 +1,5 @@
-{% from "_forms_helpers.jinja2" import render_field, render_submit, render_selectfield, render_search_field %}
+{% from "_forms_helpers.jinja2" import render_field, render_submit, render_selectfield, render_search_field,
+        render_cancel%}
 
 {% macro render_jobs_form_fields(form, form_type, disable_hm_editing=False) %}
 
@@ -25,7 +26,7 @@
         {{ render_selectfield(form.duration) }}
     {% endif %}
 
-
+    {{ render_cancel(url_for('jobs' if 'admin' in form_type else 'hr_company_jobs')) }}
     {{ render_submit("Create job" if form_type == 'create' else "Save job", disable_hm_editing) }}
 
 {% endmacro %}

@@ -62,6 +62,16 @@
 
 {% endmacro %}
 
+{% macro render_cancel(url) %}
+
+    <div class="pull-right mt-4">
+        <a href="{{ url }}" class="btn btn-cancel pull-left" role="button">
+            Cancel <span class="triangle-inner"></span>
+        </a>
+    </div>
+
+{% endmacro %}
+
 {% macro _render_errors(errors) %}
 
     {% if errors %}
