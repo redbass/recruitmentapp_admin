@@ -32,6 +32,6 @@ def csv_to_json_values(csv_file):
 
 
 def json_values_to_csv(json_values):
-    rows = ['{key},{value}'.format(key=row['key'], value=row['value'])
+    rows = ['{key},{value}'.format(key=row[0], value=row[1])
             for row in json_values]
     return '\n'.join(rows)
