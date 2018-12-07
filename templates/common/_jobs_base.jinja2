@@ -7,7 +7,7 @@
         <thead>
         <tr>
             <th scope="col">Posted by</th>
-            <th scope="col">Trade(s)</th>
+            <th scope="col">Job</th>
             <th scope="col">Area</th>
             <th scope="col">Job List Duration</th>
             <th scope="col">Date Posted</th>
@@ -25,7 +25,7 @@
             {% for advert in job.adverts %}
                 <tr>
                     <td>{{ job.company_name }}</td>
-                    <td>{{ job.metadata.trades | join(', ') }}</td>
+                    <td>{{ job.metadata.job_type | map_picklist_value('job_titles') | join(', ') }}</td>
                     <td>
                         {{ (job.location.admin_district + " - " if job.location.admin_district) }} {{ job.location.postcode }}
                     </td>

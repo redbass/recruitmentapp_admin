@@ -4,7 +4,7 @@ from wtforms.widgets import HiddenInput
 
 from lib.core_integration import get_json_from_core
 from lib.widgets import SelectFieldAsync, LongStringField
-from routes.admin.settings import get_picklist_values
+from lib.picklist import get_picklist_values
 
 
 def company_choices_fn():

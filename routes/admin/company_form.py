@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import validators, StringField
 
 from lib.widgets import LongStringField, SelectMultipleFieldAsync
-from routes.admin.settings import get_picklist_values
+from lib.picklist import get_picklist_values
 
 
 class CompanyForm(FlaskForm):

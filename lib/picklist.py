@@ -1,5 +1,19 @@
 import csv
 
+from lib.core_integration import get_json_from_core
+
+
+def get_picklist_values(entity_name, none_value=None, as_dict=False):
+    results = get_json_from_core(path='/api/picklist/' + entity_name,
+                                 is_admin=False)
+
+    values = [(p['key'], p['value']) for p in results]
+
+    if none_value:
+        values.insert(0, ('', none_value))
+
+    return values
+
 
 def csv_to_json_values(csv_file):
     reader = csv.DictReader(csv_file,
