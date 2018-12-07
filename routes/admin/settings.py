@@ -5,20 +5,9 @@ from flask.json import jsonify
 
 from lib import template_list
 from lib.auth import login_required, ADMIN_ROLE
-from lib.core_integration import get_json_from_core, post_json_to_core
-from lib.picklist import csv_to_json_values, json_values_to_csv
-
-
-def get_picklist_values(entity_name, none_value=None):
-    results = get_json_from_core(path='/api/picklist/' + entity_name,
-                                 is_admin=False)
-
-    values = [(p['key'], p['value']) for p in results]
-
-    if none_value:
-        values.insert(0, ('', none_value))
-
-    return values
+from lib.core_integration import post_json_to_core
+from lib.picklist import csv_to_json_values, json_values_to_csv, \
+    get_picklist_values
 
 
 @login_required(ADMIN_ROLE)
