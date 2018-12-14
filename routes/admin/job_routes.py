@@ -72,4 +72,5 @@ def jobs_view():
     jobs = get_json_from_core(url)
     return render_template(template_list.ADMIN_JOB_LIST,
                            jobs=jobs,
+                           archive_endpoint='set_advert_status',
                            edit_job_endpoint='edit_job')

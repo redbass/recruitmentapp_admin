@@ -1,3 +1,4 @@
+from routes.admin.advert import set_advert_status_post
 from routes.admin.company_routes import create_company_view, \
     create_company_post, edit_company_view, edit_company_post, \
     companies_view, enable_company_post
@@ -17,6 +18,8 @@ ADMIN_USER = '/admin/users/<user_id>'
 ADMIN_JOBS = '/admin/jobs'
 ADMIN_JOBS_ADD = '/admin/jobs/add'
 ADMIN_JOB = '/admin/jobs/<job_id>'
+
+ADMIN_SET_ADVERT_STATUS = '/admin/jobs/<job_id>/advert/<advert_id>/<action>'
 
 ADMIN_COMPANIES = '/admin/companies'
 ADMIN_ADD_COMPANY = '/admin/companies/add'
@@ -63,6 +66,9 @@ def _add_job_routes(app):
                      edit_job_view, methods=['GET'])
     app.add_url_rule(ADMIN_JOB, 'edit_job_post',
                      edit_job_post, methods=['POST'])
+
+    app.add_url_rule(ADMIN_SET_ADVERT_STATUS, 'set_advert_status',
+                     set_advert_status_post, methods=['POST'])
 
 
 def _add_company_routes(app):

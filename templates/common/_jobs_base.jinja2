@@ -1,4 +1,4 @@
-{% macro redner_jobs_table(jobs, edit_job_endpoint) %}
+{% macro redner_jobs_table(jobs, edit_job_endpoint, archive_endpoint) %}
     <div class="d-block my-4">
         <h3 class="my-4 d-inline">Review and Edit Jobs</h3>
         <span class="d-inline ml-4"><a href="{{ url_for('jobs', filter='approval') }}">(Click for jobs pending approval)</a></span>
@@ -22,7 +22,9 @@
         </thead>
         <tbody>
         {% for job in jobs %}
+            {% set job_index = loop.index %}
             {% for advert in job.adverts %}
+                {% set popup_index = (10000 * job_index) +  loop.index%}
                 <tr>
                     <td>{{ job.company_name }}</td>
                     <td>{{ job.metadata.job_type | map_picklist_values('job_titles') }}</td>
@@ -41,15 +43,15 @@
                     </td>
                     <td class="table-action -delete" style="width:107px">
                         <button type="button" class="btn btn-danger" data-toggle="modal"
-                                data-target="#unpublishModal{{ loop.index }}" {{ 'disabled' if advert.status != 'APPROVED' else ''}}>Unpublish Job
+                                data-target="#archiveAdvertModal{{ popup_index }}" {{ 'disabled' if advert.status != 'PUBLISHED' else ''}}>Archive Job
                         </button>
                     </td>
-                    <div class="modal fade" id="unpublishModal{{ loop.index }}" tabindex="-1" role="dialog"
-                         aria-labelledby="UnpublishCompanyModal" aria-hidden="true">
+                    <div class="modal fade" id="archiveAdvertModal{{ popup_index }}" tabindex="-1" role="dialog"
+                         aria-labelledby="ArchiveCompanyModal" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Unpublish Job</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Archive Job</h5>
                                     <button type="button" class="close" data-dismiss="modal"
                                             aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
@@ -64,9 +66,9 @@
                                     <button type="button" class="btn btn-black" data-dismiss="modal">
                                         Cancel
                                     </button>
-                                    <form action="{{ url_for('set_advert_status', job_id=job['_id'], advert_id=advert['_id'], action='unpublish') }}" method="post">
+                                    <form action="{{ url_for(archive_endpoint, job_id=job['_id'], advert_id=advert['_id'], action='archive') }}" method="post">
                                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                                        <button type="submit" class="btn btn-danger">Yes, I want to Unpublish</button>
+                                        <button type="submit" class="btn btn-danger">Yes, I want to Archive</button>
                                     </form>
                                 </div>
                             </div>
