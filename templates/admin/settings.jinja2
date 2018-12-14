@@ -16,6 +16,7 @@
         <div class="offset-lg-1 col-lg-10 col-xl-10">
 
             <h3>Picklists</h3>
+            <p>All lists must be saved in comma-separated values format (.csv)</p>
             <form id='file-form' method="post">
                 {{ render_picker(label='Job titles', options=job_title, picklist_name='job_titles') }}
                 {{ render_picker(label='Job rates', options=job_rates, picklist_name='job_rates') }}
