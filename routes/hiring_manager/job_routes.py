@@ -3,6 +3,7 @@ from flask import request, render_template, redirect, url_for
 from lib import template_list
 from lib.auth import login_required, HR_ROLE, get_logged_user
 from lib.core_integration import get_json_from_core
+from lib.errors import flash_error
 from routes.common.advert import request_set_advert_status
 from routes.common.job import edit_job, create_job
 from routes.hiring_manager.job_form import HMJobCreateForm, HMJobEditForm
@@ -45,7 +46,8 @@ def company_jobs():
 
     return render_template(template_list.HM_JOB_LIST,
                            jobs=jobs,
-                           edit_job_endpoint='hr_edit_company_job')
+                           edit_job_endpoint='hr_edit_company_job',
+                           archive_endpoint='hr_set_advert_status')
 
 
 @login_required(HR_ROLE)
@@ -76,7 +78,11 @@ def create_company_job_post():
 
 
 @login_required(HR_ROLE)
-def request_advert_approval_post(job_id, advert_id):
-    request_set_advert_status("requestApproval", advert_id, job_id)
+def archive_advert_post(job_id, advert_id, action):
 
-    return redirect(url_for('hr_edit_company_job', job_id=job_id))
+    if action in ['archive', 'requestApproval']:
+        request_set_advert_status(action, advert_id, job_id)
+    else:
+        flash_error('Action not allowed')
+
+    return redirect(url_for('hr_company_jobs', job_id=job_id))

@@ -27,7 +27,7 @@
 
     {% else %}
 
-        <form action="{{ url_for('hr_request_advert_approval', job_id=job_id, advert_id=advert._id, action='approve') }}" method="post" >
+        <form action="{{ url_for('hr_set_advert_status', job_id=job_id, advert_id=advert._id, action='requestApproval') }}" method="post" >
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             The advert is in DRAFT -
             <button type="submit" class="btn btn-link" value="publish">Would you like to request the approval?</button>
