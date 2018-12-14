@@ -1,10 +1,15 @@
-{% macro render_field(field, bold_label=True) %}
+{% macro render_field(field, bold_label=True, help_msg=None) %}
 
     {% set label_font_weight = 'bold' if bold_label else 'normal'  %}
 
     <div class="form-group row">
         <div class="col-lg-5">
             {{ field.label(class='col-form-label font-weight-' + label_font_weight) }}
+            {% if help_msg %}
+            <small id="passwordHelpBlock" class="form-text text-muted">
+              ({{ help_msg }})
+            </small>
+            {% endif %}
         </div>
         <div class="col-lg-7">
             {{ field(class='form-control', **kwargs)|safe }}

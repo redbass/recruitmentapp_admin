@@ -9,7 +9,8 @@
     {% endif %}
 
     {{ render_field(form.title) }}
-    {{ render_field(form.description, rows="5") }}
+    {{ render_field(form.description, rows="5",
+                    help_msg="For the public search Field on findastart.com.uk") }}
 
     {{ get_location__by_postcode(form) }}
     <br>
@@ -17,7 +18,9 @@
     {{ render_selectfield(form.job_type) }}
     {{ render_field(form.job_duration_weeks) }}
     {{ render_selectfield(form.rate_type) }}
-    {{ render_field(form.rate_value) }}
+    {{ render_field(form.rate_value,
+                    help_msg="select the term under witch this job will appear when a subcontractor uses the
+                    Filter by the job title function") }}
 
     <br><br>
 
