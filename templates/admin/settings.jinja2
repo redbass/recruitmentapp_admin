@@ -1,5 +1,5 @@
 {% extends '_main_base.jinja2' %}
-{% from "_forms_helpers.jinja2" import render_field %}
+{% from "_forms_helpers.jinja2" import render_field , render_submit%}
 
 {% block body %}
 
@@ -25,7 +25,8 @@
 
                 <input type="file" id="selected_file" name="file" accept="text/*,.csv" onchange="browser_closed()" hidden>
                 <input type="text" id="picklist_name" name="picklist_name" hidden>
-                <input type="submit" id='submit_picklist' hidden>
+
+                {{ render_submit(submit_label, cancel_url=url_for('companies'), id='submit_picklist') }}
 
                 <script>
                     function browse(picklist_name){

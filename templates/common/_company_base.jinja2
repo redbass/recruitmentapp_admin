@@ -1,4 +1,4 @@
-{% from "_forms_helpers.jinja2" import render_field, render_selectfield, render_submit, render_cancel %}
+{% from "_forms_helpers.jinja2" import render_field, render_selectfield, render_submit %}
 
 {% macro render_company_form_fields(form, submit_label, company_id) %}
     {{ form.csrf_token() }}

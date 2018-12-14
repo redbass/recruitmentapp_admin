@@ -6,6 +6,7 @@ from flask.json import jsonify
 from lib import template_list
 from lib.auth import login_required, ADMIN_ROLE
 from lib.core_integration import post_json_to_core
+from lib.errors import flash_message
 from lib.picklist import csv_to_json_values, json_values_to_csv, \
     get_picklist_values
 
@@ -32,6 +33,8 @@ def upload_picklist():
 
     post_json_to_core(path='/api/picklist/' + picklist_name,
                       is_admin=False, json=result)
+
+    flash_message("Upload Completed")
 
     return jsonify({})
 

@@ -4,29 +4,35 @@
 
 {% macro render_errors() %}
 
-    {% with messages = get_flashed_messages(category_filter=['error']) %}
-        {% if messages %}
-            <div class="alert alert-danger" role="alert">
-                {% if messages[0] == 'COMPANY_DISABLED' %}
-                    The company associated with this user is disabled. Please contact the administrators
-                {% elif messages[0] == 'INVALID_CREDENTIALS' %}
-                    Invalid credentials
-                {% else %}
-                    Error: {{ messages | join(", ") }}
-                {% endif %}
-            </div>
-        {% endif %}
-    {% endwith %}
+    <div class="row">
+        <div class="col offset-1">
 
-    {% with messages = get_flashed_messages(category_filter=['message']) %}
-        {% if messages %}
-            <div class="alert alert-primary" role="alert">
-                {% for message in messages %}
-                    {{ message }}<br>
-                {% endfor %}
-            </div>
-        {% endif %}
-    {% endwith %}
+        {% with messages = get_flashed_messages(category_filter=['error']) %}
+            {% if messages %}
+                <div class="alert alert-danger" role="alert">
+                    {% if messages[0] == 'COMPANY_DISABLED' %}
+                        The company associated with this user is disabled. Please contact the administrators
+                    {% elif messages[0] == 'INVALID_CREDENTIALS' %}
+                        Invalid credentials
+                    {% else %}
+                        Error: {{ messages | join(", ") }}
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% with messages = get_flashed_messages(category_filter=['message']) %}
+            {% if messages %}
+                <div class="alert alert-primary" role="alert">
+                    {% for message in messages %}
+                        {{ message }}<br>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        </div>
+    </div>
 
 {% endmacro %}
 
