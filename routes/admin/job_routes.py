@@ -23,7 +23,7 @@ def create_job_view(form=None):
 def create_job_post():
     form = JobCreateForm(request.form)
 
-    job_id = common.create_job(form)
+    job_id = common.create_job(form, approve=True)
 
     if job_id:
         flash_message("Job created")
@@ -64,9 +64,9 @@ def edit_job_post(job_id):
 
 @login_required(ADMIN_ROLE)
 def jobs_view():
-    url = '/api/job'
+    url = '/api/job?excludeDrafts=True'
     if request.args.get('filter') == 'approval':
-        url += "?advertsStatusFilter={advert_status}"\
+        url += "&advertsStatusFilter={advert_status}"\
             .format(advert_status=AdvertStatus.REQUEST_APPROVAL)
 
     jobs = get_json_from_core(url)
