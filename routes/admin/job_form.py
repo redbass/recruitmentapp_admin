@@ -30,7 +30,7 @@ class JobBaseForm(FlaskForm):
                     validators.DataRequired()])
 
     postcode = StringField(
-        'Postcode',
+        'Job Location Postcode',
         validators=[validators.DataRequired()])
 
     latitude = DecimalField(
