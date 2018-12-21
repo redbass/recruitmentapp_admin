@@ -92,7 +92,7 @@ class JobBaseForm(FlaskForm):
 
         metadata = job.get('metadata')
         self.job_type.data = metadata.get('job_type')
-        self.job_duration_weeks.data = metadata.get('job_duration_days')
+        self.job_duration_weeks.data = metadata.get('job_duration_weeks')
 
     def create_job_core_from_form(self):
         job = {
@@ -110,7 +110,7 @@ class JobBaseForm(FlaskForm):
             },
             "metadata": {
                 "job_type": self.data.get('job_type'),
-                "job_duration_days": int(self.data.get('job_duration_weeks'))
+                "job_duration_weeks": int(self.data.get('job_duration_weeks'))
             }
         }
 
