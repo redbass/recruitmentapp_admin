@@ -1,8 +1,8 @@
-{% macro render_navbar(field, user_info=None) %}
+{% macro render_navbar(field, marketing_website_url, user_info=None ) %}
     <div class="row">
         <div class="col-md-2 brand">
             <a href="{{ url_for('home') }}"><img
-                    src="https://findastart.palmerminto.com/wp-content/uploads/2018/06/cropped-Find-a-Start-logo@2x.png"/><span
+                    src="{{ marketing_website_url }}/wp-content/uploads/2018/06/cropped-Find-a-Start-logo@2x.png"/><span
                     class="sr-only">Find a Start dashboard</span></a>
         </div>
         <div class="col-md-10 ">
