@@ -15,9 +15,9 @@
     "webpack-cli": "^2.1.5"
   },
   "scripts": {
-//    "heroku-postbuild": "webpack",
     "compile": "webpack",
-    "compile:watch": "webpack --watch"
+    "compile:watch": "webpack --watch",
+    "heroku-postbuild": ""
   },
   "repository": {
     "type": "git",
