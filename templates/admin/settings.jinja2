@@ -24,51 +24,10 @@
                 {{ render_picker(label='Job locations', options=job_locations, picklist_name='job_locations') }}
                 {{ render_picker(label='Company trades', options=company_trades, picklist_name='company_trades') }}
 
-                <input type="file" id="selected_file" name="file" accept="text/*,.csv" onchange="browser_closed()" hidden>
+                <input type="file" id="selected_file" name="file" accept="text/*,.csv" onchange="on_file_chooser_close()" hidden>
                 <input type="text" id="picklist_name" name="picklist_name" hidden>
 
                 {{ render_submit(submit_label, cancel_url=url_for('companies'), id='submit_picklist') }}
-
-                <script>
-                    function browse(picklist_name){
-                        document.getElementById('picklist_name').value = picklist_name;
-                        document.getElementById('selected_file').click();
-                    }
-
-                    function browser_closed(){
-                        var form = document.getElementById('file-form');
-                        var formData = new FormData(form);
-                        var fileSelect = document.getElementById('selected_file');
-                        var files = fileSelect.files;
-
-                        // Loop through each of the selected files.
-                        for (var i = 0; i < files.length; i++) {
-                            var file = files[i];
-
-                            // Check the file type.
-                            if (file.type.match('text.*,.csv')) {
-                                continue;
-                            }
-
-                            formData.append('file', file, file.name);
-                        }
-
-                        formData.append('csrf_token', '{{ csrf_token() }}');
-
-                        var xhr = new XMLHttpRequest();
-                        xhr.open('POST', '{{ url_for('upload_picklist') }}', true);
-                        xhr.onload = function () {
-                            debugger
-                            if (xhr.status !== 200) {
-                                response = JSON.parse(xhr.response)
-                                alert(response['error']);
-                            }
-                            window.location = "{{ url_for('admin_settings') }}"
-                        };
-
-                        xhr.send(formData);
-                    }
-                </script>
             </form>
 
 
@@ -96,7 +55,7 @@
         <a href="{{ url_for('download_picklist', name=picklist_name)  }}" target="_blank">Download list...</a>
     </div>
     <div class="col-lg-2">
-        <a href="#" onclick="browse('{{ picklist_name }}')">Upload new list...</a>
+        <a href="#" onclick="upload('{{ picklist_name }}')">Upload new list...</a>
     </div>
 </div>
 {% endmacro %}
