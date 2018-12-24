@@ -35,3 +35,60 @@ const on_file_chooser_close = function(){
 
     xhr.send(formData);
 };
+
+
+var map;
+var marker;
+
+
+function initJobLocationMap() {
+    // set up the map
+    map = new L.Map('mapid');
+
+    // create the tile layer with correct attribution
+    var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    var osmAttrib = 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
+    var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 12, attribution: osmAttrib});
+
+    map.setView(new L.LatLng(55.952141, -3.189296), 9);
+    map.addLayer(osm);
+
+    map.on('click', onMapClick);
+
+    createMarkerFromFields();
+}
+
+function createMarker(latlng) {
+    if (marker == null) {
+        marker = L.marker(latlng).addTo(map);
+    }
+    marker.setLatLng(latlng);
+    map.setView(latlng, 9);
+}
+
+function createMarkerFromFields() {
+    createMarker({
+        'lat': $('#latitude').val(),
+        'lng': $('#longitude').val()
+    })
+}
+
+function onMapClick(e) {
+    document.getElementById('latitude').value = e.latlng.lat;
+    document.getElementById('longitude').value = e.latlng.lng;
+    createMarker(e.latlng);
+}
+
+function get_location_from_postcode() {
+    var postcode = $('#postcode').val();
+
+    $.get('/postcode/' + postcode).done(
+        function (response) {
+            $('#latitude').val(response.latitude);
+            $('#longitude').val(response.longitude);
+            $('#admin_district').val(response.admin_district);
+            latLng = new L.LatLng(response.latitude, response.longitude);
+            createMarker(latLng)
+        }
+    );
+}
