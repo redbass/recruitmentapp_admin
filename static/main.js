@@ -92,3 +92,44 @@ function get_location_from_postcode() {
         }
     );
 }
+
+function initUploadLogo(redirect_url, upload_url) {
+
+    function onSubmit(e) {
+        var formData = new FormData(form);
+        var fileSelect = document.getElementById('file-select');
+        var files = fileSelect.files
+
+        // Loop through each of the selected files.
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+
+            // Check the file type.
+            if (file.type.match('image.*')) {
+                continue;
+            }
+
+            formData.append('file', file, file.name);
+        }
+
+        formData.append('csrf_token', window.csrf_token);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', upload_url, true);
+        xhr.onload = function () {
+            if (xhr.status !== 200) {
+                response = JSON.parse(xhr.response);
+                alert(response['error']);
+            }
+            window.location = redirect_url;
+        };
+
+        xhr.send(formData);
+
+        e.preventDefault();
+        return false;
+    }
+
+    var form = document.getElementById('file-form');
+    form.onsubmit = onSubmit;
+}
