@@ -1,9 +1,9 @@
-const upload = function(picklist_name){
+function upload(picklist_name){
     document.getElementById('picklist_name').value = picklist_name;
     document.getElementById('selected_file').click();
 };
 
-const on_file_chooser_close = function(){
+function on_file_chooser_close(){
     var form = document.getElementById('file-form');
     var formData = new FormData(form);
     var fileSelect = document.getElementById('selected_file');
