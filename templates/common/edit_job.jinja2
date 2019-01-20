@@ -41,6 +41,8 @@
 
 {% block footer_scripts %}
 
+    <script src="{{ url_for('static', filename='stripe.js') }}"></script>
+
     {{ search_postcode([form.latitude.value, form.longitude.value]) }}
 
 #{% endblock %}
