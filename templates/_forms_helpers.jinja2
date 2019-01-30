@@ -12,9 +12,12 @@
             {% endif %}
         </div>
         <div class="col-lg-7">
-            {{ field(class='form-control', **kwargs)|safe }}
+
+            {% set field_class = 'form-control ' + ('is-invalid' if field.errors else '') %}
+
+            {{ field(class=field_class, **kwargs)|safe }}
+            {{ _render_errors(field.errors) }}
         </div>
-        {{ _render_errors(field.errors) }}
     </div>
 
 {% endmacro %}
@@ -26,7 +29,10 @@
             {{ field.label(class='col-form-label font-weight-bold') }}
         </div>
         <div class="col-lg-5">
-            {{ field(class='form-control', **kwargs)|safe }}
+            {% set field_class = 'form-control ' + ('is-invalid' if field.errors else '') %}
+
+            {{ field(class=field_class, **kwargs)|safe }}
+            {{ _render_errors(field.errors) }}
         </div>
         <div class="col-lg-2">
              <a  class="btn btn-yellow triangle-outter"
@@ -35,7 +41,6 @@
              </a>
             <span class="triangle-inner"></span>
         </div>
-        {{ _render_errors(field.errors) }}
     </div>
 
 {% endmacro %}
@@ -51,8 +56,8 @@
             {% if not is_multiple %}
             <div class="form-icons select-icon"><div class="yellow-chevron">&nbsp;</div></div>
             {% endif %}
+            {{ _render_errors(field.errors) }}
         </div>
-        {{ _render_errors(field.errors) }}
     </div>
 
 {% endmacro %}
@@ -79,7 +84,7 @@
 {% macro _render_errors(errors) %}
 
     {% if errors %}
-        <div class="-invalid-feedback">
+        <div class="invalid-feedback">
         {% for error in errors %}
             {{ error }}<br>
         {% endfor %}

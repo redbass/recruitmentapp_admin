@@ -1,6 +1,6 @@
 {% from "_forms_helpers.jinja2" import render_field, render_submit, render_selectfield, render_search_field %}
 
-{% macro render_jobs_form_fields(form, form_type, disable_hm_editing=False) %}
+{% macro render_jobs_form_fields(form, form_type, disable_hm_editing=False, marketing_website_url="marketing_website_url") %}
 
     {{ form.csrf_token() }}
 
@@ -10,7 +10,7 @@
 
     {{ render_field(form.title) }}
     {{ render_field(form.description, rows="5",
-                    help_msg="For the public search Field on findastart.com.uk") }}
+                    help_msg="For the public search Field on " + marketing_website_url) }}
 
     {{ get_location__by_postcode(form) }}
     <br>
@@ -19,8 +19,7 @@
     {{ render_field(form.job_duration_weeks) }}
     {{ render_selectfield(form.rate_type) }}
     {{ render_field(form.rate_value,
-                    help_msg="select the term under witch this job will appear when a subcontractor uses the
-                    Filter by the job title function") }}
+                    help_msg="For the public search field on " + marketing_website_url) }}
 
     <br><br>
 
