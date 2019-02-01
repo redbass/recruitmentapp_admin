@@ -14,7 +14,11 @@ class AuthenticationError(BaseRecruitmentAppException):
 
 
 class APICallError(BaseRecruitmentAppException):
-    pass
+
+    def __init__(self,
+                 msg: str = None,
+                 ref_id: str = None):
+        super().__init__(msg or "API connection error", ref_id)
 
 
 class APIValidationError(BaseRecruitmentAppException):
