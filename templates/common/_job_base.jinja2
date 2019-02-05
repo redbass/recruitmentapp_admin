@@ -1,6 +1,6 @@
 {% from "_forms_helpers.jinja2" import render_field, render_submit, render_selectfield, render_search_field %}
 
-{% macro render_jobs_form_fields(form, form_type, disable_hm_editing=False) %}
+{% macro render_jobs_form_fields(form, form_type, disable_hm_editing=False, marketing_website_url="marketing_website_url") %}
 
     {{ form.csrf_token() }}
 
@@ -10,7 +10,7 @@
 
     {{ render_field(form.title) }}
     {{ render_field(form.description, rows="5",
-                    help_msg="For the public search Field on findastart.com.uk") }}
+                    help_msg="For the public search Field on " + marketing_website_url) }}
 
     {{ get_location__by_postcode(form) }}
     <br>
@@ -19,8 +19,7 @@
     {{ render_field(form.job_duration_weeks) }}
     {{ render_selectfield(form.rate_type) }}
     {{ render_field(form.rate_value,
-                    help_msg="select the term under witch this job will appear when a subcontractor uses the
-                    Filter by the job title function") }}
+                    help_msg="For the public search field on " + marketing_website_url) }}
 
     <br><br>
 
@@ -58,66 +57,7 @@
     <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
             integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
             crossorigin=""></script>
-    <script>
 
-        var map;
-
-        function initmap() {
-            // set up the map
-            map = new L.Map('mapid');
-
-            // create the tile layer with correct attribution
-            var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            var osmAttrib = 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
-            var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 12, attribution: osmAttrib});
-
-            map.setView(new L.LatLng(55.952141, -3.189296), 9);
-            map.addLayer(osm);
-
-            return map
-        }
-
-        var marker;
-        function createMarker(latlng) {
-            if (marker == null) {
-                marker = L.marker(latlng).addTo(mymap);
-            }
-            marker.setLatLng(latlng);
-            map.setView(latlng, 9);
-        }
-
-        function createMarkerFromFields() {
-            createMarker({
-                'lat': $('#latitude').val(),
-                'lng': $('#longitude').val()
-            })
-        }
-
-        function onMapClick(e) {
-            document.getElementById('latitude').value = e.latlng.lat;
-            document.getElementById('longitude').value = e.latlng.lng;
-            createMarker(e.latlng);
-        }
-
-        var mymap = initmap();
-        mymap.on('click', onMapClick);
-
-        createMarkerFromFields();
-
-        function get_location_from_postcode() {
-            var postcode = $('#postcode').val();
-
-            $.get('/postcode/' + postcode).done(
-                function (response) {
-                    $('#latitude').val(response.latitude);
-                    $('#longitude').val(response.longitude);
-                    $('#admin_district').val(response.admin_district);
-                    latLng = new L.LatLng(response.latitude, response.longitude);
-                    createMarker(latLng)
-                }
-            );
-        }
-
-    </script>
+    <script>initJobLocationMap();</script>
 
 {% endmacro %}

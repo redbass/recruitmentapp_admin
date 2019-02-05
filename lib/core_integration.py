@@ -102,6 +102,8 @@ def _call_core_response(fn, url, is_json=True, **kwargs):
 
         if status_code == 200:
             return body
+    except requests.exceptions.ConnectionError:
+        raise APICallError()
 
     except Exception as e:
         raise APICallError(str(e))

@@ -20,7 +20,7 @@ def company_choices_fn():
 class JobBaseForm(FlaskForm):
 
     title = StringField(
-        'Job Title',
+        'Ad Title',
         validators=[validators.Length(min=1, max=25),
                     validators.DataRequired()])
 

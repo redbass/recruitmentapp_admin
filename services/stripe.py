@@ -12,11 +12,10 @@ def get_default_stripe_parameters():
 
 @login_required()
 def create_charge(job_id, advert_id):
-    token = request.form['stripeToken']  # Using Flask
     data = {
         'job_id': job_id,
         'advert_id': advert_id,
-        'token': token
+        'token': request.form['stripeToken']
     }
 
     try:

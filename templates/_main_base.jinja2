@@ -1,7 +1,6 @@
 {% from "_navbar.jinja2" import render_navbar %}
 
 
-
 {% macro render_errors() %}
 
     <div class="row">
@@ -43,11 +42,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Find a start</title>
+    <title>Find a start (Admin)</title>
 
-    {#    <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet">#}
-    <link href="{{ marketing_website_url }}/wp-content/themes/understrap-child-master/css/find-a-start.css"
-          rel="stylesheet">
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+    <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet">
+    <link href="{{ marketing_website_url }}/wp-content/themes/understrap-child-master/css/find-a-start.css" rel="stylesheet">
 </head>
 <body>
 <div class="recruitment-app-admin container-fluid -wrapper">
@@ -87,6 +86,13 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
             integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
             crossorigin="anonymous"></script>
+
+    <script>
+        window.upload_picklist_url = "{{ url_for('upload_picklist') }}";
+        window.admin_settings_url = "{{ url_for('admin_settings') }}";
+        window.csrf_token = "{{ csrf_token() }}";
+    </script>
+
     {% block footer_scripts %}
 
     {% endblock %}
