@@ -1,11 +1,12 @@
 from functools import wraps
 
+import requests
 from flask import render_template, request, session, redirect, url_for, \
     flash
 
 from lib import template_list
 from lib.errors import flash_exception
-from lib.exceptions import AuthenticationError
+from lib.exceptions import AuthenticationError, APICallError
 from lib.core_integration import request_access_jwt
 
 SESSION_IS_LOGGED_IN = 'logged_in'
@@ -27,6 +28,10 @@ def login_post():
     try:
         respone = request_access_jwt(username, password)
         user = respone.json()
+
+    except requests.exceptions.ConnectionError:
+        raise APICallError()
+
     except AuthenticationError as e:
         flash_exception(e)
         return login_view()

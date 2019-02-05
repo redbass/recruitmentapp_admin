@@ -1,3 +1,41 @@
+
+{% macro render_stripe_pay_advert(job_id, advert_id, stripe_settings) %}
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        window.STRIPE_SETTINGS = {{ stripe_settings | tojson }}
+    </script>
+
+
+    <form action="{{ url_for('stripe_charge', job_id=job_id, advert_id=advert_id) }}" method="POST" id="payment-form">
+        <div class="form-group row">
+            <div class="col-lg-5">
+                {% set price = stripe_settings['default_advert_charge'] / 100 %}
+                {% set currency = '£' if stripe_settings.default_currency == 'GBP' else stripe_settings.default_currency %}
+                <label class="col-form-label font-weight-bold" for="card-element">Pay advert ( {{ currency }}{{ "%.2f"|format(price) }})</label>
+            </div>
+            <div class="col-lg-7 has-icon">
+                <div id="card-element"></div>
+                <div id="card-errors" role="alert"></div>
+            </div>
+
+        </div>
+
+        <div class="form-group row">
+            <div class="col-lg-5"></div>
+            <div class="col-lg-7 has-icon">
+                <button class="btn btn-yellow triangle-outter pull-right">Submit Payment</button>
+            </div>
+        </div>
+    </form>
+
+    <hr>
+
+{% endmacro %}
+
+
+
+
 {% macro render_advert(job_id, advert, stripe_settings, default_email) %}
 
     {% if advert['status'] == 'REQUEST_APPROVAL' %}
@@ -5,17 +43,8 @@
         <h4>Waiting the Administrators approval</h4>
 
     {% elif advert['status'] == 'APPROVED' %}
-        <form action="{{ url_for('stripe_charge', job_id=job_id, advert_id=advert['_id']) }}" method="POST">
-            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                    data-name="Pay advert"
-                    data-locale="auto"
-                    data-allow-remember-me="false"
-                    data-email="{{ default_email }}"
-                    data-key="{{ stripe_settings['stripe_public_key'] }}"
-                    data-amount="{{ stripe_settings['default_advert_charge'] }}"
-                    data-currency="{{ stripe_settings['default_currency'] }}">
-            </script>
-        </form>
+
+        {{ render_stripe_pay_advert(job_id=job_id, advert_id=advert['_id'], stripe_settings=stripe_settings) }}
 
     {% elif advert['status'] == 'PAYED' %}
 
