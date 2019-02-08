@@ -44,7 +44,8 @@
                                 {% endif %}
                             </td>
                             <td>
-                                {% with addr = company.contacts.address if company and 'contacts' in company else {} %}
+                                {% with addr = company.contacts.address
+                                               if company and 'contacts' in company and 'address' in company.contacts else {} %}
                                     {{ addr.number }} {{ addr.street }} {{ addr.city }}
                                 {% endwith %}
                             </td>
