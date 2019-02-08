@@ -1,7 +1,7 @@
 {% macro render_navbar(field, marketing_website_url, user_info=None ) %}
     <div class="row">
         <div class="col-md-2 brand">
-            <a href="{{ url_for('home') }}"><img
+            <a href="{{ marketing_website_url }}" target="_blank"><img
                     src="{{ marketing_website_url }}/wp-content/uploads/2018/06/cropped-Find-a-Start-logo@2x.png"/><span
                     class="sr-only">Find a Start dashboard</span></a>
         </div>
