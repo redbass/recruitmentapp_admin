@@ -1,7 +1,9 @@
-{% macro redner_jobs_table(jobs, edit_job_endpoint, archive_endpoint) %}
+{% macro redner_jobs_table(jobs, edit_job_endpoint, archive_endpoint, display_approval_list=True) %}
     <div class="d-block my-4">
         <h3 class="my-4 d-inline">Review and Edit Jobs</h3>
-        <span class="d-inline ml-4"><a href="{{ url_for('jobs', filter='approval') }}">(Click for jobs pending approval)</a></span>
+        {% if display_approval_list %}
+            <span class="d-inline ml-4"><a href="{{ url_for('jobs', filter='approval') }}">(Click for jobs pending approval)</a></span>
+        {% endif %}
     </div>
     <table class="table table-striped">
         <thead>
@@ -33,7 +35,7 @@
                     </td>
                     <td>{{ advert.duration }} days</td>
                     <td>{{ advert.date.created | format_date }}</td>
-                    <td>{{ advert.status | map_picklist_values('job_statuses') }}</td>
+                    <td class="font-weight-boldfont-weight-bold">{{ advert.status | map_picklist_values('job_statuses') }}</td>
 
                     <td class="table-action -first">
                         <a class="btn btn-goto" href="{{ url_for(edit_job_endpoint, job_id=job._id) }}">
