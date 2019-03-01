@@ -1,0 +1,45 @@
+{% extends '_main_base.jinja2' %}
+{% from "common/_job_base.jinja2" import render_jobs_form_fields, search_postcode %}
+{% from "admin/_job_base.jinja2" import render_advert as admin_render_advert %}
+{% from "hm/_job_base.jinja2" import render_advert as hm_render_advert %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col offset-1">
+            <div class="row">
+                <div class="col-md-7">
+                    <h1 class=" px-3 py-1 page-header mb-4">Advert</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="offset-lg-1 col-lg-10 col-xl-8">
+
+            {{ hm_render_advert(job_id=job_id,
+                                advert=advert,
+                                stripe_settings=stripe_settings(),
+                                default_email=user_info['username']) }}
+
+            <form action="{{ url_for(form_action, job_id=job_id) }}" method="post">
+
+                {{ render_jobs_form_fields(
+                    form,
+                    form_type=form_type,
+                    disable_hm_editing=disable_hm_editing,
+                    marketing_website_url=marketing_website_url) }}
+
+            </form>
+        </div>
+    </div>
+
+{% endblock body %}
+
+{% block footer_scripts %}
+
+    <script src="{{ url_for('static', filename='stripe.js') }}"></script>
+
+    {{ search_postcode([form.latitude.value, form.longitude.value]) }}
+
+#{% endblock %}
