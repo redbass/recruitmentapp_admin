@@ -17,7 +17,7 @@
 
     <div class="row mt-4">
         <div class="offset-lg-1 col-lg-10 col-xl-8">
-            <ul class="nav nav-pills nav-fill ">
+            <ul class="nav nav-tabs">
               <li class="nav-item">
                 <a class="nav-link active" href="#" onclick="$('.job-tab').toggleClass('collapse');$('.nav-link').toggleClass('active');">Details</a>
               </li>
@@ -25,7 +25,9 @@
                 <a class="nav-link" href="#" onclick="$('.job-tab').toggleClass('collapse');$('.nav-link').toggleClass('active');">Applications</a>
               </li>
             </ul>
+            <br/>
         </div>
+
 
         <div class="offset-lg-1 col-lg-10 col-xl-8  job-tab">
 
@@ -52,30 +54,17 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>The name</td>
-                        <td>078788787654</td>
-                        <td><a href="mailto:#">email@mail.org</a></td>
-                        <td>18</td>
-                    </tr>
-                    <tr>
-                        <td>The name</td>
-                        <td>078788787654</td>
-                        <td><a href="mailto:#">email@mail.org</a></td>
-                        <td>18</td>
-                    </tr>
-                    <tr>
-                        <td>The name</td>
-                        <td>078788787654</td>
-                        <td><a href="mailto:#">email@mail.org</a></td>
-                        <td>18</td>
-                    </tr>
-                    <tr>
-                        <td>The name</td>
-                        <td>078788787654</td>
-                        <td><a href="mailto:#">email@mail.org</a></td>
-                        <td>18</td>
-                    </tr>
+                    {% if not candidates %}
+                        <tr><td colspan="4">There are no applications</td></tr>
+                    {% endif %}
+                    {% for candidate in candidates %}
+                        <tr>
+                            <td>{{candidate['first_name']}} {{candidate['last_name']}}</td>
+                            <td>{{candidate['phone_number']}}</td>
+                            <td><a href="mailto:{{candidate['email']}}">{{candidate['email']}}</a></td>
+                            <td>{{candidate['metadata']['years_experience']}}</td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
