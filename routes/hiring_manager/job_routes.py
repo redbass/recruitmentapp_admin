@@ -22,7 +22,7 @@ def edit_company_job_view(job_id, form=None):
     form_type = 'hm_edit'
     disable_hm_editing = advert['status'] != 'DRAFT' and form_type == 'hm_edit'
 
-    return render_template(template_list.COMMON_EDIT_JOB,
+    return render_template(template_list.HM_EDIT_JOB,
                            job_id=job_id,
                            advert=advert,
                            form=form,
