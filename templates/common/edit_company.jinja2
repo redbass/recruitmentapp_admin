@@ -16,12 +16,14 @@
     <div class="row mt-4">
         <div class="offset-lg-1 col-lg-10 col-xl-8">
 
-            <form action="{{ url_for(form_action, company_id=company_id) }}" method="post">
+            {% set cancel_url = '/' if 'hr' in form_action else url_for('companies') %}
 
+            <form action="{{ url_for(form_action, company_id=company_id) }}" method="post">
                 {{ render_company_form_fields(
                         form,
                         submit_label="Save changes",
-                        company_id=company_id) }}
+                        company_id=company_id,
+                        cancel_url=cancel_url) }}
 
             </form>
 

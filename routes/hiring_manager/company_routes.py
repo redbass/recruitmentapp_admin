@@ -33,7 +33,10 @@ def company_info_post():
     if edited:
         return redirect(url_for('hr_company_info'))
 
-    return render_template(template_list.COMMON_EDIT_COMPANY, form=form)
+    return render_template(template_list.COMMON_EDIT_COMPANY,
+                           form=form,
+                           company_id=company_id,
+                           form_action='hr_company_info_post')
 
 
 def get_user_company_id():

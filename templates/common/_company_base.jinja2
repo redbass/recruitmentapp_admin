@@ -1,6 +1,6 @@
 {% from "_forms_helpers.jinja2" import render_field, render_selectfield, render_submit %}
 
-{% macro render_company_form_fields(form, submit_label, company_id) %}
+{% macro render_company_form_fields(form, submit_label, company_id, cancel_url) %}
     {{ form.csrf_token() }}
 
     {{ render_field(form.name) }}
@@ -45,7 +45,7 @@
     {{ render_field(form.phone_number, bold_label=False) }}
 
 
-    {{ render_submit(submit_label, cancel_url=url_for('companies')) }}
+    {{ render_submit(submit_label, cancel_url=cancel_url) }}
 
 {% endmacro %}
 
