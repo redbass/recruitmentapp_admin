@@ -54,6 +54,9 @@
                     <th scope="col">Phone number</th>
                     <th scope="col">Email address</th>
                     <th scope="col">Years of experience</th>
+                    <th scope="col" class="table-action -first">
+                        <span class="d-none">Curriculum vitae</span>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -66,6 +69,15 @@
                             <td>{{candidate['phone_number']}}</td>
                             <td><a href="mailto:{{candidate['email']}}">{{candidate['email']}}</a></td>
                             <td>{{candidate['metadata']['years_experience']}}</td>
+                            <td class="table-action -first ">
+                            {% if candidate.metadata.cv %}
+                                <a class="btn btn-goto" target="_blank"
+                                   href="{{marketing_website_url}}/wp-content/uploads/pp-files/{{ candidate.metadata.cv }}">
+                                    View CV
+                                    <div class="chevron -yellow">&nbsp;</div>
+                                </a>
+                            {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
