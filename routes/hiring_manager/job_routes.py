@@ -12,6 +12,7 @@ from routes.hiring_manager.job_form import HMJobCreateForm, HMJobEditForm
 @login_required(HR_ROLE)
 def edit_company_job_view(job_id, form=None):
     job = get_json_from_core('/api/job/' + job_id)
+    applications = get_json_from_core('/api/job/' + job_id + '/applications')
     adverts = job.get('adverts', [None])
 
     form = HMJobEditForm()
@@ -22,13 +23,15 @@ def edit_company_job_view(job_id, form=None):
     form_type = 'hm_edit'
     disable_hm_editing = advert['status'] != 'DRAFT' and form_type == 'hm_edit'
 
+    candidates = applications['candidates'] if applications else []
     return render_template(template_list.HM_EDIT_JOB,
                            job_id=job_id,
                            advert=advert,
                            form=form,
                            form_type=form_type,
                            form_action='hr_edit_company_job_post',
-                           disable_hm_editing=disable_hm_editing)
+                           disable_hm_editing=disable_hm_editing,
+                           candidates=candidates)
 
 
 @login_required(HR_ROLE)

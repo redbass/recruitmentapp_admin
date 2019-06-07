@@ -14,8 +14,22 @@
             </div>
         </div>
     </div>
+
     <div class="row mt-4">
         <div class="offset-lg-1 col-lg-10 col-xl-8">
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                <a class="nav-link active" href="#" onclick="$('.job-tab').toggleClass('collapse');$('.nav-link').toggleClass('active');">Details</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#" onclick="$('.job-tab').toggleClass('collapse');$('.nav-link').toggleClass('active');">Applications</a>
+              </li>
+            </ul>
+            <br/>
+        </div>
+
+
+        <div class="offset-lg-1 col-lg-10 col-xl-8  job-tab">
 
             {{ hm_render_advert(job_id=job_id,
                                 advert=advert,
@@ -31,6 +45,43 @@
                     marketing_website_url=marketing_website_url) }}
 
             </form>
+        </div>
+        <div class="offset-lg-1 col-lg-10 col-xl-8  job-tab collapse">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Phone number</th>
+                    <th scope="col">Email address</th>
+                    <th scope="col">Years of experience</th>
+                    <th scope="col" class="table-action -first">
+                        <span class="d-none">Curriculum vitae</span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% if not candidates %}
+                        <tr><td colspan="4">There are no applications</td></tr>
+                    {% endif %}
+                    {% for candidate in candidates %}
+                        <tr>
+                            <td>{{candidate['first_name']}} {{candidate['last_name']}}</td>
+                            <td>{{candidate['phone_number']}}</td>
+                            <td><a href="mailto:{{candidate['email']}}">{{candidate['email']}}</a></td>
+                            <td>{{candidate['metadata']['years_experience']}}</td>
+                            <td class="table-action -first ">
+                            {% if candidate.metadata.cv %}
+                                <a class="btn btn-goto" target="_blank"
+                                   href="{{marketing_website_url}}/wp-content/uploads/pp-files/{{ candidate.metadata.cv }}">
+                                    View CV
+                                    <div class="chevron -yellow">&nbsp;</div>
+                                </a>
+                            {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 
